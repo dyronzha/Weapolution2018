@@ -1,0 +1,85 @@
+{
+     "Items": [
+            {
+             "name": "test",
+            "id": 0,
+            "craftingID": -10,
+            "image": "unknow",
+            "attack": -10,
+             "ani_type": -10
+           },
+            {
+             "name": "stick",
+            "id": 1,
+            "craftingID": -1,
+            "image": "stick",
+            "attack": 1,
+             "ani_type": 0
+           },
+           {
+            "name": "rock",
+            "id": 2,
+            "craftingID": -1,
+            "image": "rock",
+             "attack": 1,
+             "ani_type": 0
+           },
+          {
+            "name": "fire",
+            "id": 3,
+            "craftingID": -1,
+            "image": "fire",
+            "attack": 1,
+           "ani_type": -1
+          },
+          {
+            "name": "steel",
+            "id": 4,
+            "craftingID": 13,
+            "image": "steel",
+            "attack": 3,
+             "ani_type": 1
+           },
+          {
+            "name": "Big Stick",
+            "id": 5,
+            "craftingID": 2,
+            "image": "bigStick",
+            "attack": 3,
+             "ani_type": 2
+           },
+          {
+            "name": "bow",
+            "id": 6,
+            "craftingID": 26,
+            "image": "bow",
+            "attack": 3,
+             "ani_type": 3
+           },
+          {
+            "name": "Rock Ax",
+            "id": 7,
+            "craftingID":29 ,
+            "image": "rockAx",
+            "attack": 5,
+             "ani_type": 2
+           },     
+           {
+            "name": "Steel Ax",
+            "id": 8,
+            "craftingID":41 ,
+            "image": "steelAx",
+            "attack": 7,
+             "ani_type": 2
+           },    
+           {
+            "name": "Steel Bow",
+            "id": 9,
+            "craftingID":52 ,
+            "image": "steelBow",
+            "attack": 7,
+             "ani_type": 2
+           }    
+     ]
+}
+

@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - PickItem
+  - props
+  - ObstacleY
+  - ObstacleX
+  - Floor
+  - PickCollection
+  - Enemy
+  - Trap
+  - projectile
+  - Wall
+  - Stair
+  - Web
+  - EmemyBullet
+  - EnemyOut
+  - Explosion
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Obstacle
+  - DamageToPlayer
+  - CraftSystem
+  - Detect
+  - Enemy
+  - Player
+  - Mask
+  - PlayerHurtArea
+  - DamageToEnemy
+  - PickItem
+  - ObstacleForOut
+  - ObstacleForIn
+  - PlayerIn
+  - PlayerOut
+  - EnemyIn
+  - EnemyOut
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - MiniMapForIn
+  - MiniMapForOut
+  m_SortingLayers:
+  - name: BackGround
+    uniqueID: 2658103829
+    locked: 0
+  - name: OnGround
+    uniqueID: 4210630111
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: props
+    uniqueID: 3536153859
+    locked: 0
+  - name: effect
+    uniqueID: 305052633
+    locked: 0
