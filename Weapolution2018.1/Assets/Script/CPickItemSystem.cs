@@ -9,16 +9,19 @@ public class CPickItemSystem : MonoBehaviour {
     
     int totalNum;
     float spawnTime = 0.0f;
+    Vector3[] locations;
     CPickCollection fireTree;
+
     public bool test = false;
     public Transform usedCollectList, freeCollectList;
     public List<CPickItem> freePickItemList = new List<CPickItem>(), 
                                     usedPickItemList = new List<CPickItem>();
     public int[] typeCollectNum;
     public float[] typeOppunity;
-    public Vector3[] locations;
     public string stage;
     public LayerMask mask;
+
+
     void Awake () {
         Debug.Log("adsadasdasdsadsadsad" + (StageManager.nextStage - 3));
         CItemDataBase.SetItemDataBase(stage);
@@ -29,15 +32,19 @@ public class CPickItemSystem : MonoBehaviour {
         usedCollectList = transform.GetChild(3);
         used_num = 0;
         free_num = tempFree.childCount;
+        
         for (int i = 0; i < free_num; i++) {
             freePickItemList.Add(tempFree.GetChild(i).GetComponent<CPickItem>());
-            freePickItemList[i].GetComponent<CPickItem>().SetSystem(this);
+            freePickItemList[i].SetSystem(this);
             freePickItemList[i].gameObject.SetActive(false);
         }
+
+        locations = new Vector3[freeCollectList.childCount];
         for (int i = 0; i < freeCollectList.childCount; i++)
         {
             freeCollectList.GetChild(i).GetComponent<CPickCollection>().pickitem_system = this;
             freeCollectList.GetChild(i).gameObject.SetActive(false);
+            locations[i] = freeCollectList.GetChild(i).position;
         }
     }
 
@@ -169,7 +176,7 @@ public class CPickItemSystem : MonoBehaviour {
         spawned.position = pos;
         spawned.GetComponent<CPickCollection>().InitCollects(_type, _itemID);
         for (int i = 0; i < typeCollectNum.Length; i++) {
-            if (_type <= i) {
+            if (_type == i) {
                 typeCollectNum[i]++;
                 break;
             } 
