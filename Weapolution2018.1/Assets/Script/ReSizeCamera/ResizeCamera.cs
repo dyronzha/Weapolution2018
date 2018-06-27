@@ -14,6 +14,7 @@ public class ResizeCamera : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
+        UpdatePos();
         mainCamera = GetComponent<Camera>();
         minSizeY = mainCamera.orthographicSize;
         minSizeX = minSizeY * Screen.width / Screen.height;
@@ -25,16 +26,19 @@ public class ResizeCamera : MonoBehaviour {
 	// Update is called once per frame
     private void LateUpdate()
     {
+        UpdatePos();
+        SetCameraPos();
+        SetCameraSize();
+    }
+
+    void UpdatePos() {
         playerInPosX = playerIn.transform.position.x;
         playerInPosY = playerIn.transform.position.y;
         playerOutPosX = playerOut.transform.position.x;
         playerOutPosY = playerOut.transform.position.y;
         if (playerInPosY > playerOutPosY) playerInPosY += 3.0f;
         else playerOutPosY += 3.0f;
-        SetCameraPos();
-        SetCameraSize();
     }
-
 
     void SetCameraPos() {
         Vector3 pos = new Vector3((playerInPosX + playerOutPosX)*0.5f, (playerInPosY + playerOutPosY)*0.5f,
