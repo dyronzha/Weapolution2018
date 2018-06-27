@@ -19,6 +19,8 @@ public class ChoosePlayer : MonoBehaviour {
     bool p2Ready = false;
     TargetSelect TargetSelectScript;
     SelectStage SelectStageScript;
+    StageManager stageManager;
+
     // Use this for initialization
 
     void Start () {
@@ -26,6 +28,7 @@ public class ChoosePlayer : MonoBehaviour {
         buda_keyboard1 = GameObject.Find("buda_keyboard1").GetComponent<SpriteRenderer>();
         haka_joystick1 = GameObject.Find("haka_joystick1").GetComponent<SpriteRenderer>();
         haka_keyboard1 = GameObject.Find("haka_keyboard1").GetComponent<SpriteRenderer>();
+        stageManager = GameObject.Find("MappingPvE_BG").GetComponent<StageManager>();
         budaHands = GameObject.Find("budaHand");
         hakaHands = GameObject.Find("hakaHand");
         budaHands.SetActive(false);
@@ -36,7 +39,6 @@ public class ChoosePlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Player.isMapped || SelectStageScript.isChoosed ) return;
         if (!p1Ready)
         {          
             setPlayer1();
@@ -61,6 +63,9 @@ public class ChoosePlayer : MonoBehaviour {
         {
             Player.isMapped = true;           
             SelectStageScript.isChoosed = true;
+            StageManager.nextStage +=1;
+            stageManager.ChangeSceneBlackOut();
+
 
         }
         //Debug.Log("Player.p2controller" + Player.p2controller);
