@@ -159,6 +159,9 @@ public class CraftSystem : MonoBehaviour {
                // Debug.Log("設動畫");
                 if (!b_handling)
                 {
+                    if (items[picking_item.id].elementID < -20) {
+                        TeamHp.teamHp += 0.15f;
+                    } 
                     b_handling = true;
                     craftA = items[picking_item.id];
                     handling_item = picking_item.gameObject;
@@ -407,9 +410,10 @@ public class CraftSystem : MonoBehaviour {
         pick_collect.ThrowItemOut();
         pick_collect = null;
         craftFunc = true;
-        if (test){
+        if (test)
+        {
             tutorialRequest.DoneCollect();
-        } 
+        }
     }
 
     void switchMove(bool enable) {

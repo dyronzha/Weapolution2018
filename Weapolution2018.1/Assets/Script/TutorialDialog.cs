@@ -153,9 +153,9 @@ public class TutorialDialog : MonoBehaviour {
         }
         else if (progress == 4)
         {
-            pickItemSystem.SpawnPickCollect(new Vector3(-13.0f, -9.0f, 0.0f), 0, 1);
-            pickItemSystem.SpawnPickCollect(new Vector3(14.5f, -3.0f, 0.0f), 0, 1);
-            pickItemSystem.SpawnPickCollect(new Vector3(-12.7f, 2.3f, 0.0f), 1, 2);
+            pickItemSystem.SpawnPickCollect(new Vector3(-13.0f, -9.0f, 0.0f), 0);
+            pickItemSystem.SpawnPickCollect(new Vector3(14.5f, -3.0f, 0.0f), 0);
+            pickItemSystem.SpawnPickCollect(new Vector3(-12.7f, 2.3f, 0.0f), 2);
             needNumber = 3;
             enemySystem.AddUsedList(new Vector3(0.0f, 10.3f, 0.0f));
         }

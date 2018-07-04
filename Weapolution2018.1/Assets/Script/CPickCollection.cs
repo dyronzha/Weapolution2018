@@ -33,46 +33,70 @@ public class CPickCollection : MonoBehaviour {
 	}
 
     public void InitCollects(int _type, int _itemType) {
-        //bool checkCollider = false; //確認下面for迴圈是第一次遇到碰撞器，id比較小
         if(StageManager.currentStage ==5)levelHieght.SetHeight();
+        img.color = new Color(1,1,1,0);
         type = _type;
         itemTypes = _itemType;
         img.sprite = appearences[type];
-        for (int i = 0; i < colliders.Length; i++) {
-            colliders[i].enabled = false;
-            if (type < colliderType[i] ) {  //以type id大小來區分要用哪個碰撞器
+        StartCoroutine(ShowUp());
+    }
+
+    IEnumerator ShowUp() {
+        float showTime = 0.0f;
+        while (showTime < 1.0f) {
+            img.color = new Color(1,1,1,showTime);
+            showTime += Time.deltaTime;
+            yield return null;
+        }
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (type < colliderType[i])
+            {  //以type id大小來區分要用哪個碰撞器
                 colliders[i].enabled = true;
                 break;
-                //checkCollider = true;
-            } 
+            }
         }
+        yield return null;
     }
 
     //public void SetCollect(int id) {
-        
+
     //    colliders[id<2 ? 0 : 1].enabled = true;
     //    colliders[id > 2 ? 0 : 1].enabled = false;
     //    type = id;
     //}
 
+    public bool IsHealthCollect() {
+        if (CItemDataBase.items[itemTypes].elementID < -20) return true;
+        else return false; ;
+    }
+
     public void ThrowItemOut() {
-        Debug.Log("throw out");
-        int random = Random.Range(2, 4);
-        CPickItem tempItem;
-        for (int i = 0; i < random; i++) {
-            tempItem = pickitem_system.SpawnInUsed(transform.position + new Vector3(0,throwHeight,0), itemTypes);
-            if (tempItem == null) break;
-            //tempItem = pickitem_system.usedList.GetChild(pickitem_system.usedList.childCount - 1);
-            Vector3 throwWay = new Vector3(0, -1.0f, 0);
-            float angle = 0.0f;
-            if (i <= 0) angle = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(5.0f, 90.0f);
-            else {
-                float offset = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(15.0f, 30.0f);
-                angle = (Mathf.Abs(angle += offset) < 90.0f) ? angle : (Mathf.Sign(offset) * 90.0f - offset);
+        if (CItemDataBase.items[itemTypes].elementID < -20)
+        {
+            pickitem_system.RestoreHealth(transform.position);
+        }
+        else
+        {
+            int random = Random.Range(2, 4);
+            CPickItem tempItem;
+            for (int i = 0; i < random; i++)
+            {
+                tempItem = pickitem_system.SpawnInUsed(transform.position + new Vector3(0, throwHeight, 0), itemTypes);
+                if (tempItem == null) break;
+                //tempItem = pickitem_system.usedList.GetChild(pickitem_system.usedList.childCount - 1);
+                Vector3 throwWay = new Vector3(0, -1.0f, 0);
+                float angle = 0.0f;
+                if (i <= 0) angle = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(5.0f, 90.0f);
+                else
+                {
+                    float offset = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(15.0f, 30.0f);
+                    angle = (Mathf.Abs(angle += offset) < 90.0f) ? angle : (Mathf.Sign(offset) * 90.0f - offset);
+                }
+                throwWay = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * throwWay;
+                tempItem.SetFall(0.5f, throwWay, throwSpeed);
+                Debug.Log("throw out   " + throwWay);
             }
-            throwWay = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * throwWay;
-            tempItem.SetFall(0.5f, throwWay, throwSpeed);
-            Debug.Log("throw out   " + throwWay);
         }
         pickitem_system.RecyclePickCollect(this.gameObject);
         ResetTree();
@@ -108,7 +132,10 @@ public class CPickCollection : MonoBehaviour {
             ToFire = false;
             animator.SetTrigger("endFire");
         }
-        
+
+        for (int i = 0; i<colliders.Length; i++) {
+            colliders[i].enabled = false;
+        }
         type = 0;
         itemTypes = 0;
         isOnCollect = false;
