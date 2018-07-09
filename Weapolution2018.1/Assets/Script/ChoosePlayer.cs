@@ -17,8 +17,9 @@ public class ChoosePlayer : MonoBehaviour {
     bool CrafterSucces = false;
     bool p1Ready = false;
     bool p2Ready = false;
+    bool changeOnce;
     TargetSelect TargetSelectScript;
-    SelectStage SelectStageScript;
+    //SelectStage SelectStageScript;
     StageManager stageManager;
 
     // Use this for initialization
@@ -34,7 +35,7 @@ public class ChoosePlayer : MonoBehaviour {
         budaHands.SetActive(false);
         hakaHands.SetActive(false);
         TargetSelectScript = transform.GetComponent<TargetSelect>();
-        SelectStageScript = GameObject.Find("SelectStage").GetComponent<SelectStage>();
+        //SelectStageScript = GameObject.Find("SelectStage").GetComponent<SelectStage>();
     }
 	
 	// Update is called once per frame
@@ -59,11 +60,12 @@ public class ChoosePlayer : MonoBehaviour {
             LightUpButton(false);
             Cancel(false);
         }
-        if (AttackerSucces && CrafterSucces)
+        if (AttackerSucces && CrafterSucces && !changeOnce)
         {
+            changeOnce = false;
             Player.isMapped = true;           
-            SelectStageScript.isChoosed = true;
-            StageManager.nextStage +=1;
+            //SelectStageScript.isChoosed = true;
+            StageManager.nextStage = 3;
             stageManager.ChangeSceneBlackOut();
 
 

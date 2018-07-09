@@ -473,6 +473,12 @@ public class EnemyMouse : CEnemy {
     }
 
 
+    public override void OnTriggerTrap() {
+        SetState(7, true);
+        enemySystem.PlaySound(0, 1.0f);
+        
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
@@ -484,11 +490,9 @@ public class EnemyMouse : CEnemy {
                 Debug.Log("hitPlayer");
             }
         }
-        else if (collision.tag == "Trap") {
-            SetState(7, true);
-            enemySystem.PlaySound(0, 1.0f);
-            collision.GetComponent<Trape>().ResetChild();
-        }
+        //else if (collision.tag == "Trap") {
+        //    collision.GetComponent<Trape>().ResetChild();
+        //}
     }
 
 }

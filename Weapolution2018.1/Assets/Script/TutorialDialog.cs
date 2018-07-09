@@ -17,6 +17,7 @@ public class TutorialDialog : MonoBehaviour {
     CEnemySystem enemySystem;
 
     StageManager stageManager;
+    GameObject nextTurText;
 
     public int progress;
     public bool attackComplete = false, craftComplete = false;
@@ -28,6 +29,8 @@ public class TutorialDialog : MonoBehaviour {
     private void Awake()
     {
         stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
+        nextTurText = GameObject.Find("NextTurText");
+        nextTurText.SetActive(false);
     }
 
     void Start() {
@@ -87,6 +90,7 @@ public class TutorialDialog : MonoBehaviour {
                     requestImage.enabled = true;
                     StopCoroutine(RequestImgFade());
                     StartCoroutine(RequestImgFade());
+                    nextTurText.SetActive(true);
                 }
                 
             }
@@ -121,6 +125,7 @@ public class TutorialDialog : MonoBehaviour {
                 Tutorialtext.enabled = true;
                 dialogLine++;
                 Tutorialtext.text = data[dialogLine][1];
+                nextTurText.SetActive(false);
             }
             StopCoroutine(RequestImgFade());
             StartCoroutine(RequestImgFade());

@@ -150,6 +150,9 @@ public class PauseMenu : MonoBehaviour {
                 StageManager.nextStage = 2;
                 StageManagerscript.ChangeSceneBlackOut();
                 break;
+        case 4:
+                Application.Quit();
+                break;
 		}
 	}
 

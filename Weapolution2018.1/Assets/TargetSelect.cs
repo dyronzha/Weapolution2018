@@ -16,12 +16,12 @@ public class TargetSelect : MonoBehaviour {
 
     Vector3 p1_target_pos = new Vector3(1.5f, 4f, 0);
     Vector3 p2_target_pos = new Vector3(5.7f, 2.1f, 0);
-    Vector3 BudatargetSection_Center = new Vector3(1.5f, 4f, 0);
-    Vector3 hakatargetSection_Center = new Vector3(5.7f, 2.1f, 0);
-    Vector3 BudatargetSection_Left = new Vector3(0.7f, 4f, 0);
-    Vector3 BudatargetSection_Right = new Vector3(2f, 4f, 0);
-    Vector3 hakatargetSection_Left = new Vector3(5.2f, 2f, 0);
-    Vector3 hakatargetSection_Right = new Vector3(6.5f, 2f, 0);
+    Vector3 BudatargetSection_Center = new Vector3(1.5f, 4f, -1);
+    Vector3 hakatargetSection_Center = new Vector3(5.7f, 2.1f, -1);
+    Vector3 BudatargetSection_Left = new Vector3(0.7f, 4f, -1);
+    Vector3 BudatargetSection_Right = new Vector3(2f, 4f, -4);
+    Vector3 hakatargetSection_Left = new Vector3(5.2f, 2f, -1);
+    Vector3 hakatargetSection_Right = new Vector3(6.5f, 2f, -1);
 
     int TargetType;
     bool p1MoveOnlyOnce = false;
@@ -66,7 +66,7 @@ public class TargetSelect : MonoBehaviour {
             else
             {
                 p1_target.SetActive(false);
-                p1_target.transform.position = new Vector3(-2, -2, 0);                
+                p1_target.transform.position = new Vector3(-2, -2, -1);                
             }
 
         }
@@ -100,7 +100,7 @@ public class TargetSelect : MonoBehaviour {
             else
             {
                 p2_target.SetActive(false);
-                p2_target.transform.position = new Vector3(-2, -2, 0);
+                p2_target.transform.position = new Vector3(-2, -2, -1);
             }
 
         }

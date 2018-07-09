@@ -11,7 +11,7 @@ public class CPickItemSystem : MonoBehaviour {
     float spawnTime = 0.0f;
     Vector3[] locations;
     CPickCollection fireTree;
-    RestoreHealth restoreHealth;
+    //RestoreHealth restoreHealth;
 
     public bool test = false;
     public Transform usedCollectList, freeCollectList;
@@ -19,6 +19,7 @@ public class CPickItemSystem : MonoBehaviour {
                                     usedPickItemList = new List<CPickItem>();
     public int[] collectItemType;
     public int[] typeCollectNum;
+    public int[] typeCollectMaxNum;
     public float[] typeOppunity;
     public string stage;
     public LayerMask mask;
@@ -29,7 +30,7 @@ public class CPickItemSystem : MonoBehaviour {
         CItemDataBase.SetItemDataBase(stage);
         CItemDataBase.SetSpriteList(stage);
         Transform tempFree = transform.GetChild(0);
-        restoreHealth = GameObject.Find("RestoreHealth").GetComponent<RestoreHealth>();
+        //restoreHealth = GameObject.Find("RestoreHealth").GetComponent<RestoreHealth>();
         //Transform tempUsed = transform.GetChild(1);
         freeCollectList = transform.GetChild(2);
         usedCollectList = transform.GetChild(3);
@@ -74,21 +75,29 @@ public class CPickItemSystem : MonoBehaviour {
         //} 
         if (!test)
         {
-            SpawnPickCollect(locations[0], 0);
-            SpawnPickCollect(locations[4], 0);
-            SpawnPickCollect(locations[7], 2);
-            SpawnPickCollect(locations[5], 2);
+            if (StageManager.currentStage == 4) {
+                SpawnPickCollect(locations[0], 0);
+                SpawnPickCollect(locations[4], 0);
+                SpawnPickCollect(locations[7], 2);
+                SpawnPickCollect(locations[5], 2);
+            }
+            else if (StageManager.currentStage == 5) {
+                SpawnPickCollect(locations[0], 0);
+                SpawnPickCollect(locations[4], 0);
+                SpawnPickCollect(locations[7], 1);
+                SpawnPickCollect(locations[5], 1);
+            }
         }
     }
 
     // Update is called once per frame
     void Update () {
-        if (Input.GetKeyDown(KeyCode.H)) SpawnPickCollectInMap();
+        //if (Input.GetKeyDown(KeyCode.H)) SpawnPickCollectInMap();
         if (test) return;
-        if (Input.GetKeyDown(KeyCode.L)) SetThunderLoc() ;
+        //if (Input.GetKeyDown(KeyCode.L)) SetThunderLoc() ;
         
         spawnTime += Time.deltaTime;
-        if (spawnTime > 12.0f) {
+        if (spawnTime > 8.0f) {
             spawnTime = 0.0f;
             SpawnPickCollectInMap();
         }
@@ -105,7 +114,7 @@ public class CPickItemSystem : MonoBehaviour {
             {
                 if (i == 0)
                 {
-                    if (typeCollectNum[i] < 4)
+                    if (typeCollectNum[i] < typeCollectMaxNum[i])
                     {
                         SpawnPickCollect(locations[locationID], 0);
                         return;
@@ -114,14 +123,14 @@ public class CPickItemSystem : MonoBehaviour {
                 }
                 else if (i == 1)
                 {
-                    if (typeCollectNum[i] < 1) {
+                    if (typeCollectNum[i] < typeCollectMaxNum[i]) {
                         SpawnPickCollect(locations[locationID], 1);
                         return;
                     }
                     else opturity = typeOppunity[2];
                 }
                 else if (i == 2) {
-                    if (typeCollectNum[i] < 3) {
+                    if (typeCollectNum[i] < typeCollectMaxNum[i]) {
                         SpawnPickCollect(locations[locationID], 2);
                         return;
                     }
@@ -235,8 +244,8 @@ public class CPickItemSystem : MonoBehaviour {
         return new Vector3(-60.0f,0.0f,0.0f);
     }
 
-    public void RestoreHealth(Vector3 _orinigPos) {
-        restoreHealth.SetRestore(_orinigPos);
-    }
+    //public void RestoreHealth(Vector3 _orinigPos) {
+    //    restoreHealth.SetRestore(_orinigPos);
+    //}
 
 }

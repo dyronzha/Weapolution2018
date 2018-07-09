@@ -72,31 +72,25 @@ public class CPickCollection : MonoBehaviour {
     }
 
     public void ThrowItemOut() {
-        if (CItemDataBase.items[itemTypes].elementID < -20)
+        int random = Random.Range(2, 4);
+        if (IsHealthCollect()) random = 1;
+        CPickItem tempItem;
+        for (int i = 0; i < random; i++)
         {
-            pickitem_system.RestoreHealth(transform.position);
-        }
-        else
-        {
-            int random = Random.Range(2, 4);
-            CPickItem tempItem;
-            for (int i = 0; i < random; i++)
+            tempItem = pickitem_system.SpawnInUsed(transform.position + new Vector3(0, throwHeight, 0), itemTypes);
+            if (tempItem == null) break;
+            //tempItem = pickitem_system.usedList.GetChild(pickitem_system.usedList.childCount - 1);
+            Vector3 throwWay = new Vector3(0, -1.0f, 0);
+            float angle = 0.0f;
+            if (i <= 0) angle = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(5.0f, 90.0f);
+            else
             {
-                tempItem = pickitem_system.SpawnInUsed(transform.position + new Vector3(0, throwHeight, 0), itemTypes);
-                if (tempItem == null) break;
-                //tempItem = pickitem_system.usedList.GetChild(pickitem_system.usedList.childCount - 1);
-                Vector3 throwWay = new Vector3(0, -1.0f, 0);
-                float angle = 0.0f;
-                if (i <= 0) angle = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(5.0f, 90.0f);
-                else
-                {
-                    float offset = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(15.0f, 30.0f);
-                    angle = (Mathf.Abs(angle += offset) < 90.0f) ? angle : (Mathf.Sign(offset) * 90.0f - offset);
-                }
-                throwWay = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * throwWay;
-                tempItem.SetFall(0.5f, throwWay, throwSpeed);
-                Debug.Log("throw out   " + throwWay);
+                float offset = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(15.0f, 30.0f);
+                angle = (Mathf.Abs(angle += offset) < 90.0f) ? angle : (Mathf.Sign(offset) * 90.0f - offset);
             }
+            throwWay = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * throwWay;
+            tempItem.SetFall(0.5f, throwWay, throwSpeed);
+            Debug.Log("throw out   " + throwWay);
         }
         pickitem_system.RecyclePickCollect(this.gameObject);
         ResetTree();

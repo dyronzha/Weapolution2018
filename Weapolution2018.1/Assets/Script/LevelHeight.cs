@@ -38,14 +38,14 @@ public class LevelHeight : MonoBehaviour {
             }
             else
             {
-                zArrange.f_base = -100.0f;
+                zArrange.f_base = -110.0f;
             }
         }
-        else zArrange.f_base = -100.0f;
+        else zArrange.f_base = -110.0f;
     }
 
     public void isOnGround() {
-        zArrange.f_base += 20.0f;
+        zArrange.f_base += 10.0f;
     }
 
     public void SetSpecificHeight(float _base) {
@@ -58,7 +58,7 @@ public class LevelHeight : MonoBehaviour {
             if (!isIn) {
                 if (collision.transform.position.y < transform.position.y)
                 {
-                    zArrange.f_base = -100.0f;
+                    zArrange.f_base = -110.0f;
                 }
                 //else zArrange.f_base = 0.0f; ;
             }
@@ -82,7 +82,7 @@ public class LevelHeight : MonoBehaviour {
                 {
                     zArrange.f_base = 0.0f;
                 }
-                else zArrange.f_base = -100.0f;
+                else zArrange.f_base = -110.0f;
             }
         }
     }

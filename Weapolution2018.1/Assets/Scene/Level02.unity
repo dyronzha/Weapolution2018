@@ -944,6 +944,7 @@ MonoBehaviour:
   freeCollectList: {fileID: 0}
   freePickItemList: []
   usedPickItemList: []
+  collectItemType: 000000000000000000000000
   typeCollectNum: 000000000000000000000000
   typeOppunity:
   - 0.6
@@ -18532,10 +18533,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26f48b25261cd2e449114791716b37a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TeamHpLine: {fileID: 0}
-  PlayerScript: {fileID: 0}
-  CrafterScript: {fileID: 0}
-  HpBoarder: {fileID: 0}
 --- !u!114 &897009476
 MonoBehaviour:
   m_ObjectHideFlags: 0

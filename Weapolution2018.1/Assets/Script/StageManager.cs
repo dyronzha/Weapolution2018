@@ -7,7 +7,7 @@ public class StageManager : MonoBehaviour {
 
 
     public static bool timeUp;
-    public static  int currentStage = 4, nextStage = 4;
+    public static  int currentStage = 0, nextStage =0;
 
 	public bool inMenuState;
     public bool stageBegin;
@@ -171,6 +171,10 @@ public class StageManager : MonoBehaviour {
         StartCoroutine(OnChangingScene(1.0f));  //白屏後切場景
     }
 
+    public void CloseGame() {
+        Application.Quit();
+    }
+
     public IEnumerator SlowDown(float slowTime, bool _isWin) {
         Time.timeScale = 0.2f;
         BGM.pitch = 0.35f;
@@ -188,9 +192,10 @@ public class StageManager : MonoBehaviour {
     public IEnumerator OnChangingScene(float time) {
         
         yield return new WaitForSeconds(time);
-        Debug.Log("currentsdadasdasda" + currentStage);
+        
         if (nextStage >= 6) nextStage = 2;
         currentStage = nextStage;
+        
         SceneManager.LoadScene(nextStage);
     }
 

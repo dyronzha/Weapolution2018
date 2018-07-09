@@ -12,11 +12,12 @@ public class CraftSystem : MonoBehaviour {
     Transform Arrow,collectBarBk, collectBar;
     GameObject handling_item;
     SpriteRenderer handle, slot_img, slot_item_img;
-    Animator Crafteranimator;
+    Animator crafterAnimator;
     CPickItem picking_item;
     CPickCollection pick_collect;
     CItem craftA, craftB, craftC;
     CraftMenu craftMenu;
+    HealEffects healEffect;
     [HideInInspector]
     public bool craftFunc = true , useController = false;
     [HideInInspector]
@@ -52,8 +53,9 @@ public class CraftSystem : MonoBehaviour {
         //craft_records = new bool[items.Length];
         Arrow = this.transform.Find("Arrow");
         //craftMenu = GameObject.Find("CraftMenu").GetComponent<CraftMenu>();
-        //Crafteranimator = GameObject.Find("character2").GetComponent<Animator>();
+        crafterAnimator = transform.parent.GetComponent<Animator>();
         craftFunc = true;
+        healEffect = GameObject.Find("HealEffects").GetComponent<HealEffects>();
     }
 
     private void Start()
@@ -152,61 +154,82 @@ public class CraftSystem : MonoBehaviour {
             {
                 if (!LBFixed) return;
                 LBFixed = false;
-                handle.enabled = true;
-                can_pick = false;
-                //if (picking_item == null) return;
-                //Crafteranimator.SetBool("is_gather", true);
-               // Debug.Log("設動畫");
-                if (!b_handling)
+                if (CItemDataBase.items[picking_item.id].elementID < -20)
                 {
-                    if (items[picking_item.id].elementID < -20) {
-                        TeamHp.teamHp += 0.15f;
-                    } 
-                    b_handling = true;
-                    craftA = items[picking_item.id];
-                    handling_item = picking_item.gameObject;
-                    handling_item.transform.parent = transform.GetChild(0);
-                    handling_item.transform.position = this.transform.position;
-                    handling_item.GetComponent<COutLine>().SetOutLine(false);
-                    handling_item.SetActive(false);
-                    handle.sprite = CItemDataBase.spriteList[craftA.id];
-                    handling_item.GetComponent<CPickItem>().SetLifeTime(0.0f);
-                    ChangeSlot(true, 0);
-                    ArrowEnable(true);
-                    if (test)tutorialRequest.DonePickUp(true);
+                    TeamHp.ChangeHp(true, 0.15f);
+                    healEffect.SetHealEffectAni();
+                    picking_item.GetComponent<COutLine>().SetOutLine(false);
+                    picking_item.SetInFree();
+                    ChangeSlot(true, -1);
+                    if (test) tutorialRequest.DonePickUp(true);
                 }
-                else
-                {
-                    OnCrafting();
+                else {
+                    handle.enabled = true;
+                    if (!b_handling)
+                    {
+                        b_handling = true;
+                        craftA = items[picking_item.id];
+                        handling_item = picking_item.gameObject;
+                        handling_item.transform.parent = transform.GetChild(0);
+                        handling_item.transform.position = this.transform.position;
+                        handling_item.GetComponent<COutLine>().SetOutLine(false);
+                        handling_item.SetActive(false);
+                        handle.sprite = CItemDataBase.spriteList[craftA.id];
+                        handling_item.GetComponent<CPickItem>().SetLifeTime(0.0f);
+                        ChangeSlot(true, 0);
+                        ArrowEnable(true);
+                        if (test) tutorialRequest.DonePickUp(true);
+                    }
+                    else
+                    {
+                        OnCrafting();
+                    }
                 }
                 can_pick = false;
                 picking_item = null;
+
+                //if (picking_item == null) return;
+                //crafterAnimator.SetBool("is_gather", true);
+                // Debug.Log("設動畫");
             }
         }
         else {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 //if (picking_item == null) return;
-                //Crafteranimator.SetBool("is_gather", true);
+                //crafterAnimator.SetBool("is_gather", true);
 
-                handle.enabled = true;
-                if (!b_handling)
+                if (CItemDataBase.items[picking_item.id].elementID < -20)
                 {
-                    b_handling = true;
-                    craftA = items[picking_item.id];
-                    handling_item = picking_item.gameObject;
-                    handling_item.transform.parent = transform.GetChild(0);
-                    handling_item.transform.position = this.transform.position;
-                    handling_item.GetComponent<COutLine>().SetOutLine(false);
-                    handling_item.SetActive(false);
-                    handle.sprite = CItemDataBase.spriteList[craftA.id];
-                    ChangeSlot(true, 0);
-                    ArrowEnable(true);
+                    TeamHp.ChangeHp(true, 0.15f);
+                    healEffect.SetHealEffectAni();
+                    picking_item.GetComponent<COutLine>().SetOutLine(false);
+                    picking_item.SetInFree();
+                    ChangeSlot(true, -1);
                     if (test) tutorialRequest.DonePickUp(true);
                 }
                 else
                 {
-                    OnCrafting();
+                    handle.enabled = true;
+                    if (!b_handling)
+                    {
+                        b_handling = true;
+                        craftA = items[picking_item.id];
+                        handling_item = picking_item.gameObject;
+                        handling_item.transform.parent = transform.GetChild(0);
+                        handling_item.transform.position = this.transform.position;
+                        handling_item.GetComponent<COutLine>().SetOutLine(false);
+                        handling_item.SetActive(false);
+                        handle.sprite = CItemDataBase.spriteList[craftA.id];
+                        handling_item.GetComponent<CPickItem>().SetLifeTime(0.0f);
+                        ChangeSlot(true, 0);
+                        ArrowEnable(true);
+                        if (test) tutorialRequest.DonePickUp(true);
+                    }
+                    else
+                    {
+                        OnCrafting();
+                    }
                 }
                 can_pick = false;
                 picking_item = null;
@@ -370,21 +393,36 @@ public class CraftSystem : MonoBehaviour {
 
     //}
 
+    void CollectAni() {
+        Vector2 offset = new Vector2(pick_collect.transform.position.x - transform.parent.position.x,
+                                       pick_collect.transform.position.y - transform.parent.position.y);
+        if (Mathf.Abs(offset.x) > Mathf.Abs(offset.y))
+        {
+            if (offset.x >= 0.0f) crafterAnimator.SetInteger("face_way", 3);
+            else crafterAnimator.SetInteger("face_way", 2);
+        }
+        else {
+            if (offset.y >= 0.0f) crafterAnimator.SetInteger("face_way", 0);
+            else crafterAnimator.SetInteger("face_way", 1);
+        }
+        crafterAnimator.SetBool("is_gather", true);
+    }
+
     void Collect() {
         if (!can_collect) return;
         if (useController)
         {
-            
             if (Input.GetButtonDown(whichPlayer + "LB")) {
                 if (!LBFixed) return;
                 LBFixed = false;
-                Debug.Log("CONTROLLER" + whichPlayer);
+                CollectAni();
                 switchMove(false);
                 StartCoroutine("OnCollecting");
             }
         }
         else {
             if (Input.GetKeyDown(KeyCode.E)) {
+                CollectAni();
                 switchMove(false);
                 StartCoroutine("OnCollecting");
             }
@@ -404,6 +442,7 @@ public class CraftSystem : MonoBehaviour {
             collectBar.localScale = new Vector3(Mathf.Lerp(0.0f, 1.05f, time),0.1f,1.0f);
             yield return null;
         }
+        crafterAnimator.SetBool("is_gather", false);
         collectBarBk.GetComponent<SpriteRenderer>().enabled = false;
         collectBar.GetComponent<SpriteRenderer>().enabled = false;
         switchMove(true);

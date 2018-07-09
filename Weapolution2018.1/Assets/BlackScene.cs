@@ -25,6 +25,7 @@ public class BlackScene : MonoBehaviour {
     }
     void CallChangeScene()
     {
+        Debug.Log("currentsdadasdasda" + StageManager.nextStage);
         StartCoroutine( StageManagerScript.OnChangingScene(0));
     }
     public void ToStageBegin()

@@ -81,7 +81,7 @@ public class Crafter : MonoBehaviour {
         animator.SetTrigger("is_hurt");
         if (Player.p2charaType) Player.p2moveAble = false;
         else Player.p1moveAble = false;
-        TeamHp.teamHp -= 0.05f;
+        TeamHp.ChangeHp(false, 0.05f);
         GameObject.Find("MonsterAudio").GetComponent<MonsterVoice>().SetAudio(2,1f);
         GameObject.Find("CharacterAudio").GetComponent<CharacterVoice>().SetAudio(1);
     }
@@ -124,9 +124,11 @@ public class Crafter : MonoBehaviour {
         inFuntionTime = 0;
         if (StageManager.currentStage == 5)
         {
-            CanonScript.startFilled = false;
-            CanonScript.OverFinlling();
-            CanonScript.CallCraftSystemFucion();
+            if (CanonScript.startFilled) {
+                CanonScript.startFilled = false;
+                CanonScript.OverFinlling();
+                CanonScript.CallCraftSystemFucion();
+            }
         }
             
         if (Player.p2charaType) Player.p2moveAble = true;

@@ -76,8 +76,7 @@ public class RestoreHealth : MonoBehaviour {
         }
         else {
             healthyItems[whichItem].gameObject.SetActive(false);
-            TeamHp.teamHp += 0.15f;
-            if (TeamHp.teamHp > 1.0f) TeamHp.teamHp = 1.0f;
+            TeamHp.ChangeHp(true, 0.15f);
             restoreTime = 0.0f;
             storeState = -1;
             ResetItem();

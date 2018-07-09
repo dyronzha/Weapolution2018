@@ -657,7 +657,7 @@ public class Player : MonoBehaviour {
           L_JoyY = 0.0f;
           K_JoyX = 0.0f;
           K_JoyY = 0.0f;
-          TeamHp.teamHp -= 0.05f;
+          TeamHp.ChangeHp(false, 0.05f);
           inFuntionTime++;
           EffectAudio.SetAudio(1);
         }
@@ -710,7 +710,7 @@ public class Player : MonoBehaviour {
         inFuntionTime = 0;
         beingHurt_time = 0;
         invincible = false;
-        TeamHp.checkGameOver = true;
+        //TeamHp.checkGameOver = true;
 
     }
     private void OnTriggerEnter2D(Collider2D collision)

@@ -7,26 +7,29 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scene/StartMenu.unity
-    guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/Scene/temp.unity
-    guid: 00000000000000000000000000000000
+    guid: d57383d98a8d2604c9df9c322d8b41ff
   - enabled: 0
+    path: Assets/Scene/temp.unity
+    guid: 157505c390ce5a5409ce4ced588d2b5b
+  - enabled: 1
     path: Assets/Scene/OpeningAnimation.unity
-    guid: 00000000000000000000000000000000
+    guid: a1d5f9fb0f632f0469ac9034c8960533
   - enabled: 1
     path: Assets/Scene/Mapping_PvE.unity
-    guid: 00000000000000000000000000000000
+    guid: 4441983f2faa372429de74726b010997
   - enabled: 1
     path: Assets/Scene/Tutorial.unity
-    guid: 00000000000000000000000000000000
+    guid: d885bb71426b730428e3c6392bbd987c
   - enabled: 1
     path: Assets/Scene/Level01.unity
-    guid: 00000000000000000000000000000000
+    guid: a05ecf5793a385143bc0287324550391
   - enabled: 1
+    path: Assets/Scene/CameraResize.unity
+    guid: d2b2ce59a0de3f84984c6a1a7e51ef99
+  - enabled: 0
     path: Assets/Scene/Level02.unity
-    guid: 00000000000000000000000000000000
+    guid: 6bfcae48e2506c7469a3a47794e072fa
   - enabled: 0
     path: Assets/Scene/DoingTest.unity
-    guid: 00000000000000000000000000000000
+    guid: db4d7015c8634c0469ed55ab2ac39e35
   m_configObjects: {}

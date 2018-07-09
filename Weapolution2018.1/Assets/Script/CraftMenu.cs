@@ -17,12 +17,12 @@ public class CraftMenu : MonoBehaviour {
     bool useController;
     int firstColNum, UpMoveCount = 0;
     int currentCol = 0;
-    float scrollTime = 0.0f, moveTime, cameraSizeOffset = 1.0f;
+    float scrollTime = 0.0f, moveTime, moveOffset;
     float[] posY = new float[4];
     string whichPlayer;
     Vector2 oldCameraPos;
     Vector3 headColPos, TailColPos, oringinPos;
-    Transform mainCamera;
+    RectTransform rectTransform;
     Transform[] craftColumn;
     public int menuListNum;
     //public float[] posY;
@@ -30,8 +30,7 @@ public class CraftMenu : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         firstColNum = 0;
-        mainCamera = Camera.main.transform;
-        oldCameraPos = mainCamera.position;
+        rectTransform = GetComponent<RectTransform>();
         //for (int i = 0; i<3; i++) {
         //    num2offsetX[i] = transform.GetChild(1).GetChild(i+1).position.x;
         //}
@@ -42,7 +41,7 @@ public class CraftMenu : MonoBehaviour {
         craftColumn = new Transform[menuListNum];
         for (int i = 0; i < menuListNum; i++)
         {
-            craftColumn[i] = transform.GetChild(i);
+            craftColumn[i] = transform.GetChild(1).GetChild(0).GetChild(i);
             if(i < 4)posY[i] = craftColumn[i].localPosition.y;
             //if (i <= upHalf) {
             //    posY[upHalf - i] = craftColumn[upHalf].position.y - 1.6f * i;
@@ -52,12 +51,17 @@ public class CraftMenu : MonoBehaviour {
         }
         headColPos = craftColumn[0].localPosition ; //顯示外上的第一個位置
         TailColPos = craftColumn[3].localPosition ; //顯示外下的第一個位置
-        oringinPos = transform.localPosition;
+        //oringinPos = transform.localPosition;
+        oringinPos = rectTransform.anchoredPosition;
+        Camera mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
+        Debug.Log(((mainCamera.WorldToScreenPoint(Vector3.right) - mainCamera.WorldToScreenPoint(Vector3.zero)).x));
+        moveOffset = 612f;
     }
 
     private void Start()
     {
-        transform.localPosition = new Vector3(oringinPos.x * cameraSizeOffset, oringinPos.y * cameraSizeOffset, oringinPos.z);
+        //transform.localPosition = new Vector3(oringinPos.x, oringinPos.y , oringinPos.z);
+
         if (Player.p1charaType)
         {
             if (Player.p1controller) //p1用搖桿
@@ -163,12 +167,11 @@ public class CraftMenu : MonoBehaviour {
             float diffX;
             moveTime += Time.deltaTime * 2.0f;
             if (showUp)
-                diffX = Mathf.Lerp(oringinPos.x, oringinPos.x + 10.2f, moveTime);
+                diffX = Mathf.Lerp(oringinPos.x, oringinPos.x + moveOffset, moveTime);
             else
-                diffX = Mathf.Lerp(oringinPos.x + 10.2f, oringinPos.x, moveTime);
-            transform.localPosition = new Vector3(diffX * cameraSizeOffset,
-                                            oringinPos.y * cameraSizeOffset,
-                                            oringinPos.z);
+                diffX = Mathf.Lerp(oringinPos.x + moveOffset, oringinPos.x, moveTime);
+            //transform.localPosition = new Vector3(diffX ,oringinPos.y ,oringinPos.z);
+            rectTransform.anchoredPosition = new Vector3(diffX, oringinPos.y, oringinPos.z);
             if (moveTime >= 1.0f)
             {
                 if (Player.p1charaType)
@@ -187,9 +190,11 @@ public class CraftMenu : MonoBehaviour {
         }
         else {
             if(showUp)
-                transform.localPosition = new Vector3((oringinPos.x + 10.2f) * cameraSizeOffset, oringinPos.y * cameraSizeOffset, oringinPos.z);
+                rectTransform.anchoredPosition = new Vector3((oringinPos.x + moveOffset), oringinPos.y, oringinPos.z);
+            //transform.localPosition = new Vector3((oringinPos.x + moveOffset) , oringinPos.y , oringinPos.z);
             else
-                transform.localPosition = new Vector3(oringinPos.x * cameraSizeOffset, oringinPos.y * cameraSizeOffset, oringinPos.z);
+                rectTransform.anchoredPosition = new Vector3(oringinPos.x, oringinPos.y, oringinPos.z);
+            //transform.localPosition = new Vector3(oringinPos.x, oringinPos.y , oringinPos.z);
         }
     }
     void OnScrolling() {
@@ -206,8 +211,8 @@ public class CraftMenu : MonoBehaviour {
                         if (temp >= menuListNum) temp = temp - menuListNum;
                         float offsetY = Mathf.Lerp(posY[i], posY[i-1] , scrollTime);
                         if (scrollTime >= 1.0f) offsetY = posY[i - 1];
-                        craftColumn[temp].localPosition = new Vector3( craftColumn[temp].localPosition.x * cameraSizeOffset, 
-                                                                offsetY * cameraSizeOffset, 
+                        craftColumn[temp].localPosition = new Vector3( craftColumn[temp].localPosition.x, 
+                                                                offsetY , 
                                                                 craftColumn[temp].localPosition.z);
                     }
                 }
@@ -220,8 +225,8 @@ public class CraftMenu : MonoBehaviour {
                         float offsetY = Mathf.Lerp(posY[i], posY[i + 1], scrollTime);
                         if (scrollTime >= 1.0f) offsetY = posY[i + 1];
                         //craftColumn[temp].SetVectorY(offsetY + cameraOffset.y);
-                        craftColumn[temp].localPosition = new Vector3(craftColumn[temp].localPosition.x * cameraSizeOffset, 
-                                                                offsetY * cameraSizeOffset, 
+                        craftColumn[temp].localPosition = new Vector3(craftColumn[temp].localPosition.x, 
+                                                                offsetY, 
                                                                 craftColumn[temp].localPosition.z);
                         //craftColumn[i].position -= new Vector3(0, 6.4f * Time.deltaTime, 0);
                     }
@@ -242,9 +247,9 @@ public class CraftMenu : MonoBehaviour {
             UpMoveCount++;
             if (UpMoveCount >= menuListNum-3) {
                 UpMoveCount = menuListNum - 4;
-                Debug.Log("tail" + TailColPos + " offset" + cameraSizeOffset);
-                TailColPos = new Vector3(TailColPos.x * cameraSizeOffset, 
-                                        TailColPos.y * cameraSizeOffset, 
+                Debug.Log("tail" + TailColPos + " offset");
+                TailColPos = new Vector3(TailColPos.x, 
+                                        TailColPos.y, 
                                         TailColPos.z);
                 craftColumn[firstColNum].localPosition = TailColPos;
                 //lastColNum = firstColNum;
@@ -264,8 +269,8 @@ public class CraftMenu : MonoBehaviour {
                 int lastColNum = firstColNum - 1;
                 if (lastColNum < 0) lastColNum += menuListNum;
                 firstColNum = lastColNum;
-                headColPos = new Vector3(headColPos.x * cameraSizeOffset, 
-                                            headColPos.y  * cameraSizeOffset, 
+                headColPos = new Vector3(headColPos.x, 
+                                            headColPos.y, 
                                             headColPos.z);
                 craftColumn[lastColNum].localPosition = headColPos;
                 //firstColNum = lastColNum;
@@ -283,7 +288,6 @@ public class CraftMenu : MonoBehaviour {
     }
 
     public void SetSizeOffset(float _value) {
-        cameraSizeOffset = _value;
         transform.localScale = new Vector3(_value, _value, _value);
         //transform.localPosition = new Vector3(oringinPos.x * cameraSizeOffset, oringinPos.y * cameraSizeOffset, oringinPos.z);
     }

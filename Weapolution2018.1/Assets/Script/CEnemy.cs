@@ -398,6 +398,9 @@ public class CEnemy : MonoBehaviour {
         animator.SetInteger("state", state);
     }
 
+    public virtual void OnTriggerTrap() {
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
