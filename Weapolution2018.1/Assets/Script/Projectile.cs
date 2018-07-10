@@ -34,9 +34,11 @@ public class Projectile : MonoBehaviour {
         {
             if (Player.weapon.id == 6) //木頭弓箭
                 projectile_img.sprite = ProjectileSprite[0];
-            else if (Player.weapon.id == 9)
+            else if (Player.weapon.id == 7)
                 projectile_img.sprite = ProjectileSprite[1];
-            
+            else if (Player.weapon.id == 11)
+                projectile_img.sprite = ProjectileSprite[1];
+
         }
         if (StageNum == 2)
         {

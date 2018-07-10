@@ -30561,6 +30561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuListNum: 8
+  moveOffset: 612
 --- !u!1 &1287274038
 GameObject:
   m_ObjectHideFlags: 0
@@ -43206,6 +43207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuListNum: 7
+  moveOffset: 0
 --- !u!1 &1821489027
 GameObject:
   m_ObjectHideFlags: 0

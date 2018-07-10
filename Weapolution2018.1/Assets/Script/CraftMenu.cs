@@ -17,7 +17,7 @@ public class CraftMenu : MonoBehaviour {
     bool useController;
     int firstColNum, UpMoveCount = 0;
     int currentCol = 0;
-    float scrollTime = 0.0f, moveTime, moveOffset;
+    float scrollTime = 0.0f, moveTime;
     float[] posY = new float[4];
     string whichPlayer;
     Vector2 oldCameraPos;
@@ -25,6 +25,7 @@ public class CraftMenu : MonoBehaviour {
     RectTransform rectTransform;
     Transform[] craftColumn;
     public int menuListNum;
+    public float moveOffset;
     //public float[] posY;
     //public CraftMenuListStruct[] craftMenuList;
 	// Use this for initialization
@@ -55,7 +56,7 @@ public class CraftMenu : MonoBehaviour {
         oringinPos = rectTransform.anchoredPosition;
         Camera mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         Debug.Log(((mainCamera.WorldToScreenPoint(Vector3.right) - mainCamera.WorldToScreenPoint(Vector3.zero)).x));
-        moveOffset = 612f;
+        //moveOffset = 612f;
     }
 
     private void Start()
