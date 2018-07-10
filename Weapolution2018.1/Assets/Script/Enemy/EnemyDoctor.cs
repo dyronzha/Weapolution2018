@@ -47,7 +47,7 @@ public class EnemyDoctor : CEnemy
     {
         if (StageManager.timeUp) return;
         UpdatePos();
-        if (Input.GetKeyDown(KeyCode.J)) SetHurtValue(1,0);
+        //if (Input.GetKeyDown(KeyCode.J)) SetHurtValue(1,0);
         if (!isShowUp)
         {
             state = -1;

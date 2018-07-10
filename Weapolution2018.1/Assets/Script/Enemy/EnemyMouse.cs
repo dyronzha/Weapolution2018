@@ -28,7 +28,7 @@ public class EnemyMouse : CEnemy {
     // Update is called once per frame
     void Update () {
         if (StageManager.timeUp) return;
-        if (Input.GetKeyDown(KeyCode.J)) SetHurtValue(1,0);
+        //if (Input.GetKeyDown(KeyCode.J)) SetHurtValue(1,0);
         UpdatePos();
         if (!isShowUp)
         {

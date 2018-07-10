@@ -39,10 +39,10 @@ public class CEnemyBear : CEnemy {
             ShowUp(1.5f);
             return;
         }
-        if (Input.GetKeyDown(KeyCode.J)) {
-            SetHurtValue(1,4);
-            //GetHurt();
-        } 
+        //if (Input.GetKeyDown(KeyCode.J)) {
+        //    SetHurtValue(1,4);
+        //    //GetHurt();
+        //} 
         UpdatePos();
         StateMachine();
         SetAnimator();

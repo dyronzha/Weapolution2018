@@ -27,9 +27,9 @@ public class CEnemyMonkey : CEnemy {
         }
         StateMachine();
         SetAnimator();
-        if (Input.GetKeyDown(KeyCode.J)) {
-            SetHurtValue(1,0);
-        } 
+        //if (Input.GetKeyDown(KeyCode.J)) {
+        //    SetHurtValue(1,0);
+        //} 
     }
 
     public override void StateMachine()
