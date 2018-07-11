@@ -10123,6 +10123,15 @@ Prefab:
       propertyPath: enemyOut
       value: 
       objectReference: {fileID: 1130623854}
+    - target: {fileID: 212472873212734350, guid: 7fb0bf14e3a700f42bc1873593f0ab8f,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 204d359c6a643e148b55d4dbb1dab002, type: 2}
+    - target: {fileID: 4921349264772650, guid: 7fb0bf14e3a700f42bc1873593f0ab8f, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7fb0bf14e3a700f42bc1873593f0ab8f, type: 2}
   m_IsPrefabParent: 0

@@ -84,7 +84,6 @@ public class Player : MonoBehaviour {
     {
         if (!isMapped)
         {
-            Debug.Log("dsdasdsadasdsadasdasd"+ isMapped);
             p1charaType = false;
             p2charaType = true;
 
@@ -104,7 +103,7 @@ public class Player : MonoBehaviour {
         pickWeaponScript = transform.Find("PickWeapon").GetComponent<CPickWeapon>();    
         animator = transform.GetComponent<Animator>();
         //Debug.Log("animator" + animator);
-        animator.SetInteger("face_way", 5);
+        animator.SetInteger("face_way", 1);
         animator.SetInteger("weapon_type", 0);
         animation_type = 0;
         stateinfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -573,7 +572,6 @@ public class Player : MonoBehaviour {
 
         if (inFuntionTime == 0)
         {
-            Debug.Log("123543645747");
             p1moveAble = false;
             inFuntionTime++;
         }
@@ -612,10 +610,10 @@ public class Player : MonoBehaviour {
     }
     public void ShootProjectile()
     {
-        Debug.Log(projectileSystem.transform.GetChild(projectile_num).gameObject.name);
-        projectileSystem.transform.GetChild(projectile_num).position = transform.GetChild(1).GetChild(0).position;
-        projectileSystem.transform.GetChild(projectile_num).gameObject.SetActive(true);
-        projectileSystem.transform.GetChild(projectile_num).GetComponent<Projectile>().SetProjectileImg(face_way);
+        Transform tempProjectile = projectileSystem.transform.GetChild(projectile_num);
+        tempProjectile.position = transform.GetChild(1).GetChild(0).position;
+        tempProjectile.gameObject.SetActive(true);
+        tempProjectile.GetComponent<Projectile>().SetProjectileImg(face_way);
         projectile_num++;
         if (projectile_num >= projectileSystem.transform.childCount) {
             projectile_num = 0;
@@ -717,7 +715,8 @@ public class Player : MonoBehaviour {
     {
         if (collision.tag == "Enemy" && animation_type == 2)
         {
-            if (weapon.ani_type < 0) return;
+            if (weapon.ani_type != 0) return;
+            Debug.Log("atttttack waaaaaaay" + face_way + "   " + gameObject.name);
             Debug.Log("hit enemy");
             collision.transform.GetComponent<CEnemy>().SetHurtValue(weapon.attack, face_way);
             //GameObject.Find("MonsterAudio").GetComponent<MonsterVoice>().SetAudio(0 ,1f);

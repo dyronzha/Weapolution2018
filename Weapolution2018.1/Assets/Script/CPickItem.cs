@@ -99,7 +99,6 @@ public class CPickItem : MonoBehaviour {
             {
                 setColliderOnce = true;
                 collider.enabled = true;
-                Debug.Log("ing:" + f_fallingTime + "   total:" + f_flyTime);
             }
         }
         else

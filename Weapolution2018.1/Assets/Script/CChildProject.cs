@@ -21,10 +21,12 @@ public class CChildProject : MonoBehaviour {
         
 	}
     public virtual void SetOn() {
+        
     }
 
     public virtual void SetOn(float _float)
     {
+        Debug.Log("bbbbbbbaaaasssseee");
     }
 
     public virtual void SetOn(Transform _parent, float _float)

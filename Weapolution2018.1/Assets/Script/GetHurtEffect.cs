@@ -21,11 +21,11 @@ public class GetHurtEffect : MonoBehaviour {
         hitEffects.GetNewestChild().SetOn(_size);
     }
 
-    public void SetEffect(Vector3 pos, float _size, Transform _parent)
-    {
-        hitEffects.AddUsed(pos);
-        hitEffects.GetNewestChild().SetOn(_parent,_size);
-    }
+    //public void SetEffect(Vector3 pos, float _size, Transform _parent)
+    //{
+    //    hitEffects.AddUsed(pos);
+    //    hitEffects.GetNewestChild().SetOn(_parent,_size);
+    //}
 
     public void SetEffectOn() {
         StopCoroutine(EffectOn());

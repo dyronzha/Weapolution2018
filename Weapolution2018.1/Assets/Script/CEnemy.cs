@@ -307,7 +307,6 @@ public class CEnemy : MonoBehaviour {
         
         RaycastHit2D detect = Physics2D.Raycast(new_pos, hitToDir, 1.2f, 1 << LayerMask.NameToLayer("Obstacle"));
         if (!detect) {
-            Debug.Log("botherrrrrrrrrr" + hitToDir);
             transform.position += Time.deltaTime * Vector3.Lerp(15.0f * hitToDir, Vector3.zero, inState_time*3.0f);
         }
         

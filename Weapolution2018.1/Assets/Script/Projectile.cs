@@ -37,7 +37,7 @@ public class Projectile : MonoBehaviour {
             else if (Player.weapon.id == 7)
                 projectile_img.sprite = ProjectileSprite[1];
             else if (Player.weapon.id == 11)
-                projectile_img.sprite = ProjectileSprite[1];
+                projectile_img.sprite = ProjectileSprite[2];
 
         }
         if (StageNum == 2)
@@ -97,6 +97,7 @@ public class Projectile : MonoBehaviour {
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (flight_way < 0) return;
         if (collision.collider.tag == "Enemy")
         {
             collision.transform.GetComponent<CEnemy>().SetHurtValue(Player.weapon.attack, flight_way);
@@ -113,6 +114,7 @@ public class Projectile : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (flight_way < 0) return;
         if (collision.tag == "Enemy")
         {
             collision.transform.GetComponent<CEnemy>().SetHurtValue(Player.weapon.attack, flight_way);

@@ -359,7 +359,6 @@ public class EnemyMouse : CEnemy {
             if (!detect)
             {
                 transform.position += Time.deltaTime * Vector3.Lerp(12.0f * go_way, Vector3.zero, (inState_time - 0.4f));
-                Debug.Log("AttackMove" + (inState_time - 0.45f));
             }
         }
         
@@ -407,6 +406,7 @@ public class EnemyMouse : CEnemy {
         else if (_HitDir == 1) effectPos = new Vector3(new_pos.x, new_pos.y - 1.7f, -200.0f);
         else if (_HitDir == 2) effectPos = new Vector3(new_pos.x - 1.7f, new_pos.y, -200.0f);
         else if (_HitDir == 3) effectPos = new Vector3(new_pos.x + 1.7f, new_pos.y, -200.0f);
+        Debug.Log("get hurt efffffffect" + gameObject.name);
         getHurtEffect.SetEffect(effectPos, 0.5f);
         hurtValue = _value;
         hitDir = _HitDir;

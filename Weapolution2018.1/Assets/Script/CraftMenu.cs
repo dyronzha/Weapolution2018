@@ -55,7 +55,6 @@ public class CraftMenu : MonoBehaviour {
         //oringinPos = transform.localPosition;
         oringinPos = rectTransform.anchoredPosition;
         Camera mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        Debug.Log(((mainCamera.WorldToScreenPoint(Vector3.right) - mainCamera.WorldToScreenPoint(Vector3.zero)).x));
         //moveOffset = 612f;
     }
 

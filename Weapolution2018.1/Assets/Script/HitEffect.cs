@@ -49,6 +49,11 @@ public class HitEffect : CChildProject {
             Img.color = new Color(Img.color.r, Img.color.g, Img.color.b, alpha); 
         }
 	}
+    public override void SetOn()
+    {
+        
+
+    }
 
     public override void SetOn(float _scale)
     {

@@ -10,7 +10,7 @@ public class TutorialRequest : MonoBehaviour {
     CraftSystem craftSystem;
     CPickWeapon pickWeapon;
     TrapSystem trapSystem;
-    public Projectile[] projectile;
+    Projectile[] projectile;
 	// Use this for initialization
 	void Start () {
         tutorialDialog = this.transform.GetComponent<TutorialDialog>();
@@ -24,7 +24,10 @@ public class TutorialRequest : MonoBehaviour {
         pickWeapon.tutorialRequest = this;
         player.tutorialRequest = this;
         trapSystem.tutorialRequest = this;
-        for (int i = 0; i<3; i++) {
+        Transform tempProjectile = GameObject.Find("ProjectileSystem").transform;
+        projectile = new Projectile[tempProjectile.childCount];
+        for (int i = 0; i<projectile.Length; i++) {
+            projectile[i] = tempProjectile.GetChild(i).GetComponent<Projectile>();
             projectile[i].tutorialRequest = this;
         }
 	}
