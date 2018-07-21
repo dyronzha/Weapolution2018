@@ -26,7 +26,7 @@ public class UseForge : MonoBehaviour {
             {
                 if (!craftSystem.CheckIsFree()) return;
                 if (Vector2.Distance(this.transform.position, forge.fixed_pos) < forge_dis) {
-
+                    forge.SwitchHint(true);
                     closeEnough = true;
                     craftSystem.ArrowEnable(false);
                     craftSystem.craftFunc = false;
@@ -57,7 +57,7 @@ public class UseForge : MonoBehaviour {
                     craftSystem.ArrowEnable(true);
                     craftSystem.craftFunc = true;
                     forge.transform.GetComponent<COutLine>().SetOutLine(false);
-
+                    forge.SwitchHint(false);
                 }
             }
         }
@@ -70,7 +70,7 @@ public class UseForge : MonoBehaviour {
             if (craftSystem.useController)
             {
                 //往鍛造爐丟材料
-                if (Input.GetButtonDown(craftSystem.whichPlayer + "RB"))
+                if (Input.GetButtonDown(craftSystem.whichPlayer + "LB"))
                 {
                     if (craftSystem.CheckHandle().id == 3) {
                         forge.ThrowFireIn();
@@ -85,14 +85,14 @@ public class UseForge : MonoBehaviour {
                         
                     }
                 }
-                else if (Input.GetButtonDown(craftSystem.whichPlayer + "LB")) {
+                else if (Input.GetButtonDown(craftSystem.whichPlayer + "ButtonA")) {
                     forge.OnForging();
                 }
             }
             else
             {
                 //往鍛造爐丟材料
-                if (Input.GetMouseButtonDown(0))
+                if (Input.GetKeyDown(KeyCode.E))
                 {
                     if (craftSystem.CheckHandle().id == 3)
                     {
@@ -108,7 +108,7 @@ public class UseForge : MonoBehaviour {
 
                     }
                 }
-                else if (Input.GetKeyDown(KeyCode.E)) {
+                else if (Input.GetKeyDown(KeyCode.Space)) {
                     forge.OnForging();
                 }
             }

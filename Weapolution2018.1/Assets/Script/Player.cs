@@ -87,9 +87,9 @@ public class Player : MonoBehaviour {
             p1charaType = false;
             p2charaType = true;
 
-            p1controller = false; //預設鍵盤
-            p1joystick = null;
-            p2controller = true; //預設手把
+            p1controller = true; //預設鍵盤
+            p1joystick = "p1";
+            p2controller = false; //預設手把
             p2joystick = "p1";
 
         }

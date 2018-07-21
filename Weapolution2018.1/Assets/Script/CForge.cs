@@ -10,6 +10,7 @@ public class CForge : MonoBehaviour {
     private bool onForging = false;
     private CItem[] items;
     private SpriteRenderer[] images;
+    SpriteRenderer hint;
     Transform fire;
     Animator animator;
     CPickItemSystem pickItemSystem;
@@ -36,6 +37,8 @@ public class CForge : MonoBehaviour {
         animator = this.GetComponent<Animator>();
         pickItemSystem = GameObject.Find("PickItemSystem").GetComponent<CPickItemSystem>();
         enemySystem = GameObject.Find("EnemySystem").GetComponent<CEnemySystem>();
+        hint = transform.Find("hint").GetComponent<SpriteRenderer>();
+        hint.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -196,6 +199,10 @@ public class CForge : MonoBehaviour {
         }
         rockNum = 0;
         current_num = 0;
+    }
+
+    public void SwitchHint(bool _enable) {
+        hint.enabled = _enable;
     }
 
     private void OnTriggerEnter(Collider other)

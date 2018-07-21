@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Canon : MonoBehaviour {
 
+    SpriteRenderer hint;
+
     public bool CanonisfillingPowder = false;
 
     public bool startFilled = false;
@@ -30,6 +32,8 @@ public class Canon : MonoBehaviour {
         RightCanon = GameObject.Find("Canon");
         LeftCanon = GameObject.Find("Canon (1)");
         outLine = transform.GetComponent<COutLine>();
+        hint = transform.Find("hint").GetComponent<SpriteRenderer>();
+        hint.enabled = false;
         //CraftSystemScript = GameObject.Find("CraftSystem").GetComponent<CraftSystem>();
         //Debug.Log(GameObject.Find("CraftSystem").GetComponent<CraftSystem>());
         //Debug.Log("CraftSystemScript：  " + CraftSystemScript);
@@ -122,7 +126,7 @@ public class Canon : MonoBehaviour {
                 outLine.SetOutLine(true);
                 CanoncanFiiled = true;
                 CanonFilled = true;
-
+                hint.enabled = true;
             }
 
             else return;
@@ -134,6 +138,7 @@ public class Canon : MonoBehaviour {
     {
         CanonTriigerIN = false;
         outLine.SetOutLine(false);
+        hint.enabled = false;
     }
 
 }

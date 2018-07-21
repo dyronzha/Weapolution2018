@@ -6,7 +6,7 @@ public class CanonSystem : MonoBehaviour {
 
     GameObject RightCanon;
     public GameObject RightAim;
-    bool showUp;
+    bool useControler, showUp, hasFillAni;
     string whichPlayer = "p1";
     int CanonNum;
     float p1_L_JoyX;
@@ -46,11 +46,25 @@ public class CanonSystem : MonoBehaviour {
 
         characterVoice = GameObject.Find("CharacterAudio").GetComponent<CharacterVoice>();
         enemySystem = GameObject.Find("EnemySystem").GetComponent<CEnemySystem>();
+
     }
     private void Start()
     {
-        if (Player.p2charaType) whichPlayer = Player.p2joystick;
-        else whichPlayer = Player.p1joystick;
+        if (Player.p2charaType)
+        {
+            if (Player.p2controller)
+            {
+                useControler = true;
+                whichPlayer = Player.p2joystick;
+            }
+        }
+        else {
+            if (Player.p1controller)
+            {
+                useControler = true;
+                whichPlayer = Player.p1joystick;
+            }
+        } 
         DefaultAimPos[0] = new Vector3(13f, -6f, 0);
         DefaultAimPos[1] = new Vector3(-13f, -6f, 0);
         unWalkable = 1 << LayerMask.NameToLayer("Obstacle") |
@@ -65,6 +79,7 @@ public class CanonSystem : MonoBehaviour {
             {
                 showUp = true;
                 CanonAnimator.SetBool("CanonDisable", false);
+
             }
         }
         else {
@@ -75,27 +90,42 @@ public class CanonSystem : MonoBehaviour {
             {
                 if (ShowRightAim)
                 {
-                    if (Input.GetButtonDown(whichPlayer + "ButtonA")) ShootAndExplosion();
+                    if (useControler)
+                    {
+                        if (Input.GetButtonDown(whichPlayer + "ButtonA")) ShootAndExplosion();
+                        if (Input.GetButtonDown(whichPlayer + "ButtonB")) CancelShoot();
+                    }
+                    else {
+                        if (Input.GetKeyDown(KeyCode.Space)) ShootAndExplosion();
+                        if (Input.GetKeyDown(KeyCode.Z)) CancelShoot();
+                    } 
                     RaycastHitWall();
-                    AimControl(RightAim);
-
-                    if (Input.GetButtonDown(whichPlayer + "ButtonB")) CancelShoot();
+                    AimControl(RightAim);                   
                 }
-                if (Input.GetButtonDown(whichPlayer + "ButtonA") && CanonScript.CanonTriigerIN && !ShowRightAim && CanonScript.CanonPowderNum != 0)
-                {
-                    ReadyToShoot(true);
+                else {
+                    if (CanonScript.CanonTriigerIN && CanonScript.CanonPowderNum != 0) {
+                        if (useControler) {
+                            if (Input.GetButtonDown(whichPlayer + "ButtonA")) ReadyToShoot(true);
+                        }
+                        else {
+                            if (Input.GetKeyDown(KeyCode.Space)) ReadyToShoot(true);
+                        }
+                    }
                 }
-
             }
         }
     }
 
     void CanonAnimtion()
     {
-        Debug.Log(CanonScript + "   " + CanonAnimator);
-        if (CanonScript.CanonPowderNum == 0) CanonAnimator.SetBool("HavePowder", false);
-        else CanonAnimator.SetBool("HavePowder", true);
-      
+        if (!hasFillAni) {
+            hasFillAni = true;
+            CanonAnimator.SetBool("HavePowder", true);
+        } 
+        //Debug.Log(CanonScript + "   " + CanonAnimator);
+        //if (CanonScript.CanonPowderNum == 0) CanonAnimator.SetBool("HavePowder", false);
+        //else CanonAnimator.SetBool("HavePowder", true);
+
     } 
     void ReadyToShoot(bool isRightCanon)
     {
@@ -120,6 +150,8 @@ public class CanonSystem : MonoBehaviour {
     {
         if (CanonScript.CanonPowderNum == 0)
         {
+            hasFillAni = false;
+            CanonAnimator.SetBool("HavePowder", false);
             CancelShoot();
         }
     }
@@ -149,57 +181,31 @@ public class CanonSystem : MonoBehaviour {
     {
         float speedX = 0, speedY = 0;
 
-        if (Player.p2charaType)
+        if (useControler)
         {
-            if (Player.p2controller)
+            if (whichPlayer == "p1")
             {
-                if (whichPlayer == "p1")
-                {
-                    if (Mathf.Abs(p1_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
-                    if (Mathf.Abs(p1_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
-                    if (IsHitted[0] && speedY > 0.0F) speedY = 0.0f;
-                    if (IsHitted[1] && speedY < 0.0F) speedY = 0.0f;
-                    if (IsHitted[2] && speedX < 0.0F) speedX = 0.0f;
-                    if (IsHitted[3] && speedX > 0.0F) speedX = 0.0f;
-                }
-                else {
-                    if (Mathf.Abs(p2_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
-                    if (Mathf.Abs(p2_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
-                    if (IsHitted[0] && speedY > 0.0F) speedY = 0.0f;
-                    if (IsHitted[1] && speedY < 0.0F) speedY = 0.0f;
-                    if (IsHitted[2] && speedX < 0.0F) speedX = 0.0f;
-                    if (IsHitted[3] && speedX > 0.0F) speedX = 0.0f;
-                }
-                whichAim.transform.position += Time.deltaTime * speed * new Vector3(speedX, speedY, 0);
+                if (Mathf.Abs(p1_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
+                if (Mathf.Abs(p1_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
+                
             }
-            else { }//用鍵盤
-        }
-        else
-        {
-            if (Player.p1controller)
+            else
             {
-                if (whichPlayer == "p1")
-                {
-                    if (Mathf.Abs(p1_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
-                    if (Mathf.Abs(p1_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
-                    if (IsHitted[0] && speedY > 0.0F) speedY = 0.0f;
-                    if (IsHitted[1] && speedY < 0.0F) speedY = 0.0f;
-                    if (IsHitted[2] && speedX < 0.0F) speedX = 0.0f;
-                    if (IsHitted[3] && speedX > 0.0F) speedX = 0.0f;
-                }
-                else
-                {
-                    if (Mathf.Abs(p2_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
-                    if (Mathf.Abs(p2_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
-                    if (IsHitted[0] && speedY > 0.0F) speedY = 0.0f;
-                    if (IsHitted[1] && speedY < 0.0F) speedY = 0.0f;
-                    if (IsHitted[2] && speedX < 0.0F) speedX = 0.0f;
-                    if (IsHitted[3] && speedX > 0.0F) speedX = 0.0f;
-                }
-                whichAim.transform.position += Time.deltaTime * speed * new Vector3(speedX, speedY, 0);
+                if (Mathf.Abs(p2_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
+                if (Mathf.Abs(p2_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
             }
-            else { }//用鍵盤
         }
+        else {
+            if (Input.GetKey(KeyCode.W)) speedY = 1.0f;
+            else if (Input.GetKey(KeyCode.S)) speedY = -1.0f;
+            if (Input.GetKey(KeyCode.D)) speedX = 1.0f;
+            else if (Input.GetKey(KeyCode.A)) speedX = -1.0f;
+        }
+        if (IsHitted[0] && speedY > 0.0F) speedY = 0.0f;
+        if (IsHitted[1] && speedY < 0.0F) speedY = 0.0f;
+        if (IsHitted[2] && speedX < 0.0F) speedX = 0.0f;
+        if (IsHitted[3] && speedX > 0.0F) speedX = 0.0f;
+        whichAim.transform.position += Time.deltaTime * speed * new Vector3(speedX, speedY, 0);
     }
 
     void RaycastHitWall()
