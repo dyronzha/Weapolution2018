@@ -126,7 +126,7 @@ public class Player : MonoBehaviour {
     void Update () {
         if (StageManager.timeUp) return;
         if (p1_die) return;
-        if (Input.GetKeyDown(KeyCode.Z) && Input.GetKeyDown(KeyCode.X)) CharacterRespawn();
+        //拿掉if (Input.GetKeyDown(KeyCode.Z) && Input.GetKeyDown(KeyCode.X)) CharacterRespawn();
         if (!p1charaType) //p1是attacker
         {
             Movement(p1moveAble, p1controller, p1joystick);

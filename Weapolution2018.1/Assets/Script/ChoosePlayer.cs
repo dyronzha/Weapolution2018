@@ -9,7 +9,7 @@ public class ChoosePlayer : MonoBehaviour {
     SpriteRenderer buda_keyboard1;
     SpriteRenderer haka_joystick1;
     SpriteRenderer haka_keyboard1;
-    GameObject scene;
+    //GameObject scene;
     GameObject budaHands;
     GameObject hakaHands;
     bool targetOnBuda = true;
