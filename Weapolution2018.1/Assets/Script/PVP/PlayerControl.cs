@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
+    public static string[] controller = new string[4];
+
 	// Use this for initialization
 	void Start () {
 		
