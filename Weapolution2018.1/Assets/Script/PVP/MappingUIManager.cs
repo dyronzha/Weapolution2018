@@ -6,23 +6,53 @@ public class MappingUIManager : MonoBehaviour {
 
     int playerNum = -1;
     bool[] hasControl = new bool[5] { false, false, false, false, false };
-    bool[] confirm = new bool[4] { false, false, false, false};
-    int[] playerSlotID = new int[4] { 0, 0, 0, 0 };
+    bool[] slotConfirm = new bool[4] { false, false, false, false};
     int[] slotPlayerNum = new int[5]{0,0,0,0,0};
-    string[] controlName = new string[4];
+    PlayerController[] playerControllers = new PlayerController[4];
 
     float playerGap = 90.0f;
 
     RectTransform[] playerUI = new RectTransform[4];
 
-    PlayerUIController[] playerUIController = new PlayerUIController[4];
     Vector3[] slotPos = new Vector3[4];
 
     struct PlayerController {
-        bool confirm;
-        string control;
-        int slotID;
+        //public bool confirm;
+        public string control;
+        public int slotID;
+
+        bool isHold;
+        float holdTime, getAxis;
+
+        public int isMove() {
+            getAxis = Input.GetAxis(control + "LHorizontal");
+
+            if (Mathf.Abs(getAxis) > 0.7f) {
+                if (!isHold)
+                {
+                    isHold = true;
+                    return (getAxis > 0.0f) ? 1 : 0;
+                }
+                else {
+                    holdTime += Time.deltaTime;
+                    if (holdTime > 0.15f)
+                    {
+                        holdTime = 0.0f;
+                        return (getAxis > 0.0f) ? 1 : 0;
+                    }
+                    else return 0;
+                }
+            }
+            else {
+                isHold = false;
+                holdTime = 0.0f;
+                getAxis = 0.0f;
+                return 0;
+            } 
+
+        }
     }
+
 
     // Use this for initialization
     private void Awake()
@@ -33,6 +63,7 @@ public class MappingUIManager : MonoBehaviour {
             slotPos[i] = heads.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
             playerUI[i] = UIs.GetChild(i).GetComponent<RectTransform>();
             playerUI[i].gameObject.SetActive(false);
+            playerControllers[i] = new PlayerController();
         }
     }
     void Start () {
@@ -41,7 +72,15 @@ public class MappingUIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (Mathf.Abs(Input.GetAxis("keyboardLHorizontal")) > 0) {
+            Debug.Log("fffuck  " + Input.GetAxis("keyboardLHorizontal"));
+        }
+        if (Input.GetButtonDown("keyboardButtonA")) {
+            Debug.Log("down confirm");
+        }
+        else if (Input.GetButtonUp("keyboardButtonA")) {
+            Debug.Log("up confirm");
+        }
 	}
 
     void GetInput() {
@@ -64,16 +103,31 @@ public class MappingUIManager : MonoBehaviour {
 
 
         for (int i = 0; i < playerNum; i++) {
-            if (Mathf.Sign(Input.GetAxis(controlName[i] + "LHorizontal")) > 0) {
-
+            int move = playerControllers[i].isMove();
+            int lastID = playerControllers[i].slotID;
+            if (move > 0)
+            {
+                do {
+                    playerControllers[i].slotID++;
+                } while (slotConfirm[playerControllers[i].slotID]);
             }
+            else if (move < 0) {
+                do{
+                    playerControllers[i].slotID--;
+                } while (slotConfirm[playerControllers[i].slotID]);
+            }
+            if (lastID != playerControllers[i].slotID) {
+                playerUI[i].anchoredPosition = slotPos[playerControllers[i].slotID] + new Vector3(0, playerGap * slotPlayerNum[playerControllers[i].slotID], 0);
+                slotPlayerNum[lastID]--;
+            }
+
         }
     }
 
     void AddNewPlayer(string control) {
         playerNum++;
-        controlName[playerNum] = control;
-        playerSlotID[playerNum] = 0;
+        playerControllers[playerNum].control = control;
+        playerControllers[playerNum].slotID = 0;
         playerUI[playerNum].gameObject.SetActive(true);
         playerUI[playerNum].anchoredPosition = slotPos[0] + new Vector3(0, playerGap * slotPlayerNum[0], 0);
         slotPlayerNum[0]++;
