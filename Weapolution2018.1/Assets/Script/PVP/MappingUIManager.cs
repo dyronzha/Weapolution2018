@@ -18,13 +18,19 @@ public class MappingUIManager : MonoBehaviour {
     PlayerUIController[] playerUIController = new PlayerUIController[4];
     Vector3[] slotPos = new Vector3[4];
 
+    struct PlayerController {
+        bool confirm;
+        string control;
+        int slotID;
+    }
+
     // Use this for initialization
     private void Awake()
     {
         Transform heads = transform.Find("PlayerHeadSlot");
         Transform UIs = transform.Find("PlayerUI");
         for (int i = 0; i < 4; i++) {
-            slotPos[i] = heads.GetChild(i).GetComponent<RectTransform>().position;
+            slotPos[i] = heads.GetChild(i).GetComponent<RectTransform>().anchoredPosition;
             playerUI[i] = UIs.GetChild(i).GetComponent<RectTransform>();
             playerUI[i].gameObject.SetActive(false);
         }
@@ -69,7 +75,7 @@ public class MappingUIManager : MonoBehaviour {
         controlName[playerNum] = control;
         playerSlotID[playerNum] = 0;
         playerUI[playerNum].gameObject.SetActive(true);
-        playerUI[playerNum].position = slotPos[0] + new Vector3(0, playerGap * slotPlayerNum[0], 0);
+        playerUI[playerNum].anchoredPosition = slotPos[0] + new Vector3(0, playerGap * slotPlayerNum[0], 0);
         slotPlayerNum[0]++;
     }
 
