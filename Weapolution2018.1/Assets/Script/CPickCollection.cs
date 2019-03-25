@@ -86,7 +86,7 @@ public class CPickCollection : MonoBehaviour {
             else
             {
                 float offset = (Random.Range(0, 10) > 6 ? 1.0f : -1.0f) * Random.Range(15.0f, 30.0f);
-                angle = (Mathf.Abs(angle += offset) < 90.0f) ? angle : (Mathf.Sign(offset) * 90.0f - offset);
+                angle = (Mathf.Abs(angle + offset) < 90.0f) ? angle : (Mathf.Sign(offset) * 90.0f - offset);
             }
             throwWay = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * throwWay;
             tempItem.SetFall(0.5f, throwWay, throwSpeed);

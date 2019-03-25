@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-    public static string[] controller = new string[4];
+    bool isKeyboard;
+    string control;
 
 	// Use this for initialization
 	void Start () {
@@ -15,4 +16,9 @@ public class PlayerControl : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void SetController(string con) {
+        control = con;
+        if (con == "keyboard") isKeyboard = true;
+    }
 }
