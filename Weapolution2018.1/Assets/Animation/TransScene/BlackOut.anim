@@ -3,7 +3,7 @@
 --- !u!74 &7400000
 AnimationClip:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: BlackOut
   serializedVersion: 6
@@ -29,16 +29,16 @@ AnimationClip:
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1
-        value: {x: -32.00978, y: 11.934246, z: 11.934246}
-        inSlope: {x: -30.092695, y: 0, z: 0}
-        outSlope: {x: -30.092695, y: 0, z: 0}
+        value: {x: 32.00978, y: 11.934246, z: 11.934246}
+        inSlope: {x: 27.472654, y: 0, z: 0}
+        outSlope: {x: 27.472654, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 1.5
-        value: {x: -43.29454, y: 11.934246, z: 11.934246}
+        value: {x: 43.29454, y: 11.934246, z: 11.934246}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -127,16 +127,16 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: -32.00978
-        inSlope: -30.092695
-        outSlope: -30.092695
+        value: 32.00978
+        inSlope: 27.472654
+        outSlope: 27.472654
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1.5
-        value: -43.29454
+        value: 43.29454
         inSlope: 0
         outSlope: 0
         tangentMode: 136

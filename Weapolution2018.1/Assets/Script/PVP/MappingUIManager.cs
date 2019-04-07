@@ -201,7 +201,7 @@ public class MappingUIManager : MonoBehaviour {
                 {
                     if (playerControllers[i].isChosen && id != i && playerControllers[i].slotID == playerControllers[id].slotID)
                     {
-                        playerUI[i].anchoredPosition = slotPos[4] + new Vector3(0, -180.0f-playerGap * i, 0);
+                        playerUI[i].anchoredPosition = slotPos[4] + new Vector3(0, -playerGap * i, 0);
                         playerControllers[i].slotID = 4;
                     }
                 }

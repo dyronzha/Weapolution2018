@@ -12,7 +12,8 @@ public class PVPPlayerManager : MonoBehaviour {
         Transform controls = transform.Find("Players");
         for (int i  = 0; i < 4; i++) {
             playerControls[i] = controls.GetChild(i).GetComponent<PlayerControl>();
-            playerControls[i].SetController(controller[i]);
+            if(i==1 || i== 3)playerControls[i].SetController(true, controller[i]);
+            else playerControls[i].SetController(false, controller[i]);
         }
     }
     void Start () {

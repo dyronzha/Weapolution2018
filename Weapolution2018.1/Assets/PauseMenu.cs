@@ -76,14 +76,14 @@ public class PauseMenu : MonoBehaviour {
     void ShowMenu()
     {
 
-		if (StageManagerscript.inMenuState)
+		if (StageManagerscript.inMenuState && !showMenu)
         {
             PauseMenuSystem.SetActive(true);
 			BlackScene.SetActive(true);
 			showMenu = true;
             //BlackScene.GetComponent<SpriteRenderer>().color = new Color32(0, 0, 0, 100);
         }
-        else
+        else if(!StageManagerscript.inMenuState && showMenu)
         {
             PauseMenuSystem.SetActive(false);
 			BlackScene.SetActive(false);
