@@ -17,6 +17,9 @@ public class CPickItem : MonoBehaviour {
     Collider2D collider;
     LevelHeight levelHeight;
     ZArrange zArrange;
+
+    int weaponUsedTime = 0;
+
     private void Awake()
     {
         render = this.transform.GetChild(0).GetComponent<SpriteRenderer>();
@@ -62,6 +65,8 @@ public class CPickItem : MonoBehaviour {
         item = CItemDataBase.items[id];
     }
     public void SetInFree() {
+        weaponUsedTime = 0;
+
         time = 0.0f;
         f_fallingTime = 0.0f;
         b_falling = false;
@@ -72,6 +77,7 @@ public class CPickItem : MonoBehaviour {
         this.GetComponent<COutLine>().SetOutLine(false);
         pickitem_system.AddFreeList(this);
         this.gameObject.SetActive(false);
+
         //this.transform.parent = pickitem_system.gameObject.transform.GetChild(0);
     }
     public void SetInField() {
@@ -193,6 +199,10 @@ public class CPickItem : MonoBehaviour {
         shadowRender.enabled = _isOn;
     }
 
+
+    public int BeingUsed() {
+        return (weaponUsedTime++);
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

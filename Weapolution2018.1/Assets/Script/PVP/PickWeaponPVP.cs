@@ -137,12 +137,23 @@ public class PickWeaponPVP : MonoBehaviour {
             }
         }
     }
+
+    public bool UsingWeaponTillBroken() {
+        int used = pickWeapon.BeingUsed();
+        if (used >= holdWeapon.durability)
+        {
+            DestroyWeapon();
+            return true;
+        }
+        else return false;
+    }
+
     public void DestroyWeapon()
     {
         pickWeapon.gameObject.SetActive(false);
         pickWeapon.SetInFree();
         ishold = false;
-        holdWeapon = null;
+        holdWeapon = CItemDataBase.items[0];
         playerWeaponImg.sprite = weaponSprite[0];
     }
     void IsNearWeapon()

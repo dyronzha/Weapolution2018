@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerControl : MonoBehaviour {
 
-    bool isCraft, isKeyboard, dashHit;
+    bool isCraft, isKeyboard, dashHit, invincible, die;
     int faceDir = 1, lastDir = -1;
     string control;
     float speedX, speedY, dashInputTime = 1.0f, dashTime;
@@ -14,8 +14,8 @@ public class PlayerControl : MonoBehaviour {
     Animator animator;
     CraftSystem craftSystem;
     PickWeaponPVP pickWeapon;
-
-    public CItem weapon;
+    PVPPlayerManager playerManager;
+    CharacterVoice effectAudio;
 
     enum State {
         idle, move, dash, hurt, die, attack
@@ -42,7 +42,7 @@ public class PlayerControl : MonoBehaviour {
         switch (state) {
             case State.idle:
                 if (FirstInState()) {
-                    
+                    animator.SetBool("is_walk", false);
                 }
                 GetInput();
                 break;
@@ -71,14 +71,17 @@ public class PlayerControl : MonoBehaviour {
                 break;
             case State.attack:
                 if (FirstInState()) {
-                    animator.SetBool("is_attack", true);
+                    Attack();
                 }
                 break;
 
         }
 	}
 
-
+    public void Init(PVPPlayerManager manager, CharacterVoice voice) {
+        playerManager = manager;
+        effectAudio = voice;
+    }
     public void SetController(bool crafter, string con) {
         isCraft = crafter;
         control = con;
@@ -278,10 +281,73 @@ public class PlayerControl : MonoBehaviour {
         //inFuntionTime = 0;
     }
 
+    void Attack() {
+        if (pickWeapon.holdWeapon.ani_type == 0) //持近距離武器
+        {
+            animator.SetInteger("weapon_type", 0);
+        }
+        else if (pickWeapon.holdWeapon.ani_type == 1)//持遠距離武器
+        {
+            animator.SetInteger("weapon_type", 1);
+        }
+        else if (pickWeapon.holdWeapon.ani_type == 2) //放陷阱
+        {
+            animator.SetInteger("weapon_type", 2);
+        }
+        animator.SetBool("is_attack", true);
+        effectAudio.SetAudio(pickWeapon.holdWeapon.audio_source);
+    }
+
+    public void OverAttack()
+    {
+        animator.SetBool("is_attack", false);
+        state = State.idle;
+        invincible = false;
+        if (pickWeapon.UsingWeaponTillBroken())
+        {
+            //projectile_num = 0;
+        }
+        Debug.Log("OverAttack");
+        speedX = .0f;
+        speedY = .0f;
+    }
+
+    public void GetHurt()
+    {
+        //Debug.Log("getHurt");
+
+        state = State.hurt;
+        invincible = true;
+        effectAudio.SetAudio(1);
+        animator.SetTrigger("is_hurt");
+        speedX = .0f;
+        speedY = .0f;
+        if (state == State.attack)//如果被打到時正在攻擊，被斷招
+        {
+            
+            animator.SetBool("is_attack", false);
+        }
+
+        //if (inFuntionTime == 0)
+        //{
+        //    L_JoyX = 0.0f;
+        //    L_JoyY = 0.0f;
+        //    K_JoyX = 0.0f;
+        //    K_JoyY = 0.0f;
+        //    TeamHp.ChangeHp(false, 0.05f);
+        //    inFuntionTime++;
+            
+        //}
+
+
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.tag == "DamageToPlayer" && !invincible && !die) {
+            GetHurt();
+        }
     }
 
 }

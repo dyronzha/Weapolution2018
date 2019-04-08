@@ -19,6 +19,7 @@ TagManager:
   - EmemyBullet
   - EnemyOut
   - Explosion
+  - DamageToPlayer
   layers:
   - Default
   - TransparentFX

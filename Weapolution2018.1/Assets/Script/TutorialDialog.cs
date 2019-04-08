@@ -223,7 +223,7 @@ public class TutorialDialog : MonoBehaviour {
     }
 
     void SkipRequest() {
-        if (progress > -2) {
+        if (progress > -1) {
             attackComplete = true;
             attackerConfirm.enabled = true;
             craftComplete = true;
