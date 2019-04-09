@@ -43,4 +43,8 @@ public class PVPPlayerManager : MonoBehaviour {
         StartCoroutine(stageManager.SlowDown(2.2f, false));
     }
 
+    public void SetHP(bool teamA, float value) {
+
+    }
+
 }

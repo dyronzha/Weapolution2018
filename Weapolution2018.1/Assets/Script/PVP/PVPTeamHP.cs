@@ -39,25 +39,25 @@ public class PVPTeamHP : MonoBehaviour {
         if (teamHp[id] > 0.5f)
         {
             teamHPImg[id].color = new Color32(44, 244, 44, 255);
-            teamAppearance[id].sprite = teamAppearanceSprite[0];
+            teamAppearance[id].sprite = teamAppearanceSprite[0 + id*4];
             //HpBoarder[id].sprite = Resources.Load<Sprite>("image/Stage/1/HpImage/blood100_");
         }
 
         else if (teamHp[id] > 0.2f) //hp 30%~50%
         {
             teamHPImg[id].color = new Color32(255, 176, 92, 255);
-            teamAppearance[id].sprite = teamAppearanceSprite[1];
+            teamAppearance[id].sprite = teamAppearanceSprite[1 + id * 4];
             //HpBoarder.sprite = Resources.Load<Sprite>("image/Stage/1/HpImage/blood50_");
 
         }
         else if (teamHp[id] > 0.0f) //hp 0~20%
         {
             teamHPImg[id].color = new Color32(249, 79, 68, 255);
-            teamAppearance[id].sprite = teamAppearanceSprite[2];
+            teamAppearance[id].sprite = teamAppearanceSprite[2 + id * 4];
         }
         else
         {
-            teamAppearance[id].sprite = teamAppearanceSprite[3];
+            teamAppearance[id].sprite = teamAppearanceSprite[3 + id * 4];
             //HpBoarder.sprite = Resources.Load<Sprite>("image/Stage/1/HpImage/blood0_");
         }
 

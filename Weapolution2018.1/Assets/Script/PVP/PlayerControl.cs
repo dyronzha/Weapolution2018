@@ -338,6 +338,7 @@ public class PlayerControl : MonoBehaviour {
         {
             animator.SetBool("is_attack", false);
         }
+        playerManager.SetHP(teamA, 0.05f);
 
         //if (inFuntionTime == 0)
         //{
