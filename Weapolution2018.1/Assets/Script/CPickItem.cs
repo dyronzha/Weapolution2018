@@ -201,7 +201,8 @@ public class CPickItem : MonoBehaviour {
 
 
     public int BeingUsed() {
-        return (weaponUsedTime++);
+        weaponUsedTime++;
+        return (weaponUsedTime);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

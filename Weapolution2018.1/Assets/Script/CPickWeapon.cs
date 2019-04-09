@@ -159,6 +159,18 @@ public class CPickWeapon : MonoBehaviour {
             }
         }
     }
+
+    public bool UsingWeaponTillBroken()
+    {
+        int used = pickWeapon.BeingUsed();
+        if (used >= Player.weapon.durability)
+        {
+            DestroyWeapon();
+            return true;
+        }
+        else return false;
+    }
+
     public void DestroyWeapon() {
         pickWeapon.gameObject.SetActive(false);
         pickWeapon.SetInFree();

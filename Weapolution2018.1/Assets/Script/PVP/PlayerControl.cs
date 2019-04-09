@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour {
 
     bool isCraft, isKeyboard, dashHit, invincible, die;
+    bool teamA;
     int faceDir = 1, lastDir = -1;
     string control;
     float speedX, speedY, dashInputTime = 1.0f, dashTime;
@@ -32,12 +33,12 @@ public class PlayerControl : MonoBehaviour {
         animator = GetComponent<Animator>();
         pickWeapon = transform.Find("PickWeapon").GetComponent<PickWeaponPVP>();
     }
-    void Start () {
+    void Start() {
         pickWeapon.SetController(!isKeyboard, control);
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update() {
         if (StageManager.timeUp) return;
         switch (state) {
             case State.idle:
@@ -66,6 +67,7 @@ public class PlayerControl : MonoBehaviour {
                 Dash();
                 break;
             case State.hurt:
+                
                 break;
             case State.die:
                 break;
@@ -73,21 +75,23 @@ public class PlayerControl : MonoBehaviour {
                 if (FirstInState()) {
                     Attack();
                 }
+                if(pickWeapon.holdWeapon.ani_type == 0) GetInput();
                 break;
 
         }
-	}
+    }
 
-    public void Init(PVPPlayerManager manager, CharacterVoice voice) {
+    public void Init(PVPPlayerManager manager, CharacterVoice voice, bool team) {
         playerManager = manager;
         effectAudio = voice;
+        teamA = team;
     }
     public void SetController(bool crafter, string con) {
         isCraft = crafter;
         control = con;
         if (con == "keyboard") isKeyboard = true;
         if (crafter) {
-            craftSystem = transform.Find("CraftSystem").GetComponent <CraftSystem>();
+            craftSystem = transform.Find("CraftSystem").GetComponent<CraftSystem>();
         }
     }
 
@@ -123,7 +127,7 @@ public class PlayerControl : MonoBehaviour {
                 else if (Input.GetKeyDown(KeyCode.A)) {
                     if (speedX > .0f) faceDir = 2;
                     speedX = -1.0f;
-                } 
+                }
 
 
             }
@@ -152,6 +156,10 @@ public class PlayerControl : MonoBehaviour {
             if ((Input.GetKeyUp(KeyCode.W) && speedY > 0.1f) || (Input.GetKeyUp(KeyCode.S) && speedY < 0.1f)) speedY = .0f;
             if ((Input.GetKeyUp(KeyCode.D) && speedX > 0.1f) || (Input.GetKeyUp(KeyCode.A) && speedX < 0.1f)) speedX = .0f;
 
+
+            //如果在攻擊狀態跳過下面狀態切換只接收移動輸入
+            if (state == State.attack) return;
+
             //判斷是否移動
             if (Mathf.Abs(speedY) < 0.1f && Mathf.Abs(speedX) < 0.1f)
             {
@@ -159,7 +167,7 @@ public class PlayerControl : MonoBehaviour {
             }
             else
             {// 有移動輸入再偵測翻滾輸入
-                if(Input.GetMouseButtonDown(1)) state = State.dash;
+                if (Input.GetMouseButtonDown(1)) state = State.dash;
                 else state = State.move;
             }
 
@@ -181,11 +189,14 @@ public class PlayerControl : MonoBehaviour {
                 else faceDir = 3;
             }
 
+            //如果在攻擊狀態跳過下面狀態切換只接收移動輸入
+            if (state == State.attack) return;
+
             //判斷是否移動
             if (Mathf.Abs(speedY) < 0.1f && Mathf.Abs(speedX) < 0.1f)
             {
                 state = State.idle;
-                dashInputTime = 1.0f;
+                //dashInputTime = 1.0f;
             }
             else
             {// 有移動輸入再偵測翻滾輸入
@@ -219,14 +230,15 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
+
     bool GetControllerDash() {
 
-        if (dashInputTime < 0.7f) {
+        if (dashInputTime < 0.5f) {
             dashInputTime += Time.deltaTime;
             return false;
         }
         else {
-            if (Input.GetAxis(control + "LT") < 0.7f)
+            if (Input.GetAxis(control + "LT") < 0.5f)
                 return false;
             else {
                 dashInputTime = 0.0f;
@@ -324,7 +336,6 @@ public class PlayerControl : MonoBehaviour {
         speedY = .0f;
         if (state == State.attack)//如果被打到時正在攻擊，被斷招
         {
-            
             animator.SetBool("is_attack", false);
         }
 
@@ -339,6 +350,15 @@ public class PlayerControl : MonoBehaviour {
             
         //}
 
+
+    }
+
+    public void OverBeHurt()
+    {
+        //Debug.Log(gameObject.name + "hurt over");
+        state = State.idle;
+        invincible = false;
+        //TeamHp.checkGameOver = true;
 
     }
 

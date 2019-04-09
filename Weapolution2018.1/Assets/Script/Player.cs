@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
     bool invincible;
-    int weaponUsedTimes = 0;
     static public bool gamemode;
     //mode 0 == PvE
     //mode 1 == PvP
@@ -52,7 +51,7 @@ public class Player : MonoBehaviour {
     float unbeatable_time = 1;
     Vector3 rollWay;
     float roll_time = 0;
-    float rollCDtime = 0.7f;
+    float rollCDtime = 0.5f;
     float clickTime = 0;
 
     public float Speed = 5.0f;
@@ -133,7 +132,7 @@ public class Player : MonoBehaviour {
             #region 翻滾
             if (!p1controller) //鍵盤
             {
-                if (p1moveAble && (Input.GetMouseButtonDown(1)) && Time.time - clickTime > rollCDtime)
+                if (p1moveAble && (Input.GetMouseButtonDown(1)) && Time.time - clickTime > rollCDtime && inFuntionTime == 0)
                 {
                     if (Mathf.Abs(K_JoyY) < 0.1f && Mathf.Abs(K_JoyX) < 0.1f) return;
                     clickTime = Time.time;
@@ -146,7 +145,7 @@ public class Player : MonoBehaviour {
             {
                 if(p1joystick == "p1")
                 {
-                    if (p1moveAble && Input.GetAxis(p1joystick + "LT") > 0.5f && Time.time - clickTime > rollCDtime)
+                    if (p1moveAble && Input.GetAxis(p1joystick + "LT") > 0.5f && Time.time - clickTime > rollCDtime && inFuntionTime==0)
                     {
                         if (Mathf.Abs(L_JoyY) < 0.1f && Mathf.Abs(L_JoyX) < 0.1f) return;
                         clickTime = Time.time;
@@ -158,7 +157,7 @@ public class Player : MonoBehaviour {
                 }
                 else
                 {
-                    if (p1moveAble && Input.GetAxis(p1joystick + "LT") > 0.5f && Time.time - clickTime > rollCDtime)
+                    if (p1moveAble && Input.GetAxis(p1joystick + "LT") > 0.5f && Time.time - clickTime > rollCDtime && inFuntionTime == 0)
                     {
                         if (Mathf.Abs(L_JoyY) < 0.1f && Mathf.Abs(L_JoyX) < 0.1f) return;
                         clickTime = Time.time;
@@ -176,14 +175,14 @@ public class Player : MonoBehaviour {
             #region 攻擊
             if (!p1controller) //鍵盤
             {
-                if ((Input.GetMouseButtonDown(0))) //|| p1_RT > 0.1f
+                if (p1moveAble && (Input.GetMouseButtonDown(0)) && inFuntionTime == 0) //|| p1_RT > 0.1f
                 {
                     animation_type = 2;
                 }
             }
             else
             {
-                if (Input.GetButtonDown(p1joystick + "ButtonA")) animation_type = 2;
+                if (p1moveAble && Input.GetButtonDown(p1joystick + "ButtonA") && inFuntionTime == 0) animation_type = 2;
             }
 
             #endregion
@@ -210,7 +209,7 @@ public class Player : MonoBehaviour {
             if (!p2controller) //鍵盤
             {
 
-                if (p2moveAble && (Input.GetMouseButtonDown(1)) && Time.time - clickTime > rollCDtime)
+                if (p2moveAble && (Input.GetMouseButtonDown(1)) && Time.time - clickTime > rollCDtime && inFuntionTime == 0)
                 {
                     if (Mathf.Abs(K_JoyY) < 0.1f && Mathf.Abs(K_JoyX) < 0.1f) return;
                     clickTime = Time.time;
@@ -223,7 +222,7 @@ public class Player : MonoBehaviour {
             {
                 if (p2joystick == "p1")
                 {
-                    if (p2moveAble && Input.GetAxis(p2joystick + "LT") > 0.5f && Time.time - clickTime > rollCDtime)
+                    if (p2moveAble && Input.GetAxis(p2joystick + "LT") > 0.5f && Time.time - clickTime > rollCDtime && inFuntionTime == 0)
                     {
                         if (Mathf.Abs(L_JoyY) < 0.1f && Mathf.Abs(L_JoyX) < 0.1f) return;
                         clickTime = Time.time;
@@ -235,7 +234,7 @@ public class Player : MonoBehaviour {
                 }
                 else
                 {
-                    if (p2moveAble && Input.GetAxis(p2joystick + "LT") > 0.5f && Time.time - clickTime > rollCDtime)
+                    if (p2moveAble && Input.GetAxis(p2joystick + "LT") > 0.5f && Time.time - clickTime > rollCDtime && inFuntionTime == 0)
                     {
                         if (Mathf.Abs(L_JoyY) < 0.1f && Mathf.Abs(L_JoyX) < 0.1f) return;
                         clickTime = Time.time;
@@ -252,14 +251,14 @@ public class Player : MonoBehaviour {
             #region 攻擊
             if (!p2controller) //鍵盤
             {
-                if ((Input.GetMouseButtonDown(0))) //|| p1_RT > 0.1f
+                if (p2moveAble && (Input.GetMouseButtonDown(0))) //|| p1_RT > 0.1f
                 {
                     animation_type = 2;
                 }
             }
             else
             {
-                if (Input.GetButtonDown(p2joystick + "ButtonA")) animation_type = 2;
+                if (p2moveAble && Input.GetButtonDown(p2joystick + "ButtonA")) animation_type = 2;
             }
 
             #endregion
@@ -683,14 +682,11 @@ public class Player : MonoBehaviour {
         animator.SetBool("is_attack", false);
         animation_type = 0;
         inFuntionTime = 0;
-        weaponUsedTimes++;
         invincible = false;
-        if (weaponUsedTimes >= weapon.durability)
+        if (pickWeaponScript.UsingWeaponTillBroken())
         {
-            pickWeaponScript.DestroyWeapon();
             weapon = CItemDataBase.items[0];
             projectile_num = 0;
-            weaponUsedTimes = 0;
         }
         if (test) tutorialRequest.DoneAttack();
         Debug.Log("OverAttack");
