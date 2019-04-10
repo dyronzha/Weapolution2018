@@ -19,8 +19,14 @@ public class PVPPlayerManager : MonoBehaviour {
             playerControls[i] = controls.GetChild(i).GetComponent<PlayerControl>();
             if(i<2)playerControls[i].Init(this, characterVoice, true);
             else playerControls[i].Init(this, characterVoice, false);
-            if (i==1 || i== 3)playerControls[i].SetController(true, controller[i]);
-            else playerControls[i].SetController(false, controller[i]);
+            if (i == 1 || i == 3) {
+                playerControls[i].SetController(true, controller[i]);
+                playerControls[i].GetComponent<PVPCraftSystem>().Init(characterVoice, controller[i]);
+            } 
+            else {
+                playerControls[i].SetController(false, controller[i]);
+                playerControls[i].GetComponent<PVPAttacker>().Init(characterVoice, controller[i]);
+            } 
         }
 
         teamHp.Init(PVPGameOver);
@@ -39,12 +45,21 @@ public class PVPPlayerManager : MonoBehaviour {
         controller[id] = con;
     }
 
-    public void PVPGameOver() {
+    public void PVPGameOver(int team) {
+        if (team == 0)
+        {
+            playerControls[0].GoDie();
+            playerControls[1].GoDie();
+        }
+        else {
+            playerControls[2].GoDie();
+            playerControls[3].GoDie();
+        }
         StartCoroutine(stageManager.SlowDown(2.2f, false));
     }
 
     public void SetHP(bool teamA, float value) {
-
+        teamHp.ChangeHp(teamA, value);
     }
 
 }

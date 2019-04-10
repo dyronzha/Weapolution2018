@@ -15,10 +15,13 @@ public class UseTrapeSystem : MonoBehaviour {
     public Sprite ToolImg, unToolImg;
     public LayerMask trapeMask;
 
+    CraftSystem craftSystem;
+
     private void Awake()
     {
         Tool = transform.Find("Tool").GetComponent<SpriteRenderer>();
         childProjectSystem = GameObject.Find("Trapes").GetComponent<CChildProjectSystem>();
+        craftSystem = transform.Find("CraftSystem").GetComponent<CraftSystem>();
     }
 
     // Use this for initialization
@@ -71,6 +74,8 @@ public class UseTrapeSystem : MonoBehaviour {
                     usingTool = true;
                     switchMove(false);
                     if (trapeNum < 2) trapeNum++;
+
+                    craftSystem.SetFuncBusy(true);
                 }
             }
         }
@@ -91,6 +96,7 @@ public class UseTrapeSystem : MonoBehaviour {
                     usingTool = true;
                     switchMove(false);
                     if (trapeNum < 2) trapeNum++;
+                    craftSystem.SetFuncBusy(true);
                 }
             }
         }
@@ -133,6 +139,7 @@ public class UseTrapeSystem : MonoBehaviour {
         Tool.enabled = false;
         OnBuildTrapping = false;
         switchMove(true);
+        craftSystem.SetFuncBusy(false);
 
     }
 

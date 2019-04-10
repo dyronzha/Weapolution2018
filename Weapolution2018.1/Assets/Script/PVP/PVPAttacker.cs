@@ -8,6 +8,9 @@ public class PVPAttacker : MonoBehaviour {
     PickWeaponPVP pickWeapon;
     bool isKeyboard;
     string control;
+    int projectileNum = 0;
+
+    Transform projectileSystem, weapon;
 
     Animator animator;
     CharacterVoice effectAudio;
@@ -15,17 +18,13 @@ public class PVPAttacker : MonoBehaviour {
     // Use this for initialization
     private void Awake()
     {
-        playerControl = GetComponent<PlayerControl>();
-        pickWeapon = transform.Find("PickWeapon").GetComponent<PickWeaponPVP>();
-        animator = transform.parent.GetComponent<Animator>();
+        projectileSystem = GameObject.Find("ProjectileSystem").transform;
+        weapon = transform.GetChild(1).GetChild(0);
     }
     void Start() {
-        playerControl.SubAtkFunc(AttackOver);
+        
 
-        control = playerControl.GetControl();
-        if (control == "keyboard") isKeyboard = true;
-        else isKeyboard = false;
-        pickWeapon.SetController(!isKeyboard, control);
+        
     }
 
     // Update is called once per frame
@@ -33,8 +32,18 @@ public class PVPAttacker : MonoBehaviour {
         GetInput();
     }
 
-    public void SetVoice(CharacterVoice voice) {
+    public void Init(CharacterVoice voice, string con) {
+        playerControl = GetComponent<PlayerControl>();
+        animator = transform.parent.GetComponent<Animator>();
         effectAudio = voice;
+
+        if (con == "keyboard") isKeyboard = true;
+        else isKeyboard = false;
+
+        pickWeapon = transform.Find("PickWeapon").GetComponent<PickWeaponPVP>();
+        pickWeapon.SetController(!isKeyboard, control);
+
+        playerControl.SubAtkFunc(AttackOver);
     }
 
     void GetInput() {
@@ -42,8 +51,7 @@ public class PVPAttacker : MonoBehaviour {
         {
             if (Input.GetMouseButtonDown(0) && pickWeapon.holdWeapon.ani_type >= 0)
             {
-                playerControl.SetAttackState(pickWeapon.holdWeapon.ani_type);
-                Attack();
+                if(playerControl.SetAttackState(pickWeapon.holdWeapon.ani_type)) Attack();
             }
             if (Input.GetMouseButtonDown(1)){
                 playerControl.SetDashState();
@@ -52,8 +60,7 @@ public class PVPAttacker : MonoBehaviour {
         else {
             if (Input.GetButtonDown(control + "ButtonA") && pickWeapon.holdWeapon.ani_type >= 0)
             {
-                playerControl.SetAttackState(pickWeapon.holdWeapon.ani_type);
-                Attack();
+                if (playerControl.SetAttackState(pickWeapon.holdWeapon.ani_type)) Attack();
             }
             if (Input.GetAxis(control + "LT") >= 0.5f)
             {
@@ -81,11 +88,34 @@ public class PVPAttacker : MonoBehaviour {
 
     void AttackOver()
     {
-        if (pickWeapon.UsingWeaponTillBroken())
-        {
-            //projectile_num = 0;
-        }
+        pickWeapon.UsingWeaponTillBroken();
         Debug.Log("OverAttack");
+
+        //if (pickWeapon.UsingWeaponTillBroken())
+        //{
+        //    //projectile_num = 0;
+        //}
+
+    }
+
+    public void ShootProjectile()
+    {
+        Transform tempProjectile = projectileSystem.GetChild(projectileNum);
+        tempProjectile.position = weapon.position;
+        tempProjectile.gameObject.SetActive(true);
+        tempProjectile.GetComponent<Projectile>().SetProjectileImg(playerControl.GetFaceDir());
+        projectileNum++;
+        if (projectileNum >= projectileSystem.transform.childCount)
+        {
+            projectileNum = 0;
+        }
+        //if (projectile_num >= weapon.durability) //大於武器耐久
+        //{
+        //    projectile_num = 0;
+        //    outOfProjectile = true;
+        //    pickWeaponScript.ThrowWeapon();
+        //    //GameObject.Find("PickWeapon").GetComponent<CPickWeapon>().ThrowWeapon();
+        //}
     }
 
 }

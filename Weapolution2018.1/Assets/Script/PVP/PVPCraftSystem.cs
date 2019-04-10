@@ -22,20 +22,17 @@ public class PVPCraftSystem : MonoBehaviour {
     public bool craftFunc = true, useController = false;
     [HideInInspector]
     public string whichPlayer;
-    public bool test;
     public float throwSpeed;
-    public int spikeNum = 0;
     public CItem[] items;
     public GameObject Slot;
-    public bool isCraftPlayer;
-    public TutorialRequest tutorialRequest;
+
+    PlayerControl playerControl;
 
     // CCraftItem craftReslut;
 
     // Use this for initialization
     void Awake()
     {
-        if (!isCraftPlayer) this.gameObject.SetActive(false);
         handle = this.transform.GetChild(0).GetComponent<SpriteRenderer>();
         handle.enabled = false;
         //items = ItemDataBase.GetItemDataBase();
@@ -57,6 +54,8 @@ public class PVPCraftSystem : MonoBehaviour {
         crafterAnimator = transform.parent.GetComponent<Animator>();
         craftFunc = true;
         healEffect = GameObject.Find("HealEffects").GetComponent<HealEffects>();
+
+        playerControl = transform.parent.GetComponent<PlayerControl>();
     }
 
     private void Start()
@@ -128,6 +127,12 @@ public class PVPCraftSystem : MonoBehaviour {
 
     }
 
+    public void Init(CharacterVoice voice, string con) {
+        if (con == "keyboard") useController = false;
+        else useController = true;
+        whichPlayer = con;
+    }
+
     void InputFixed()
     {
         if (!LBFixed)
@@ -170,7 +175,6 @@ public class PVPCraftSystem : MonoBehaviour {
                     picking_item.GetComponent<COutLine>().SetOutLine(false);
                     picking_item.SetInFree();
                     ChangeSlot(true, -1);
-                    if (test) tutorialRequest.DonePickUp(true);
                 }
                 else
                 {
@@ -188,7 +192,6 @@ public class PVPCraftSystem : MonoBehaviour {
                         handling_item.GetComponent<CPickItem>().SetLifeTime(0.0f);
                         ChangeSlot(true, 0);
                         ArrowEnable(true);
-                        if (test) tutorialRequest.DonePickUp(true);
                     }
                     else
                     {
@@ -217,7 +220,6 @@ public class PVPCraftSystem : MonoBehaviour {
                     picking_item.GetComponent<COutLine>().SetOutLine(false);
                     picking_item.SetInFree();
                     ChangeSlot(true, -1);
-                    if (test) tutorialRequest.DonePickUp(true);
                 }
                 else
                 {
@@ -235,7 +237,6 @@ public class PVPCraftSystem : MonoBehaviour {
                         handling_item.GetComponent<CPickItem>().SetLifeTime(0.0f);
                         ChangeSlot(true, 0);
                         ArrowEnable(true);
-                        if (test) tutorialRequest.DonePickUp(true);
                     }
                     else
                     {
@@ -288,7 +289,6 @@ public class PVPCraftSystem : MonoBehaviour {
             //    craft_records[craftA.id] = true;
             //    //craftMenu.UpdateMenuInfo(craftA.id);
             //}
-            if (test) tutorialRequest.DoneCraft();
         }
         else
         {
@@ -361,7 +361,6 @@ public class PVPCraftSystem : MonoBehaviour {
             handle.enabled = false;
             b_handling = false;
             goingThrow = false;
-            if (test) tutorialRequest.DoneThrow();
         }
 
     }
@@ -476,10 +475,6 @@ public class PVPCraftSystem : MonoBehaviour {
         pick_collect.ThrowItemOut();
         pick_collect = null;
         craftFunc = true;
-        if (test)
-        {
-            tutorialRequest.DoneCollect();
-        }
     }
 
     void switchMove(bool enable)

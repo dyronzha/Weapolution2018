@@ -32,10 +32,13 @@ public class Crafter : MonoBehaviour {
 
     LayerMask unWalkable;
 
+    CraftSystem craftSystem;
+
     private void Awake()
     {
         unWalkable = 1 << LayerMask.NameToLayer("Obstacle") |
                       1 << LayerMask.NameToLayer("ObstacleForOut");
+        craftSystem = transform.Find("CraftSystem").GetComponent<CraftSystem>();
     }
 
     void Start () {
@@ -84,11 +87,13 @@ public class Crafter : MonoBehaviour {
         TeamHp.ChangeHp(false, 0.05f);
         GameObject.Find("MonsterAudio").GetComponent<MonsterVoice>().SetAudio(2,1f);
         GameObject.Find("CharacterAudio").GetComponent<CharacterVoice>().SetAudio(1);
+        craftSystem.SetFuncBusy(true);
     }
     public void OverBeHurt()
     {
         if (Player.p2charaType) Player.p2moveAble = true;
         else Player.p1moveAble = true;
+        craftSystem.SetFuncBusy(false);
     }
     void BeSticked()
     {

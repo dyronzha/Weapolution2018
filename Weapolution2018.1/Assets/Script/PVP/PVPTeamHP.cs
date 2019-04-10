@@ -7,7 +7,7 @@ public class PVPTeamHP : MonoBehaviour {
 
     float[] teamHp = new float[2]; //滿血是1
     
-    System.Action gameOver;
+    System.Action<int> gameOver;
 
     public Image[] teamHPImg = new Image[2];
     public Image[] teamAppearance = new Image[2];
@@ -27,8 +27,8 @@ public class PVPTeamHP : MonoBehaviour {
     {
     }
 
-    public void Init(System.Action cbk) {
-        gameOver += cbk;
+    public void Init(System.Action<int> cbk) {
+        gameOver = cbk;
     }
 
     void RenderUI(int id)
@@ -66,7 +66,7 @@ public class PVPTeamHP : MonoBehaviour {
     {
         if (teamHp[id] < 0 )
         {
-            gameOver();
+            gameOver(id);
         }
     }
 

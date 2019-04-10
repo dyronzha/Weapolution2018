@@ -605,7 +605,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1509064461851820, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
       propertyPath: m_Layer
-      value: 13
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114046573159395030, guid: 937f97f65f7a09049a5c51edb34698c4,
         type: 2}
@@ -640,6 +640,15 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 8c1265c84ce9a3448a6b8a9d2ed875d2,
         type: 3}
+    - target: {fileID: 61834303271580040, guid: 937f97f65f7a09049a5c51edb34698c4,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509064461851820, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
+      propertyPath: m_TagString
+      value: DamageToPlayer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
   m_IsPrefabAsset: 0
@@ -10053,6 +10062,19 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 8c1265c84ce9a3448a6b8a9d2ed875d2,
         type: 3}
+    - target: {fileID: 61225137814395290, guid: 85c57b1b5a7eb584dbdaccbc3e779c19,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102546242595936, guid: 85c57b1b5a7eb584dbdaccbc3e779c19, type: 2}
+      propertyPath: m_TagString
+      value: DamageToPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1102546242595936, guid: 85c57b1b5a7eb584dbdaccbc3e779c19, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85c57b1b5a7eb584dbdaccbc3e779c19, type: 2}
   m_IsPrefabAsset: 0
@@ -10910,7 +10932,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1509064461851820, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
       propertyPath: m_Layer
-      value: 13
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114046573159395030, guid: 937f97f65f7a09049a5c51edb34698c4,
         type: 2}
@@ -10945,6 +10967,15 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 8c1265c84ce9a3448a6b8a9d2ed875d2,
         type: 3}
+    - target: {fileID: 61834303271580040, guid: 937f97f65f7a09049a5c51edb34698c4,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509064461851820, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
+      propertyPath: m_TagString
+      value: DamageToPlayer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
   m_IsPrefabAsset: 0
@@ -18493,7 +18524,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1509064461851820, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
       propertyPath: m_Layer
-      value: 13
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114046573159395030, guid: 937f97f65f7a09049a5c51edb34698c4,
         type: 2}
@@ -18528,6 +18559,15 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 8c1265c84ce9a3448a6b8a9d2ed875d2,
         type: 3}
+    - target: {fileID: 61834303271580040, guid: 937f97f65f7a09049a5c51edb34698c4,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509064461851820, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
+      propertyPath: m_TagString
+      value: DamageToPlayer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
   m_IsPrefabAsset: 0
@@ -21048,7 +21088,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1509064461851820, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
       propertyPath: m_Layer
-      value: 13
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 114046573159395030, guid: 937f97f65f7a09049a5c51edb34698c4,
         type: 2}
@@ -21083,6 +21123,15 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 8c1265c84ce9a3448a6b8a9d2ed875d2,
         type: 3}
+    - target: {fileID: 61834303271580040, guid: 937f97f65f7a09049a5c51edb34698c4,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1509064461851820, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
+      propertyPath: m_TagString
+      value: DamageToPlayer
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 937f97f65f7a09049a5c51edb34698c4, type: 2}
   m_IsPrefabAsset: 0

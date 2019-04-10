@@ -18,9 +18,13 @@ public class TrapSystem : MonoBehaviour {
     public Transform enemyOut;
     public TutorialRequest tutorialRequest;
     public bool test;
+
+    CraftSystem craftSystem;
+
     private void Awake()
     {
         Tool = transform.Find("Tool").GetComponent<SpriteRenderer>();
+        craftSystem = transform.Find("CraftSystem").GetComponent<CraftSystem>();
     }
 
     // Use this for initialization
@@ -62,7 +66,7 @@ public class TrapSystem : MonoBehaviour {
 	}
 
     void UseTrap() {
-        if (digging) return;
+        if (digging || !craftSystem.GetFunc()) return;
         if (!useController)
         {
             if (Input.GetKeyDown(KeyCode.Q))
@@ -83,6 +87,7 @@ public class TrapSystem : MonoBehaviour {
                         switchMove(false);
                         if (test) tutorialRequest.DoneTrap();
                         if (trapNum < 2) trapNum++;
+                        craftSystem.SetFuncBusy(true);
                         return;
                     }
                 }
@@ -110,6 +115,7 @@ public class TrapSystem : MonoBehaviour {
                         if (test) tutorialRequest.DoneTrap();
                         if (trapNum < 2) trapNum++;
                         Debug.Log("shovel" + trapNum);
+                        craftSystem.SetFuncBusy(true);
                         return;
                     }
                 }
@@ -248,6 +254,7 @@ public class TrapSystem : MonoBehaviour {
                 digging = false;
                 switchMove(true);
                 Tool.enabled = false;
+                craftSystem.SetFuncBusy(false);
                 return;
             }
         }

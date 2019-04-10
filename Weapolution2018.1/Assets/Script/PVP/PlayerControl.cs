@@ -22,7 +22,8 @@ public class PlayerControl : MonoBehaviour {
     Action AttackOver;
 
     enum State {
-        idle, move, dash, hurt, die, attack
+        idle, move, dash, hurt, die, attack,
+        collect, useTrap
     }
     State state = State.idle;
     State lastState = State.die;
@@ -52,7 +53,7 @@ public class PlayerControl : MonoBehaviour {
                 if (FirstInState())
                 {
                     animator.SetBool("is_walk", true);
-                    moveMask = 1 << LayerMask.NameToLayer("Obstacle");
+                    moveMask = 1 << LayerMask.NameToLayer("Obstacle") | 1 << LayerMask.NameToLayer("Player");
                 }
                 GetInput();
                 Move();
@@ -60,7 +61,7 @@ public class PlayerControl : MonoBehaviour {
             case State.dash:
                 if (FirstInState()) {
                     animator.SetBool("is_rolling", true);
-                    moveMask = 1 << LayerMask.NameToLayer("Obstacle") | 1 << LayerMask.NameToLayer("Player");
+                    moveMask = 1 << LayerMask.NameToLayer("Obstacle");
                     dashDir = new Vector2(speedX, speedY).normalized;
                     dashHit = false;
                     dashTime = .0f;
@@ -68,12 +69,14 @@ public class PlayerControl : MonoBehaviour {
                 Dash();
                 break;
             case State.hurt:
-                
+                if(FirstInState()) animator.SetTrigger("is_hurt");
                 break;
             case State.die:
+                if(FirstInState()) animator.SetBool("is_die", true);
                 break;
             case State.attack:
-                if(meleeWeapon) GetInput();
+                if(FirstInState()) animator.SetBool("is_attack", true);
+                if (meleeWeapon) GetInput();
                 break;
 
         }
@@ -89,9 +92,6 @@ public class PlayerControl : MonoBehaviour {
         isCraft = crafter;
         control = con;
         if (con == "keyboard") isKeyboard = true;
-    }
-    public string GetControl() {
-        return control;
     }
     public void SubAtkFunc( Action atkOver) {
         AttackOver = atkOver;
@@ -160,7 +160,7 @@ public class PlayerControl : MonoBehaviour {
 
 
             //如果在攻擊狀態跳過下面狀態切換只接收移動輸入
-            if (state == State.attack) return;
+            if (state != State.idle && state != State.move) return;
 
             //判斷是否移動
             if (Mathf.Abs(speedY) < 0.1f && Mathf.Abs(speedX) < 0.1f)
@@ -218,22 +218,43 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
-    public void SetAttackState(int type) {
+    public bool SetAttackState(int type) {
         if (state == State.idle || state == State.move)
         {
             state = State.attack;
             if (type == 0) meleeWeapon = true;
             else meleeWeapon = false;
+            return true;
         }
+        else return false;
     }
     public void SetDashState() {
         if (state == State.move)
         {
             state = State.dash;
         }
-        
+    }
+    public bool SetCollect() {
+        if (state == State.idle || state == State.move)
+        {
+            state = State.collect;
+            return true;
+        }
+        else return false;
+    }
+    public bool SetUseTrap()
+    {
+        if (state == State.idle || state == State.move)
+        {
+            state = State.useTrap;
+            return true;
+        }
+        else return false;
     }
 
+    public int GetFaceDir() {
+        return faceDir;
+    }
 
     void Move()
     {
@@ -287,22 +308,22 @@ public class PlayerControl : MonoBehaviour {
     {
         animator.SetBool("is_attack", false);
         state = State.idle;
-        invincible = false;
         Debug.Log("OverAttack");
         speedX = .0f;
         speedY = .0f;
+        //invincible = false;
 
         AttackOver();
     }
 
-    public void GetHurt()
+    public void GetHurt(float value)
     {
         //Debug.Log("getHurt");
 
         state = State.hurt;
         invincible = true;
         effectAudio.SetAudio(1);
-        animator.SetTrigger("is_hurt");
+        //animator.SetTrigger("is_hurt");
         speedX = .0f;
         speedY = .0f;
         if (state == State.attack)//如果被打到時正在攻擊，被斷招
@@ -335,10 +356,15 @@ public class PlayerControl : MonoBehaviour {
     }
 
 
+    public void GoDie() {
+        state = State.die;
+        die = true;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "DamageToPlayer" && !invincible && !die) {
-            GetHurt();
+            GetHurt(collision.GetComponent<PVPProjectile>().GetATKValue());
         }
     }
 

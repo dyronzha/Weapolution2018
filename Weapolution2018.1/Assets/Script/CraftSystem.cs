@@ -455,6 +455,13 @@ public class CraftSystem : MonoBehaviour {
         }
     }
 
+    public bool GetFunc() {
+        return craftFunc;
+    }
+    public void SetFuncBusy(bool busy) {
+        craftFunc = !busy;
+    }
+
     void switchMove(bool enable) {
         if (enable)
         {

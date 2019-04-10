@@ -138,14 +138,14 @@ public class PickWeaponPVP : MonoBehaviour {
         }
     }
 
-    public bool UsingWeaponTillBroken() {
+    public void UsingWeaponTillBroken() {
         int used = pickWeapon.BeingUsed();
         if (used >= holdWeapon.durability)
         {
             DestroyWeapon();
-            return true;
+            //return true;
         }
-        else return false;
+        //else return false;
     }
 
     public void DestroyWeapon()
