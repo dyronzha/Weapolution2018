@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerControl : MonoBehaviour {
 
     bool isCraft, isKeyboard, dashHit, invincible, die;
-    bool teamA;
+    bool teamA, meleeWeapon;
     int faceDir = 1, lastDir = -1;
     string control;
     float speedX, speedY, dashInputTime = 1.0f, dashTime;
@@ -13,10 +14,12 @@ public class PlayerControl : MonoBehaviour {
     Vector3 moveDir = Vector3.zero;
     LayerMask moveMask;
     Animator animator;
-    CraftSystem craftSystem;
-    PickWeaponPVP pickWeapon;
+    //CraftSystem craftSystem;
+    //PickWeaponPVP pickWeapon;
     PVPPlayerManager playerManager;
     CharacterVoice effectAudio;
+
+    Action AttackOver;
 
     enum State {
         idle, move, dash, hurt, die, attack
@@ -31,10 +34,8 @@ public class PlayerControl : MonoBehaviour {
     {
         moveMask = 1 << LayerMask.NameToLayer("Obstacle");
         animator = GetComponent<Animator>();
-        pickWeapon = transform.Find("PickWeapon").GetComponent<PickWeaponPVP>();
     }
     void Start() {
-        pickWeapon.SetController(!isKeyboard, control);
     }
 
     // Update is called once per frame
@@ -72,10 +73,7 @@ public class PlayerControl : MonoBehaviour {
             case State.die:
                 break;
             case State.attack:
-                if (FirstInState()) {
-                    Attack();
-                }
-                if(pickWeapon.holdWeapon.ani_type == 0) GetInput();
+                if(meleeWeapon) GetInput();
                 break;
 
         }
@@ -85,14 +83,18 @@ public class PlayerControl : MonoBehaviour {
         playerManager = manager;
         effectAudio = voice;
         teamA = team;
+        
     }
     public void SetController(bool crafter, string con) {
         isCraft = crafter;
         control = con;
         if (con == "keyboard") isKeyboard = true;
-        if (crafter) {
-            craftSystem = transform.Find("CraftSystem").GetComponent<CraftSystem>();
-        }
+    }
+    public string GetControl() {
+        return control;
+    }
+    public void SubAtkFunc( Action atkOver) {
+        AttackOver = atkOver;
     }
 
 
@@ -167,13 +169,7 @@ public class PlayerControl : MonoBehaviour {
             }
             else
             {// 有移動輸入再偵測翻滾輸入
-                if (Input.GetMouseButtonDown(1)) state = State.dash;
-                else state = State.move;
-            }
-
-            //判斷攻擊
-            if (Input.GetMouseButtonDown(0) && pickWeapon.holdWeapon.ani_type >= 0) {
-                state = State.attack;
+                state = State.move;
             }
         }
         else { //手把移動
@@ -190,7 +186,7 @@ public class PlayerControl : MonoBehaviour {
             }
 
             //如果在攻擊狀態跳過下面狀態切換只接收移動輸入
-            if (state == State.attack) return;
+            if (state != State.idle && state != State.move) return;
 
             //判斷是否移動
             if (Mathf.Abs(speedY) < 0.1f && Mathf.Abs(speedX) < 0.1f)
@@ -199,17 +195,9 @@ public class PlayerControl : MonoBehaviour {
                 //dashInputTime = 1.0f;
             }
             else
-            {// 有移動輸入再偵測翻滾輸入
-                if (GetControllerDash()) state = State.dash;
-                else state = State.move;
-            }
-
-            //判斷攻擊
-            if (Input.GetButtonDown(control + "ButtonA") && pickWeapon.holdWeapon.ani_type >= 0)
             {
-                state = State.attack;
+                 state = State.move;
             }
-
         }
         if (lastDir != faceDir)
         {
@@ -230,22 +218,22 @@ public class PlayerControl : MonoBehaviour {
 
     }
 
-
-    bool GetControllerDash() {
-
-        if (dashInputTime < 0.5f) {
-            dashInputTime += Time.deltaTime;
-            return false;
-        }
-        else {
-            if (Input.GetAxis(control + "LT") < 0.5f)
-                return false;
-            else {
-                dashInputTime = 0.0f;
-                return true;
-            } 
+    public void SetAttackState(int type) {
+        if (state == State.idle || state == State.move)
+        {
+            state = State.attack;
+            if (type == 0) meleeWeapon = true;
+            else meleeWeapon = false;
         }
     }
+    public void SetDashState() {
+        if (state == State.move)
+        {
+            state = State.dash;
+        }
+        
+    }
+
 
     void Move()
     {
@@ -271,7 +259,7 @@ public class PlayerControl : MonoBehaviour {
 
     void Dash() {
         dashTime += Time.deltaTime;
-        if (dashTime > 0.4f) state = State.idle;
+        //if (dashTime > 0.4f) state = State.idle;
         if (!dashHit) {
             Vector2 pos = new Vector2(transform.position.x, transform.position.y + 0.2f);
             if (Physics2D.Raycast(pos, dashDir, 2.5f, moveMask))
@@ -287,41 +275,24 @@ public class PlayerControl : MonoBehaviour {
         speedY = 0;
         animator.SetBool("is_rolling", false);
         animator.SetBool("is_walk", false);
+        state = State.idle;
         Debug.Log("OverRoll");
         //roll_time = 0;
         //invincible = false;
         //inFuntionTime = 0;
     }
 
-    void Attack() {
-        if (pickWeapon.holdWeapon.ani_type == 0) //持近距離武器
-        {
-            animator.SetInteger("weapon_type", 0);
-        }
-        else if (pickWeapon.holdWeapon.ani_type == 1)//持遠距離武器
-        {
-            animator.SetInteger("weapon_type", 1);
-        }
-        else if (pickWeapon.holdWeapon.ani_type == 2) //放陷阱
-        {
-            animator.SetInteger("weapon_type", 2);
-        }
-        animator.SetBool("is_attack", true);
-        effectAudio.SetAudio(pickWeapon.holdWeapon.audio_source);
-    }
 
     public void OverAttack()
     {
         animator.SetBool("is_attack", false);
         state = State.idle;
         invincible = false;
-        if (pickWeapon.UsingWeaponTillBroken())
-        {
-            //projectile_num = 0;
-        }
         Debug.Log("OverAttack");
         speedX = .0f;
         speedY = .0f;
+
+        AttackOver();
     }
 
     public void GetHurt()
