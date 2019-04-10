@@ -217,7 +217,9 @@ public class PlayerControl : MonoBehaviour {
         //}
 
     }
-
+    public void SetIDle() {
+        state = State.idle;
+    }
     public bool SetAttackState(int type) {
         if (state == State.idle || state == State.move)
         {

@@ -439,7 +439,7 @@ public class PVPCraftSystem : MonoBehaviour {
                 if (!LBFixed) return;
                 LBFixed = false;
                 CollectAni();
-                switchMove(false);
+                playerControl.SetCollect();
                 StartCoroutine("OnCollecting");
             }
         }
@@ -448,7 +448,7 @@ public class PVPCraftSystem : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.E))
             {
                 CollectAni();
-                switchMove(false);
+                playerControl.SetCollect();
                 StartCoroutine("OnCollecting");
             }
         }
@@ -471,26 +471,12 @@ public class PVPCraftSystem : MonoBehaviour {
         crafterAnimator.SetBool("is_gather", false);
         collectBarBk.GetComponent<SpriteRenderer>().enabled = false;
         collectBar.GetComponent<SpriteRenderer>().enabled = false;
-        switchMove(true);
+        playerControl.SetIDle();
         pick_collect.ThrowItemOut();
         pick_collect = null;
         craftFunc = true;
     }
 
-    void switchMove(bool enable)
-    {
-        if (enable)
-        {
-            if (Player.p1charaType) Player.p1moveAble = true;
-            else Player.p2moveAble = true;
-        }
-        else
-        {
-            if (Player.p1charaType) Player.p1moveAble = false;
-            else Player.p2moveAble = false;
-        }
-
-    }
     public void ThrowOut()
     {
         handling_item.GetComponent<CPickItem>().SetInFree();
