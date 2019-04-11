@@ -11,6 +11,7 @@ public class CChildProjectSystem : MonoBehaviour {
         web = 2,
         mouseTape = 3,
         poison = 4,
+        pvpbanana = 5
     }
 
     public typeForm type;
