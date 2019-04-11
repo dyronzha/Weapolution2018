@@ -19,7 +19,7 @@ public class PlayerControl : MonoBehaviour {
     PVPPlayerManager playerManager;
     CharacterVoice effectAudio;
 
-    Action AttackOver;
+    Action AttackOver, TrapOver, CollectOver;
 
     enum State {
         idle, move, dash, hurt, die, attack,
@@ -78,6 +78,12 @@ public class PlayerControl : MonoBehaviour {
                 if(FirstInState()) animator.SetBool("is_attack", true);
                 if (meleeWeapon) GetInput();
                 break;
+            case State.collect:
+
+                break;
+            case State.useTrap:
+                //if (FirstInState()) animator.SetTrigger("is_dig");
+                break;
 
         }
     }
@@ -96,7 +102,10 @@ public class PlayerControl : MonoBehaviour {
     public void SubAtkFunc( Action atkOver) {
         AttackOver = atkOver;
     }
-
+    public void SubCraftFunc(Action trapOver, Action colOver) {
+        TrapOver = trapOver;
+        CollectOver = colOver;
+    }
 
     bool FirstInState() {
         if (state != lastState) {
@@ -265,7 +274,7 @@ public class PlayerControl : MonoBehaviour {
         RaycastHit2D upHit = Physics2D.Raycast(pos, new Vector3(0, 1, 0),
                                         1.5f, moveMask);
         RaycastHit2D downHit = Physics2D.Raycast(pos, new Vector3(0, -1, 0),
-                                        0.5f, moveMask);
+                                        0.45f, moveMask);
         RaycastHit2D leftHit = Physics2D.Raycast(pos, new Vector3(-1, 0, 0),
                                         0.8f, moveMask);
         RaycastHit2D rightHit = Physics2D.Raycast(pos, new Vector3(1, 0, 0),
@@ -355,6 +364,19 @@ public class PlayerControl : MonoBehaviour {
         invincible = false;
         //TeamHp.checkGameOver = true;
 
+    }
+
+
+    public void OverGathering() {
+        CollectOver();
+        animator.SetBool("is_gather", false);
+        animator.SetBool("is_walk", false);
+        state = State.idle;
+    }
+    public void SetTrapOver() {
+        TrapOver();
+        animator.SetBool("is_walk", false);
+        state = State.idle;
     }
 
 

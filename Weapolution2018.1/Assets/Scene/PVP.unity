@@ -14600,9 +14600,8 @@ GameObject:
   - component: {fileID: 1161687257}
   - component: {fileID: 1161687256}
   - component: {fileID: 1161687255}
-  - component: {fileID: 1161687254}
   - component: {fileID: 1161687253}
-  - component: {fileID: 1161687252}
+  - component: {fileID: 1161687258}
   m_Layer: 13
   m_Name: character2
   m_TagString: Player
@@ -14610,26 +14609,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1161687252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114758104764821250, guid: 7fb0bf14e3a700f42bc1873593f0ab8f,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1161687251}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4567a761eb222e49816eabd3c4f6d7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shovelImg: {fileID: 21300000, guid: a64018324cec90d4f9aa336f99b90471, type: 3}
-  unShovelImg: {fileID: 21300000, guid: e4e2197045e9c9e48b7f11dad88adcf7, type: 3}
-  traps:
-  - {fileID: 273876759}
-  - {fileID: 1819560476}
-  enemyOut: {fileID: 0}
-  tutorialRequest: {fileID: 0}
-  test: 0
 --- !u!114 &1161687253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14643,25 +14622,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   f_base: 0
---- !u!114 &1161687254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114712748133012306, guid: 7fb0bf14e3a700f42bc1873593f0ab8f,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1161687251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bd73d9dffd0f284db03af45e2cda4f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  last_way: 0
-  test: 0
-  character_num: 2
-  Speed: 5
-  CanonScript: {fileID: 0}
-  animator: {fileID: 0}
-  PlayerScript: {fileID: 0}
 --- !u!61 &1161687255
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -14728,6 +14688,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1161687258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1161687251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db9205974c363b4e9aabcb6534395e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
 --- !u!1 &1187114129
 GameObject:
   m_ObjectHideFlags: 0

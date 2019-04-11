@@ -132,7 +132,7 @@ public class UseTrapeSystem : MonoBehaviour {
         if(trapeNum > 0)trapeNum--;
     }
 
-    public void OnBuildingTrape() {
+    public void SetTrapOver() {
         Vector3 pos = new Vector3(transform.position.x, transform.position.y - 0.6f,transform.position.z);
         childProjectSystem.AddUsed(pos);
         childProjectSystem.GetNewestChild().SetOn(true, RecycleTrape);

@@ -63,6 +63,7 @@ public class PVPCraftSystem : MonoBehaviour {
 
         playerControl = transform.parent.GetComponent<PlayerControl>();
         tool = transform.parent.Find("Tool").GetComponent<SpriteRenderer>();
+        playerControl.SubCraftFunc(SetTrapOver, CollectOver);
     }
 
     private void Start()
@@ -449,10 +450,13 @@ public class PVPCraftSystem : MonoBehaviour {
             collectBar.localScale = new Vector3(Mathf.Lerp(0.0f, 1.05f, time), 0.1f, 1.0f);
             yield return null;
         }
+        //playerControl.SetIDle();
+    }
+
+    void CollectOver() {
         crafterAnimator.SetBool("is_gather", false);
         collectBarBk.GetComponent<SpriteRenderer>().enabled = false;
         collectBar.GetComponent<SpriteRenderer>().enabled = false;
-        playerControl.SetIDle();
         pick_collect.ThrowItemOut();
         pick_collect = null;
         craftFunc = true;
@@ -492,8 +496,7 @@ public class PVPCraftSystem : MonoBehaviour {
             if (Input.GetButtonDown(whichPlayer + "ButtonX") && CanSetTrap())
             {
                 if (playerControl.SetUseTrap()) {
-                    trapSystem.AddUsed(transform.position);
-                    trapSystem.GetNewestChild().SetOn(false, RecycleTrape);
+                    craftFunc = false;
                     trapNum++;
                 }  
             }
@@ -502,9 +505,8 @@ public class PVPCraftSystem : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Q) && CanSetTrap()) {
                 if (playerControl.SetUseTrap())
                 {
-                    trapSystem.AddUsed(transform.position);
-                    trapSystem.GetNewestChild().SetOn(false, RecycleTrape);
                     trapNum++;
+                    craftFunc = false;
                 }
             }
         }
@@ -522,6 +524,12 @@ public class PVPCraftSystem : MonoBehaviour {
             tool.sprite = ToolImg;
             return true;
         } 
+    }
+    public void SetTrapOver() {
+        trapSystem.AddUsed(transform.position);
+        trapSystem.GetNewestChild().SetOn(false, RecycleTrape);
+        tool.enabled = false;
+        craftFunc = true;
     }
     void UnBuildTrape()
     {
