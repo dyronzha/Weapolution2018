@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PVPTrapSystem : MonoBehaviour {
 
-    Transform traps;
+    public CChildProjectSystem traps;
+    PlayerControl playerControl;
 
-
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    private void Awake()
+    {
+        playerControl = GetComponent<PlayerControl>();
+    }
+    void Start () {
 		
 	}
 	

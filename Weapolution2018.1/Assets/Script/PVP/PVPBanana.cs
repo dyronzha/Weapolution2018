@@ -51,8 +51,14 @@ public class PVPBanana : CChildProject
         oringinPos = transform.position;
     }
 
+    public override void SetOn(bool _isOuT, System.Action _callBack)
+    {
+        callBack = _callBack;
+    }
+
     public override void ResetChild()
     {
+        callBack();
         time = 0.0f;
         boom = false;
         bananaFly = false;
@@ -61,6 +67,7 @@ public class PVPBanana : CChildProject
         damageOnce = false;
         image.sprite = boomImgs[8];
         aniImgID = 0;
+        
     }
     public void SetFly(Vector2 dir)
     {
@@ -103,13 +110,7 @@ public class PVPBanana : CChildProject
         aniTime += Time.deltaTime;
         if (aniImgID >= 8)
         {
-            boom = false;
-            bananaFly = false;
-            bePlaced = false;
-            boomDetect.enabled = false;
-            damageOnce = false;
-            image.sprite = boomImgs[aniImgID];
-            aniImgID = 0;
+            ResetChild();
             system.AddFree(this.transform);
         }
     }

@@ -27,6 +27,12 @@ public class PVPCraftSystem : MonoBehaviour {
     public GameObject Slot;
 
     PlayerControl playerControl;
+    SpriteRenderer tool;
+    public CChildProjectSystem trapSystem;
+    public Sprite ToolImg, unToolImg;
+    int trapNum;
+    bool unTool;
+    float unBuildTime;
 
     // CCraftItem craftReslut;
 
@@ -56,37 +62,12 @@ public class PVPCraftSystem : MonoBehaviour {
         healEffect = GameObject.Find("HealEffects").GetComponent<HealEffects>();
 
         playerControl = transform.parent.GetComponent<PlayerControl>();
+        tool = transform.parent.Find("Tool").GetComponent<SpriteRenderer>();
     }
 
     private void Start()
     {
-        if (Player.p1charaType)
-        {
-            if (Player.p1controller) //p1用搖桿
-            {
-                useController = true;
-                whichPlayer = Player.p1joystick;
-            }
-            else
-            {
-                useController = false;
-
-            }
-
-        }
-        else
-        {
-            if (Player.p2controller) //p1用搖桿
-            {
-                useController = true;
-                whichPlayer = Player.p2joystick;
-            }
-            else
-            {
-                useController = false;
-
-            }
-        }
+       
         //Debug.Log(whichPlayer);
         //whichPlayer = "p2";
         //useController = false;
@@ -95,14 +76,13 @@ public class PVPCraftSystem : MonoBehaviour {
     void Update()
     {
         if (StageManager.timeUp) return;
-        if (craftFunc)
-        {
-            if (can_pick) CheckPickItem();
-            ThrowItem();
-            PickItem();
-            Collect();
-            InputFixed();
-        }
+        if (can_pick) CheckPickItem();
+        ThrowItem();
+        PickItem();
+        Collect();
+        InputFixed();
+        UseTrap();
+        UnBuildTrape();
         //是否靠近鍛造爐
         //if (forge.showUp && Vector2.Distance(this.transform.position, forge.fixed_pos) < forge_dis)
         //    NearForge();
@@ -148,6 +128,7 @@ public class PVPCraftSystem : MonoBehaviour {
 
     void CheckPickItem()
     {
+        if (!craftFunc) return;
         if (picking_item != null)
         {
             if (!picking_item.gameObject.activeSelf)
@@ -161,7 +142,7 @@ public class PVPCraftSystem : MonoBehaviour {
 
     void PickItem()
     {
-        if (!can_pick || picking_item == null) return;
+        if (!can_pick || picking_item == null || !craftFunc) return;
         if (useController)
         {
             if (Input.GetButtonDown(whichPlayer + "LB"))
@@ -322,7 +303,7 @@ public class PVPCraftSystem : MonoBehaviour {
 
     void ThrowItem()
     {
-        if (!b_handling) return;
+        if (!b_handling || !craftFunc) return;
         //int throw_way = -1;
         //if (Input.GetKeyDown(KeyCode.W)) throw_way = 0;
         //else if (Input.GetKeyDown(KeyCode.S)) throw_way = 1;
@@ -431,7 +412,7 @@ public class PVPCraftSystem : MonoBehaviour {
 
     void Collect()
     {
-        if (!can_collect) return;
+        if (!can_collect || !craftFunc) return;
         if (useController)
         {
             if (Input.GetButtonDown(whichPlayer + "LB"))
@@ -502,6 +483,63 @@ public class PVPCraftSystem : MonoBehaviour {
     {
         if (can_pick || can_collect) return false;
         else return true;
+    }
+
+    void UseTrap() {
+        if (!craftFunc || trapNum >= 2) return;
+        if (useController)
+        {
+            if (Input.GetButtonDown(whichPlayer + "ButtonX") && CanSetTrap())
+            {
+                if (playerControl.SetUseTrap()) {
+                    trapSystem.AddUsed(transform.position);
+                    trapSystem.GetNewestChild().SetOn(false, RecycleTrape);
+                    trapNum++;
+                }  
+            }
+        }
+        else {
+            if (Input.GetKeyDown(KeyCode.Q) && CanSetTrap()) {
+                if (playerControl.SetUseTrap())
+                {
+                    trapSystem.AddUsed(transform.position);
+                    trapSystem.GetNewestChild().SetOn(false, RecycleTrape);
+                    trapNum++;
+                }
+            }
+        }
+        
+    }
+    bool CanSetTrap() {
+        tool.enabled = true;
+        if (Physics2D.Raycast(transform.position, Vector2.down, 1.8f, 1 << LayerMask.NameToLayer("Obstacle")))
+        {
+            unTool = true;
+            tool.sprite = unToolImg;
+            return false;
+        }
+        else {
+            tool.sprite = ToolImg;
+            return true;
+        } 
+    }
+    void UnBuildTrape()
+    {
+        if (unTool)
+        {
+            unBuildTime += Time.deltaTime;
+            if (unBuildTime > 0.5f)
+            {
+                unBuildTime = 0.0f;
+                tool.enabled = false;
+                unTool = false;
+            }
+
+        }
+    }
+    public void RecycleTrape()
+    {
+        if (trapNum > 0) trapNum--;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

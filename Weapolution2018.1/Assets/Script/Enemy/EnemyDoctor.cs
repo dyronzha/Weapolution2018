@@ -413,7 +413,7 @@ public class EnemyDoctor : CEnemy
         {
             animator.Play("EnemyDoctorDie");
             SetState(5, true);
-            enemySystem.NextStage();
+            //enemySystem.NextStage();
         }
     }
 

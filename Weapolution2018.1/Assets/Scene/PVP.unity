@@ -3500,6 +3500,7 @@ GameObject:
   - component: {fileID: 316151550}
   - component: {fileID: 316151549}
   - component: {fileID: 316151548}
+  - component: {fileID: 316151551}
   m_Layer: 10
   m_Name: CraftSystem
   m_TagString: Untagged
@@ -3576,6 +3577,26 @@ MonoBehaviour:
   Slot: {fileID: 1591418539}
   isCraftPlayer: 1
   tutorialRequest: {fileID: 0}
+--- !u!114 &316151551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 316151546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc183d2cf078e54ab84f5e8d380bdf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftFunc: 1
+  useController: 0
+  whichPlayer: 
+  throwSpeed: 20
+  items: []
+  Slot: {fileID: 0}
+  trapSystem: {fileID: 0}
+  ToolImg: {fileID: 0}
+  unToolImg: {fileID: 0}
 --- !u!1 &316261100
 GameObject:
   m_ObjectHideFlags: 0
