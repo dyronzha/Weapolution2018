@@ -135,7 +135,7 @@ public class CEnemySystem : MonoBehaviour {
 
     void MonstersInit() {
         hasInit = true;
-        if (StageManager.currentStage == 4)
+        if (StageManager.currentStage == 6)
         {
             //AddUsedList(new Vector3(-12.0f, spawnLocY, 0));
             //AddUsedList(new Vector3(0.0f, spawnLocY, 0));
@@ -144,7 +144,7 @@ public class CEnemySystem : MonoBehaviour {
             AddUsedList(new Vector3(6.6f, spawnLocY, 0));
             AddUsedList(new Vector3(-0.5f, spawnLocY, 0));
         }
-        else if (StageManager.currentStage == 5)
+        else if (StageManager.currentStage == 7)
         {
             AddUsedList(new Vector3(-12.0f, spawnLocY, 0));
             //AddUsedList(new Vector3(0.0f, spawnLocY, 0));
@@ -161,7 +161,7 @@ public class CEnemySystem : MonoBehaviour {
         trans.gameObject.SetActive(false);
         enemyNumber--;
         //deathNumber++;
-        if (StageManager.currentStage < 5) {
+        if (StageManager.currentStage <7) {
             if (Mathf.Abs(side) > 0.5f)
             {    //如果回收的敵人有占住一個攻擊位置，把位置給其他人
                 if (side > 0.1f) canAttackLoc[1] = true;
@@ -198,7 +198,7 @@ public class CEnemySystem : MonoBehaviour {
         temp.position = pos;
         temp.gameObject.SetActive(true);
         enemyNumber++;
-        if (StageManager.currentStage < 5) {
+        if (StageManager.currentStage < 7) {
             if (canAttackLoc[0])
             {
                 temp.GetComponent<CEnemy>().whichSide = -1.0f;
@@ -226,7 +226,7 @@ public class CEnemySystem : MonoBehaviour {
 
     public void RespawnEnemy() {
         deathNumber++;
-        if (StageManager.currentStage == 4)
+        if (StageManager.currentStage == 6)
         {
             if (deathNumber >= 3)
             {
@@ -242,7 +242,7 @@ public class CEnemySystem : MonoBehaviour {
             //}
         }
 
-        else if (StageManager.currentStage == 5) {
+        else if (StageManager.currentStage == 7) {
             if (deathNumber >= 4)
             {
                 if (!bossAppear)

@@ -33,7 +33,7 @@ public class CPickCollection : MonoBehaviour {
 	}
 
     public void InitCollects(int _type, int _itemType) {
-        if(StageManager.currentStage ==5)levelHieght.SetHeight();
+        if(StageManager.currentStage == 7)levelHieght.SetHeight();
         img.color = new Color(1,1,1,0);
         type = _type;
         itemTypes = _itemType;

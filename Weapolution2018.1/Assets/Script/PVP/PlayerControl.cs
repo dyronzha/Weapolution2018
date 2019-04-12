@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour {
 
     Action AttackOver, TrapOver, CollectOver;
 
-    enum State {
+    public enum State {
         idle, move, dash, hurt, die, attack,
         collect, useTrap
     }
@@ -226,6 +226,11 @@ public class PlayerControl : MonoBehaviour {
         //}
 
     }
+
+    public State GetState() {
+        return state;
+    }
+
     public void SetIDle() {
         state = State.idle;
     }
@@ -329,6 +334,7 @@ public class PlayerControl : MonoBehaviour {
 
     public void GetHurt(float value)
     {
+        if (invincible) return;
         //Debug.Log("getHurt");
 
         state = State.hurt;
@@ -341,7 +347,7 @@ public class PlayerControl : MonoBehaviour {
         {
             animator.SetBool("is_attack", false);
         }
-        playerManager.SetHP(teamA, 0.05f);
+        playerManager.SetHP(teamA, value);
 
         //if (inFuntionTime == 0)
         //{
@@ -388,7 +394,8 @@ public class PlayerControl : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "DamageToPlayer" && !invincible && !die) {
-            GetHurt(collision.GetComponent<PVPProjectile>().GetATKValue());
+            if(isCraft)GetHurt(collision.GetComponent<PVPProjectile>().GetATKValue());
+            else GetHurt(0.02f);
         }
     }
 

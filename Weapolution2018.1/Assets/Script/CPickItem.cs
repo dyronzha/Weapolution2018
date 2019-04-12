@@ -26,7 +26,7 @@ public class CPickItem : MonoBehaviour {
         shadowRender = this.transform.GetChild(1).GetComponent<SpriteRenderer>();
         collider = this.GetComponent<Collider2D>();
         f_flyTime = 2.0f * ground_height / f_gravity;
-        if(StageManager.currentStage > 4)levelHeight = GetComponent<LevelHeight>();
+        if(StageManager.currentStage == 7)levelHeight = GetComponent<LevelHeight>();
         zArrange = GetComponent<ZArrange>();
     }
 
@@ -113,7 +113,7 @@ public class CPickItem : MonoBehaviour {
             f_fallingTime = 0.0f;
             b_falling = false;
             shadowRender.enabled = true;
-            if(StageManager.currentStage > 4)levelHeight.SetHeight();
+            if(StageManager.currentStage == 7)levelHeight.SetHeight();
         }
     }
 
@@ -172,7 +172,7 @@ public class CPickItem : MonoBehaviour {
             f_fallingTime = 0.0f;
             b_flying = false;
             shadowRender.enabled = true;
-            if(StageManager.currentStage > 4)levelHeight.SetHeight();
+            if(StageManager.currentStage == 7)levelHeight.SetHeight();
         } 
     }
 

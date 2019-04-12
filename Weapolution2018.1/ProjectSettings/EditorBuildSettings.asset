@@ -8,9 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scene/StartMenu.unity
     guid: d57383d98a8d2604c9df9c322d8b41ff
-  - enabled: 0
-    path: Assets/Scene/temp.unity
-    guid: 157505c390ce5a5409ce4ced588d2b5b
   - enabled: 1
     path: Assets/Scene/Mapping_PVP.unity
     guid: 6bef19e547fbc6a418327274258525a3
@@ -38,4 +35,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scene/DoingTest.unity
     guid: db4d7015c8634c0469ed55ab2ac39e35
+  - enabled: 0
+    path: Assets/Scene/temp.unity
+    guid: 157505c390ce5a5409ce4ced588d2b5b
   m_configObjects: {}

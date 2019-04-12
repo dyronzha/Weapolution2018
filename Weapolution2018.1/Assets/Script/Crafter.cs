@@ -127,7 +127,7 @@ public class Crafter : MonoBehaviour {
     {
         animator.SetBool("is_gather", false);        
         inFuntionTime = 0;
-        if (StageManager.currentStage == 5)
+        if (StageManager.currentStage == 7)
         {
             if (CanonScript.startFilled) {
                 CanonScript.startFilled = false;

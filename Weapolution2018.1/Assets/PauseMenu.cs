@@ -29,7 +29,7 @@ public class PauseMenu : MonoBehaviour {
 		StageManagerscript = GameObject.Find ("StageManager").GetComponent<StageManager>();
         BlackScene = GameObject.Find ("PauseBlackScene");
 		BlackScene.SetActive(false);
-        if (StageManager.currentStage < 5)
+        if (StageManager.currentStage < 7)
             WhichStage = Stage01ButtonState;
         else
             WhichStage = Stage02ButtonState;
@@ -171,7 +171,7 @@ public class PauseMenu : MonoBehaviour {
                     StageManagerscript.ChangeSceneBlackOut();
                     break;
 			case 3:
-				    StageManager.nextStage = 2;
+				    StageManager.nextStage = 0;
                     StageManagerscript.ChangeSceneBlackOut();
                     break;
 			}

@@ -13,7 +13,6 @@ public class PVPBanana : CChildProject
     SpriteRenderer image, shadowRender;
     BoxCollider2D boomDetect;
     public float height, gravity, speed;
-    public CEnemyMonkey monkey;
     public Sprite[] boomImgs;
 
     // Use this for initialization

@@ -20,6 +20,7 @@ TagManager:
   - EnemyOut
   - Explosion
   - DamageToPlayer
+  - PlayerHurtArea
   layers:
   - Default
   - TransparentFX

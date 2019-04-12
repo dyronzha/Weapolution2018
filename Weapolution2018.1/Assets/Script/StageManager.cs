@@ -30,14 +30,14 @@ public class StageManager : MonoBehaviour {
         inChanging = false;
         //if (stageManager == null) stageManager = this;
         animator = GameObject.Find("BlackScene").GetComponent<Animator>();
-        if (currentStage >= 3)
+        if (currentStage >= 5)
         {
             transRender = Camera.main.GetComponent<SceneTransRender>();
             transRender.stageManager = this;
             BGM = GameObject.Find("map").GetComponent<AudioSource>();
             MonsterSound = GameObject.Find("MonsterAudio").GetComponent<AudioSource>();
             CharacterSound = GameObject.Find("CharacterAudio").GetComponent<AudioSource>();
-            if (currentStage > 3) {
+            if (currentStage > 5) {
                 dialog = GameObject.Find("Dialog").GetComponent<Dialog>();
                 teamHP = GameObject.Find("TeamHp").GetComponent<TeamHp>();
                 dialog.gameObject.SetActive(false);
@@ -62,30 +62,35 @@ public class StageManager : MonoBehaviour {
         //    Player.isMapped = false;
         //    StartCoroutine(OnChangingScene(0.0f));
         //}
-        if (currentStage == 1) {
+        if (currentStage == 3) {
             if (Input.GetKeyDown(KeyCode.Space)) {
                 nextStage = 2;
                 StartCoroutine(OnChangingScene(0.0f));
             }
         }
-        if (currentStage < 3)  return;
-        if (!stageBegin)
-        {
-            if (!inChanging)
+
+
+
+        if (currentStage < 5 || currentStage == 1 || currentStage == 2) {
+            if (!stageBegin)
+            {
+                if (!inChanging)
+                {
+
+                    inChanging = true;
+                    if (currentStage == 5 || currentStage == 1 || currentStage == 2) animator.Play("BlackIn");
+                    else transRender.SetIsGoIn(true);
+                    //ToStageBegin();
+                }
+            }
+            else
             {
 
-                inChanging = true;
-                if (currentStage == 3) animator.Play("BlackIn");
-                else transRender.SetIsGoIn(true);
-                //ToStageBegin();
+                GetInput();
+                //if (Input.GetKeyDown(KeyCode.Space)) SetCurStageOver(true);
             }
         }
-         else{
-
-            GetInput();
-            //if (Input.GetKeyDown(KeyCode.Space)) SetCurStageOver(true);
-        }
-
+     
 	}
 
     public void ToStageBegin() {
@@ -193,7 +198,7 @@ public class StageManager : MonoBehaviour {
         
         yield return new WaitForSeconds(time);
         
-        if (nextStage >= 6) nextStage = 2;
+        if (nextStage >= 8) nextStage = 0;
         currentStage = nextStage;
         
         SceneManager.LoadScene(nextStage);

@@ -10,6 +10,7 @@ public class PickWeaponPVP : MonoBehaviour {
     string whichPlayer = "p1";//Player.p1joystick;
     CPickItem pickWeapon, tempPick, lastPick;
     List<CPickItem> pickUsed;
+    [HideInInspector]
     public CItem holdWeapon; //這類別裡有一個attack變數是攻擊力
     SpriteRenderer playerWeaponImg;
     public List<Sprite> weaponSprite;

@@ -75,13 +75,13 @@ public class CPickItemSystem : MonoBehaviour {
         //} 
         if (!test)
         {
-            if (StageManager.currentStage == 4) {
+            if (StageManager.currentStage == 6) {
                 SpawnPickCollect(locations[0], 0);
                 SpawnPickCollect(locations[4], 0);
                 SpawnPickCollect(locations[7], 2);
                 SpawnPickCollect(locations[5], 2);
             }
-            else if (StageManager.currentStage == 5) {
+            else if (StageManager.currentStage == 7) {
                 SpawnPickCollect(locations[0], 0);
                 SpawnPickCollect(locations[4], 0);
                 SpawnPickCollect(locations[7], 1);
@@ -112,31 +112,37 @@ public class CPickItemSystem : MonoBehaviour {
         for (int i = 0; i < typeOppunity.Length; i++) {
             if (opturity <= typeOppunity[i] && CheckPickCollectLoc())
             {
-                if (i == 0)
+                if (typeCollectNum[i] < typeCollectMaxNum[i])
                 {
-                    if (typeCollectNum[i] < typeCollectMaxNum[i])
-                    {
-                        SpawnPickCollect(locations[locationID], 0);
-                        return;
-                    }
-                    else opturity = typeOppunity[1];
+                    SpawnPickCollect(locations[locationID], i);
+                    return;
                 }
-                else if (i == 1)
-                {
-                    if (typeCollectNum[i] < typeCollectMaxNum[i]) {
-                        SpawnPickCollect(locations[locationID], 1);
-                        return;
-                    }
-                    else opturity = typeOppunity[2];
-                }
-                else if (i == 2) {
-                    if (typeCollectNum[i] < typeCollectMaxNum[i]) {
-                        SpawnPickCollect(locations[locationID], 2);
-                        return;
-                    }
-                    else opturity = typeOppunity[0];
-                }
-                
+                else opturity = typeOppunity[i];
+                //if (i == 0)
+                //{
+                //    if (typeCollectNum[i] < typeCollectMaxNum[i])
+                //    {
+                //        SpawnPickCollect(locations[locationID], 0);
+                //        return;
+                //    }
+                //    else opturity = typeOppunity[1];
+                //}
+                //else if (i == 1)
+                //{
+                //    if (typeCollectNum[i] < typeCollectMaxNum[i]) {
+                //        SpawnPickCollect(locations[locationID], 1);
+                //        return;
+                //    }
+                //    else opturity = typeOppunity[2];
+                //}
+                //else if (i == 2) {
+                //    if (typeCollectNum[i] < typeCollectMaxNum[i]) {
+                //        SpawnPickCollect(locations[locationID], 2);
+                //        return;
+                //    }
+                //    else opturity = typeOppunity[0];
+                //}
+
             }
         }
         //else if (opturity <= 1.0f)

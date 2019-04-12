@@ -103,7 +103,7 @@ public class PVPAttacker : MonoBehaviour {
         Transform tempProjectile = projectileSystem.GetChild(projectileNum);
         tempProjectile.position = weapon.position;
         tempProjectile.gameObject.SetActive(true);
-        tempProjectile.GetComponent<Projectile>().SetProjectileImg(playerControl.GetFaceDir());
+        tempProjectile.GetComponent<PVPProjectile>().SetProjectileImg(playerControl.GetFaceDir(), pickWeapon.holdWeapon);
         projectileNum++;
         if (projectileNum >= projectileSystem.transform.childCount)
         {
@@ -116,6 +116,15 @@ public class PVPAttacker : MonoBehaviour {
         //    pickWeaponScript.ThrowWeapon();
         //    //GameObject.Find("PickWeapon").GetComponent<CPickWeapon>().ThrowWeapon();
         //}
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "PlayerHurtArea" && playerControl.GetState() == PlayerControl.State.attack)
+        {
+            collision.GetComponent<PlayerControl>().GetHurt(pickWeapon.holdWeapon.attack);
+        }
     }
 
 }
