@@ -37,6 +37,7 @@ public class PVPAttacker : MonoBehaviour {
         animator = transform.parent.GetComponent<Animator>();
         effectAudio = voice;
 
+        control = con;
         if (con == "keyboard") isKeyboard = true;
         else isKeyboard = false;
 

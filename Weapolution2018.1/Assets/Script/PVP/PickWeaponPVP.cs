@@ -21,6 +21,7 @@ public class PickWeaponPVP : MonoBehaviour {
         pickUsed = GameObject.Find("PickItemSystem").GetComponent<CPickItemSystem>().usedPickItemList;
         playerWeaponImg = transform.parent.Find("Weapon").GetChild(0).GetComponent<SpriteRenderer>();
         playerWeaponImg.sprite = weaponSprite[0];
+        holdWeapon = CItemDataBase.items[0];
     }
 
     // Update is called once per frame

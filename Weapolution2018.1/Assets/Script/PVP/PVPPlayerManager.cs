@@ -14,14 +14,14 @@ public class PVPPlayerManager : MonoBehaviour {
         stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         teamHp = GetComponent<PVPTeamHP>();
         CharacterVoice characterVoice = GetComponent<CharacterVoice>();
-        Transform controls = transform.Find("Players");
+
         for (int i  = 0; i < 4; i++) {
-            playerControls[i] = controls.GetChild(i).GetComponent<PlayerControl>();
+            playerControls[i] = transform.GetChild(i).GetComponent<PlayerControl>();
             if(i<2)playerControls[i].Init(this, characterVoice, true);
             else playerControls[i].Init(this, characterVoice, false);
             if (i == 1 || i == 3) {
                 playerControls[i].SetController(true, controller[i]);
-                playerControls[i].GetComponent<PVPCraftSystem>().Init(characterVoice, controller[i]);
+                playerControls[i].transform.Find("CraftSystem").GetComponent<PVPCraftSystem>().Init(characterVoice, controller[i]);
             } 
             else {
                 playerControls[i].SetController(false, controller[i]);

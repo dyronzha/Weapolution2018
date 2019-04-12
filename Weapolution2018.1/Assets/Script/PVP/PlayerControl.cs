@@ -53,7 +53,7 @@ public class PlayerControl : MonoBehaviour {
                 if (FirstInState())
                 {
                     animator.SetBool("is_walk", true);
-                    moveMask = 1 << LayerMask.NameToLayer("Obstacle") | 1 << LayerMask.NameToLayer("Player");
+                    moveMask = 1 << LayerMask.NameToLayer("Obstacle") ;//| 1 << LayerMask.NameToLayer("Player")
                 }
                 GetInput();
                 Move();
@@ -120,7 +120,7 @@ public class PlayerControl : MonoBehaviour {
         if (isKeyboard)
         {
             //同時按兩鍵以上
-            if (Mathf.Abs(speedX) > 0.1f && speedY > 0.1f) {
+            if (state != State.idle) {
                 if (Input.GetKeyDown(KeyCode.W))
                 {
                     if (speedY < .0f) faceDir = 0;
@@ -289,8 +289,13 @@ public class PlayerControl : MonoBehaviour {
         if (speedX > .0f && rightHit) speedX = .0f;
         else if (speedX < .0f && leftHit) speedX = .0f;
 
+        if (upHit || downHit || leftHit || rightHit) {
+            Debug.Log(isCraft + "   hit wall");
+        }
+
         Vector2 move = Vector2.zero;
         if (isKeyboard)move = new Vector2(speedX, speedY).normalized;
+        Debug.Log(isCraft + "  is move   " + move);
         transform.position += Time.deltaTime * speed * new Vector3(move.x, move.y, 0);
     }
 
@@ -347,7 +352,7 @@ public class PlayerControl : MonoBehaviour {
         {
             animator.SetBool("is_attack", false);
         }
-        playerManager.SetHP(teamA, value);
+        playerManager.SetHP(teamA, -value);
 
         //if (inFuntionTime == 0)
         //{
