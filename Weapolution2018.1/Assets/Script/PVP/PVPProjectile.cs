@@ -28,7 +28,7 @@ public class PVPProjectile : MonoBehaviour {
     public void SetProjectileImg(int _flight_way, CItem weapon)
     {
         atkValue = weapon.attack;
-
+        Debug.Log("weapon type  " + weapon.id);
         if (weapon.id == 6) //木頭弓箭
             projectile_img.sprite = ProjectileSprite[0];
         else if (weapon.id == 7)

@@ -24,6 +24,7 @@ public class PVPBanana : CChildProject
         image = this.GetComponent<SpriteRenderer>();
         shadowRender = this.transform.GetChild(0).GetComponent<SpriteRenderer>();
         boomDetect = this.GetComponent<BoxCollider2D>();
+        boomDetect.enabled = false;
     }
 
     // Update is called once per frame
@@ -92,6 +93,7 @@ public class PVPBanana : CChildProject
             bananaFly = false;
             bePlaced = true;
             shadowRender.enabled = true;
+            boomDetect.enabled = true;
             Debug.Log("loc position" + oringinPos);
             //oringinScaleX *= Mathf.Sign(this.transform.parent.parent.parent.localScale.x) ;
         }

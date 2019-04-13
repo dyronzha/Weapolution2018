@@ -645,8 +645,8 @@ public class Player : MonoBehaviour {
 
         beingHurt_time = Time.time;
         animator.SetTrigger("is_hurt");
-        if (!p1charaType) p1moveAble = false;
-        else p2moveAble = false;
+        //if (!p1charaType) p1moveAble = false;
+        //else p2moveAble = false;
         invincible = true;
         if (inFuntionTime == 0)
         {

@@ -30,6 +30,16 @@ public class StageManager : MonoBehaviour {
         inChanging = false;
         //if (stageManager == null) stageManager = this;
         animator = GameObject.Find("BlackScene").GetComponent<Animator>();
+
+        transRender = Camera.main.GetComponent<SceneTransRender>();
+        transRender.stageManager = this;
+        BGM = GameObject.Find("map").GetComponent<AudioSource>();
+
+        if (currentStage == 2) {
+            transRender = Camera.main.GetComponent<SceneTransRender>();
+            transRender.stageManager = this;
+            BGM = GameObject.Find("map").GetComponent<AudioSource>();
+        }
         if (currentStage >= 5)
         {
             transRender = Camera.main.GetComponent<SceneTransRender>();
@@ -183,15 +193,27 @@ public class StageManager : MonoBehaviour {
     public IEnumerator SlowDown(float slowTime, bool _isWin) {
         Time.timeScale = 0.2f;
         BGM.pitch = 0.35f;
-        MonsterSound.pitch = 0.35f;
-        CharacterSound.pitch = 0.35f;
-        yield return new WaitForSecondsRealtime(slowTime);
-        Time.timeScale = 1.0f;
-        BGM.pitch = 1.0f;
-        MonsterSound.pitch = 1.0f;
-        CharacterSound.pitch = 0.35f;
-        yield return null;
-        SetCurStageOver(_isWin);
+
+        if (currentStage < 5)
+        {
+            yield return new WaitForSecondsRealtime(slowTime);
+            Time.timeScale = 1.0f;
+            BGM.pitch = 1.0f;
+            yield return null;
+            //SetCurStageOver(_isWin);
+        }
+        else {
+            MonsterSound.pitch = 0.35f;
+            CharacterSound.pitch = 0.35f;
+            yield return new WaitForSecondsRealtime(slowTime);
+            Time.timeScale = 1.0f;
+            BGM.pitch = 1.0f;
+            MonsterSound.pitch = 1.0f;
+            CharacterSound.pitch = 0.35f;
+            yield return null;
+            SetCurStageOver(_isWin);
+        }
+       
     }
 
     public IEnumerator OnChangingScene(float time) {

@@ -82,7 +82,7 @@ public class TrapSystem : MonoBehaviour {
                     if (!trapUse[i])
                     {
                         Tool.sprite = shovelImg;
-                        this.GetComponent<Animator>().SetTrigger("is_dig");
+                        this.GetComponent<Animator>().SetTrigger("usingTrape");
                         digging = true;
                         switchMove(false);
                         if (test) tutorialRequest.DoneTrap();
@@ -109,7 +109,7 @@ public class TrapSystem : MonoBehaviour {
                     if (!trapUse[i])
                     {
                         Tool.sprite = shovelImg;
-                        this.GetComponent<Animator>().SetTrigger("is_dig");
+                        this.GetComponent<Animator>().SetTrigger("usingTrape");
                         digging = true;
                         switchMove(false);
                         if (test) tutorialRequest.DoneTrap();

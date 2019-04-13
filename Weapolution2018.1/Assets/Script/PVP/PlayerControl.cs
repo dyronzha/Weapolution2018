@@ -7,9 +7,11 @@ public class PlayerControl : MonoBehaviour {
 
     bool isCraft, isKeyboard, dashHit, invincible, die;
     bool teamA, meleeWeapon;
-    int faceDir = 1, lastDir = -1;
+    int faceDir = 1, lastDir = -1, lastXInput = 0, lastYInput = 0;
     string control;
     float speedX, speedY, dashInputTime = 1.0f, dashTime;
+    float[] directTime = new float[2] { -1.0f, -1.0f };
+    float[] inputTime = new float[4] { -1.0f, -1.0f, -1.0f, -1.0f };
     Vector2 dashDir;
     Vector3 moveDir = Vector3.zero;
     LayerMask moveMask;
@@ -119,60 +121,206 @@ public class PlayerControl : MonoBehaviour {
     {
         if (isKeyboard)
         {
-            //同時按兩鍵以上
-            if (state != State.idle) {
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    if (speedY < .0f) faceDir = 0;
-                    speedY = 1.0f;
-                }
-                else if (Input.GetKeyDown(KeyCode.S)) {
-                    if (speedY > .0f) faceDir = 1;
-                    speedY = -1.0f;
-                }
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    if (speedX < .0f) faceDir = 3;
-                    speedX = 1.0f;
-                }
-                else if (Input.GetKeyDown(KeyCode.A)) {
-                    if (speedX > .0f) faceDir = 2;
-                    speedX = -1.0f;
-                }
-
-
+            bool stop = false;
+            bool inputUp = Input.GetKey(KeyCode.W);
+            bool inputDown = Input.GetKey(KeyCode.S);
+            bool inputLeft = Input.GetKey(KeyCode.A);
+            bool inputRight = Input.GetKey(KeyCode.D);
+            if (!inputUp && !inputDown && !inputRight && !inputLeft) {
+                speedX = .0f;
+                speedY = .0f;
+                lastXInput = 0;
+                lastYInput = 0;
+                stop = true;
             }
-            else { //只按一鍵
-                if (Input.GetKeyDown(KeyCode.W))
-                {
-                    faceDir = 0;
-                    speedY = 1.0f;
-                }
-                else if (Input.GetKeyDown(KeyCode.S))
-                {
-                    faceDir = 1;
-                    speedY = -1.0f;
-                }
-                if (Input.GetKeyDown(KeyCode.D))
-                {
-                    faceDir = 3;
-                    speedX = 1.0f;
-                }
-                else if (Input.GetKeyDown(KeyCode.A))
-                {
-                    faceDir = 2;
-                    speedX = -1.0f;
-                }
+            switch (faceDir)
+            {
+                case 0:
+                case 1:
+                    if (inputRight && inputLeft)
+                    {
+                        if (lastXInput <= 0 && inputRight) speedX = 1.0f;
+                        if (lastXInput >= 0 && inputLeft) speedX = -1.0f;
+                    }
+                    else
+                    {
+                        if (inputRight)
+                        {
+                            speedX = 1.0f;
+                            lastXInput = 1;
+                        }
+                        else if (inputLeft)
+                        {
+                            speedX = -1.0f;
+                            lastXInput = -1;
+                        }
+                        else
+                        {
+                            speedX = .0f;
+                            lastXInput = 0;
+                        }
+                    }
+
+                    if (!inputUp && !inputDown)
+                    {
+                        if (speedX > 0.1f) faceDir = 3;
+                        else if(speedX < -0.1f) faceDir = 2;
+                        speedY = .0f;
+                        lastYInput = 0;
+                        break;
+                    }
+                    if (faceDir == 0)
+                    {
+                        if (!inputDown && lastYInput <= 0) lastYInput = 1;
+                        if (inputUp && inputDown)
+                        {
+                            if (lastYInput > 0 && inputDown)
+                            {
+                                speedY = -1.0f;
+                                faceDir = 1;
+                            }
+                        }
+                        else if (inputDown)
+                        {
+                            speedY = -1.0f;
+                            faceDir = 1;
+                        }
+                        else if (inputUp) speedY = 1.0f;
+
+                    }
+                    else if (faceDir == 1)
+                    {
+                        if (!inputUp && lastYInput >= 0) lastYInput = -1;
+                        if (inputUp && inputDown)
+                        {
+                            if (lastYInput < 0 && inputUp)
+                            {
+                                speedY = 1.0f;
+                                faceDir = 0;
+                            }
+                        }
+                        else if (inputUp)
+                        {
+                            speedY = 1.0f;
+                            faceDir = 0;
+                        }
+                        else if (inputDown) speedY = -1.0f;
+
+                    }
+
+                    break;
+
+                case 2:
+                case 3:
+                    if (inputUp && inputDown)
+                    {
+                        if (lastYInput <= 0 && inputUp) speedY = 1.0f;
+                        if (lastYInput >= 0 && inputDown) speedY = -1.0f;
+                    }
+                    else
+                    {
+                        if (inputUp)
+                        {
+                            speedY = 1.0f;
+                            lastYInput = 1;
+                        }
+                        else if (inputDown)
+                        {
+                            speedY = -1.0f;
+                            lastYInput = -1;
+                        }
+                        else
+                        {
+                            speedY = .0f;
+                            lastYInput = 0;
+                        }
+                    }
+
+                    if (!inputRight && !inputLeft)
+                    {
+                        if (speedY > 0.1f) faceDir = 0;
+                        else if(speedY < -0.1f) faceDir = 1;
+                        speedX = .0f;
+                        lastXInput = 0;
+                        break;
+                    }
+                    if (faceDir == 2)
+                    {
+                        if (!inputRight && lastXInput >= 0) lastXInput = -1;
+                        if (inputLeft && inputRight)
+                        {
+                            if (lastXInput < 0 && inputRight)
+                            {
+                                speedX = 1.0f;
+                                faceDir = 3;
+                            }
+                        }
+                        else if (inputRight)
+                        {
+                            speedX = 1.0f;
+                            faceDir = 3;
+                        }
+                        else if (inputLeft) speedX = -1.0f;
+
+                    }
+                    else if (faceDir == 3)
+                    {
+                        if (!inputLeft && lastXInput <= 0) lastXInput = 1;
+                        if (inputLeft && inputRight)
+                        {
+                            if (lastXInput > 0 && inputLeft)
+                            {
+                                speedX = -1.0f;
+                                faceDir = 2;
+                            }
+                        }
+                        else if (inputLeft)
+                        {
+                            speedX = -1.0f;
+                            faceDir = 2;
+                        }
+                        else if (inputRight) speedX = 1.0f;
+                    }
+                    break;
             }
-            if ((Input.GetKeyUp(KeyCode.W) && speedY > 0.1f) || (Input.GetKeyUp(KeyCode.S) && speedY < 0.1f)) speedY = .0f;
-            if ((Input.GetKeyUp(KeyCode.D) && speedX > 0.1f) || (Input.GetKeyUp(KeyCode.A) && speedX < 0.1f)) speedX = .0f;
+            //if (stop)
+            //{
+            //    if (inputUp)
+            //    {
+            //        faceDir = 0;
+            //        speedY = 1.0f;
+            //        lastYInput = 1;
+            //    }
+            //    else if (inputDown)
+            //    {
+            //        faceDir = 1;
+            //        speedY = -1.0f;
+            //        lastYInput = -1;
+            //    }
+            //    if (inputRight)
+            //    {
+            //        faceDir = 3;
+            //        speedX = 1.0f;
+            //        lastXInput = 1;
+            //    }
+            //    else if (inputLeft)
+            //    {
+            //        faceDir = 2;
+            //        speedX = -1.0f;
+            //        lastXInput = -1;
+            //    }
+            //}
+            //else
+            //{
+
+            //}
 
 
             //如果在攻擊狀態跳過下面狀態切換只接收移動輸入
             if (state != State.idle && state != State.move) return;
 
             //判斷是否移動
-            if (Mathf.Abs(speedY) < 0.1f && Mathf.Abs(speedX) < 0.1f)
+            if (stop)
             {
                 state = State.idle;
             }
@@ -327,6 +475,7 @@ public class PlayerControl : MonoBehaviour {
 
     public void OverAttack()
     {
+        Debug.Log(gameObject.name);
         animator.SetBool("is_attack", false);
         state = State.idle;
         Debug.Log("OverAttack");
@@ -399,9 +548,71 @@ public class PlayerControl : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "DamageToPlayer" && !invincible && !die) {
-            if(isCraft)GetHurt(collision.GetComponent<PVPProjectile>().GetATKValue());
+            if(!isCraft)GetHurt(collision.GetComponent<PVPProjectile>().GetATKValue());
             else GetHurt(0.02f);
         }
     }
 
 }
+
+
+
+            ////同時按兩鍵以上
+            //if (!stop) {
+            //    if (Input.GetKeyDown(KeyCode.W))
+            //    {
+            //        if (speedY< .0f) faceDir = 0;
+            //        speedY = 1.0f;
+            //    }
+            //    else if (Input.GetKeyDown(KeyCode.S)) {
+            //        if (speedY > .0f) faceDir = 1;
+            //        speedY = -1.0f;
+            //    }
+            //    if (Input.GetKeyDown(KeyCode.D))
+            //    {
+            //        if (speedX< .0f) faceDir = 3;
+            //        speedX = 1.0f;
+            //    }
+            //    else if (Input.GetKeyDown(KeyCode.A)) {
+            //        if (speedX > .0f) faceDir = 2;
+            //        speedX = -1.0f;
+            //    }
+
+
+            //}
+            //else { //只按一鍵
+            //    if (Input.GetKeyDown(KeyCode.W))
+            //    {
+            //        faceDir = 0;
+            //        speedY = 1.0f;
+            //    }
+            //    else if (Input.GetKeyDown(KeyCode.S))
+            //    {
+            //        faceDir = 1;
+            //        speedY = -1.0f;
+            //    }
+            //    if (Input.GetKeyDown(KeyCode.D))
+            //    {
+            //        faceDir = 3;
+            //        speedX = 1.0f;
+            //    }
+            //    else if (Input.GetKeyDown(KeyCode.A))
+            //    {
+            //        faceDir = 2;
+            //        speedX = -1.0f;
+            //    }
+            //}
+            //if ((Input.GetKeyUp(KeyCode.W) && speedY > 0.1f) || (Input.GetKeyUp(KeyCode.S) && speedY< 0.1f)) {
+            //    if (Input.GetKey(KeyCode.W)) speedY = 1.0f;
+            //    else if (Input.GetKey(KeyCode.S)) speedY = -1.0f;
+            //    else speedY = .0f;
+            //    if (speedX > .1f) faceDir = 3;
+            //    else if (speedX< -.1f) faceDir = 2;
+            //}
+            //if ((Input.GetKeyUp(KeyCode.D) && speedX > 0.1f) || (Input.GetKeyUp(KeyCode.A) && speedX< 0.1f)) {
+            //    if (Input.GetKey(KeyCode.D)) speedX = 1.0f;
+            //    else if (Input.GetKey(KeyCode.A)) speedX = -1.0f;
+            //    else speedX = .0f;
+            //    if (speedY > .1f) faceDir = 0;
+            //    else if (speedY< -.1f) faceDir = 1;
+            //} 

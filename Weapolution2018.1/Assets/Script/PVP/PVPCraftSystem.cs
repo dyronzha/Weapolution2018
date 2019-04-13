@@ -505,6 +505,7 @@ public class PVPCraftSystem : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.Q) && CanSetTrap()) {
                 if (playerControl.SetUseTrap())
                 {
+                    crafterAnimator.SetTrigger("usingTrape");
                     trapNum++;
                     craftFunc = false;
                 }

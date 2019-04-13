@@ -8,7 +8,7 @@ public class PVPAttacker : MonoBehaviour {
     PickWeaponPVP pickWeapon;
     bool isKeyboard;
     string control;
-    int projectileNum = 0;
+    static int projectileNum = 0;
 
     Transform projectileSystem, weapon;
 
@@ -34,7 +34,7 @@ public class PVPAttacker : MonoBehaviour {
 
     public void Init(CharacterVoice voice, string con) {
         playerControl = GetComponent<PlayerControl>();
-        animator = transform.parent.GetComponent<Animator>();
+        animator = transform.GetComponent<Animator>();
         effectAudio = voice;
 
         control = con;
@@ -84,6 +84,7 @@ public class PVPAttacker : MonoBehaviour {
             animator.SetInteger("weapon_type", 2);
         }
         animator.SetBool("is_attack", true);
+        Debug.Log(effectAudio);
         effectAudio.SetAudio(pickWeapon.holdWeapon.audio_source);
     }
 
@@ -118,14 +119,13 @@ public class PVPAttacker : MonoBehaviour {
         //    //GameObject.Find("PickWeapon").GetComponent<CPickWeapon>().ThrowWeapon();
         //}
     }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
+    public void HitSomeone(Collider2D collision) {
+        Debug.Log("aaaaaaaaaaaaaaaaaaa  " + gameObject.name);
         if (collision.tag == "PlayerHurtArea" && playerControl.GetState() == PlayerControl.State.attack)
         {
-            collision.GetComponent<PlayerControl>().GetHurt(pickWeapon.holdWeapon.attack);
+            collision.transform.parent.GetComponent<PlayerControl>().GetHurt(pickWeapon.holdWeapon.attack);
         }
     }
+
 
 }

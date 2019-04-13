@@ -64,7 +64,7 @@ public class PVPTeamHP : MonoBehaviour {
     }
     public void CheckHp(int id)
     {
-        if (teamHp[id] < 0 )
+        if (teamHp[id] <= 0 )
         {
             gameOver(id);
         }
