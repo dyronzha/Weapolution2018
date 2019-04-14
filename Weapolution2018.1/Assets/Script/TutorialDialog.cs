@@ -80,7 +80,7 @@ public class TutorialDialog : MonoBehaviour {
             {
                 if (progress < -1)
                 {
-                    StageManager.nextStage = 4;
+                    StageManager.nextStage = 6;
                     stageManager.ChangeSceneBlackOut();
                 }
                 else {

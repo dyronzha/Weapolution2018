@@ -174,7 +174,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 0.35
+  - time: 0.41666666
     functionName: OverRoll
     data: 
     objectReferenceParameter: {fileID: 0}

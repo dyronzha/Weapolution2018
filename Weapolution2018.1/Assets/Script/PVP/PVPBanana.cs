@@ -121,7 +121,7 @@ public class PVPBanana : CChildProject
     {
         if (collision.tag == "Player") {
             if (!boom) {
-                collision.transform.parent.GetComponent<Crafter>().GetHurt();
+                collision.transform.parent.GetComponent<PlayerControl>().GetHurt(5.0f);
                 boom = true;
                 image.sortingOrder = 1;
                 bePlaced = false;

@@ -7,7 +7,7 @@ public class StageManager : MonoBehaviour {
 
 
     public static bool timeUp;
-    public static  int currentStage =2, nextStage =3;
+    public static  int currentStage =1, nextStage =2;
 
 	public bool inMenuState;
     public bool stageBegin;
@@ -29,15 +29,19 @@ public class StageManager : MonoBehaviour {
     {
         inChanging = false;
         //if (stageManager == null) stageManager = this;
-        animator = GameObject.Find("BlackScene").GetComponent<Animator>();
+        //animator = GameObject.Find("BlackScene").GetComponent<Animator>();
 
-        transRender = Camera.main.GetComponent<SceneTransRender>();
-        transRender.stageManager = this;
-        BGM = GameObject.Find("map").GetComponent<AudioSource>();
+        //transRender = Camera.main.GetComponent<SceneTransRender>();
+        //transRender.stageManager = this;
+        //BGM = GameObject.Find("map").GetComponent<AudioSource>();
 
+        if (currentStage == 1) {
+            animator = GameObject.Find("BlackScene").GetComponent<Animator>();
+        }
         if (currentStage == 2) {
             transRender = Camera.main.GetComponent<SceneTransRender>();
             transRender.stageManager = this;
+            animator = GameObject.Find("BlackScene").GetComponent<Animator>();
             BGM = GameObject.Find("map").GetComponent<AudioSource>();
         }
         if (currentStage >= 5)
@@ -74,8 +78,9 @@ public class StageManager : MonoBehaviour {
         //}
         if (currentStage == 3) {
             if (Input.GetKeyDown(KeyCode.Space)) {
-                nextStage = 2;
-                StartCoroutine(OnChangingScene(0.0f));
+                nextStage = 4;
+                ChangeSceneBlackOut();
+                //StartCoroutine(OnChangingScene(0.0f));
             }
         }
 
@@ -142,7 +147,7 @@ public class StageManager : MonoBehaviour {
 
 
     public void StartBegining() {
-        nextStage = 1;
+        nextStage = 3;
         StartCoroutine(OnChangingScene(0.0f));
     }
 

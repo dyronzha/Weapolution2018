@@ -101,6 +101,8 @@ public class Crafter : MonoBehaviour {
         if (Player.p2charaType) Player.p2moveAble = false;
         else Player.p1moveAble = false;
         animator.SetTrigger("is_sticked");
+        K_JoyX = 0;
+        K_JoyY = 0;
         GameObject.Find("CharacterAudio").GetComponent<CharacterVoice>().SetAudio(1); //受傷音效
     }
     void OverBeingStcik()
@@ -125,8 +127,10 @@ public class Crafter : MonoBehaviour {
 
     void OverGathering()
     {
-        animator.SetBool("is_gather", false);        
+        //animator.SetBool("is_gather", false);        
         inFuntionTime = 0;
+        K_JoyX = 0;
+        K_JoyY = 0;
         if (StageManager.currentStage == 7)
         {
             if (CanonScript.startFilled) {

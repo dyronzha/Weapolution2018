@@ -29,12 +29,14 @@ public class PVPProjectile : MonoBehaviour {
     {
         atkValue = weapon.attack;
         Debug.Log("weapon type  " + weapon.id);
-        if (weapon.id == 6) //木頭弓箭
+        if (weapon.id == 5) 
             projectile_img.sprite = ProjectileSprite[0];
-        else if (weapon.id == 7)
+        else if (weapon.id == 6)
             projectile_img.sprite = ProjectileSprite[1];
-        else if (weapon.id == 11)
+        else if (weapon.id == 10)
             projectile_img.sprite = ProjectileSprite[2];
+        else if (weapon.id == 15)
+            projectile_img.sprite = ProjectileSprite[3];
 
 
         //Debug.Log("setflight" + _flight_way);
@@ -95,6 +97,7 @@ public class PVPProjectile : MonoBehaviour {
         flight_way = -1;
         atkValue = 0;
         gameObject.SetActive(false);
+        flight_way = -1;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

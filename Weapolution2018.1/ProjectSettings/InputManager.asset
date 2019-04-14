@@ -538,7 +538,7 @@ InputManager:
     descriptiveName: keyboard_ButtonB
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: escape
+    positiveButton: q
     altNegativeButton: 
     altPositiveButton: 
     gravity: 1000

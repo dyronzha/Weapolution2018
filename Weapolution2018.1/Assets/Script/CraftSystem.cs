@@ -110,7 +110,7 @@ public class CraftSystem : MonoBehaviour {
 
         //if (Input.GetButton(whichPlayer + "ButtonA"))
         //{
-        //    Debug.Log("trap");
+        //   //Debug.Log("trap");
         //    if (spikeNum < 3 && !trapOnce) {
         //        Instantiate(spike, transform.parent.position, Quaternion.identity);
         //        spikeNum++;
@@ -190,7 +190,7 @@ public class CraftSystem : MonoBehaviour {
 
                 //if (picking_item == null) return;
                 //crafterAnimator.SetBool("is_gather", true);
-                // Debug.Log("設動畫");
+                ////Debug.Log("設動畫");
             }
         }
         else {
@@ -249,7 +249,7 @@ public class CraftSystem : MonoBehaviour {
                 ChangeSlot(false, i);
                 //if (craft_records[i]) ChangeSlot(false, i);
                 //else ChangeSlot(false, 0);
-                Debug.Log("craft final" + final_id + items[i].image);
+               //Debug.Log("craft final" + final_id + items[i].image);
                 craftC = items[i];
                 return;
             }
@@ -297,7 +297,7 @@ public class CraftSystem : MonoBehaviour {
                 return;
             } 
             slot_item_img.sprite = CItemDataBase.spriteList[id];
-            Debug.Log("craft final" + id+ CItemDataBase.spriteList[id].name);
+           //Debug.Log("craft final" + id+ CItemDataBase.spriteList[id].name);
         }
 
     }
@@ -406,6 +406,7 @@ public class CraftSystem : MonoBehaviour {
             else crafterAnimator.SetInteger("face_way", 1);
         }
         crafterAnimator.SetBool("is_gather", true);
+        crafterAnimator.SetBool("is_walk", false);
     }
 
     void Collect() {
@@ -430,7 +431,7 @@ public class CraftSystem : MonoBehaviour {
     }
 
     IEnumerator OnCollecting() {
-        Debug.Log(this.gameObject.name + "coroutine");
+       //Debug.Log(this.gameObject.name + "coroutine");
         can_collect = false;
         craftFunc = false;
         float time = 0.0f;
@@ -506,12 +507,12 @@ public class CraftSystem : MonoBehaviour {
                 picking_item.GetComponent<COutLine>().SetOutLine(true);
                 if (!b_handling)
                 {
-                    Debug.Log("going to pick");
+                   //Debug.Log("going to pick");
                     ChangeSlot(false, picking_item.id);
                 }
                 else
                 {
-                    Debug.Log("going to craft");
+                   //Debug.Log("going to craft");
                     craftB = items[picking_item.id];
                     CheckCrafting();
                 }
@@ -524,7 +525,7 @@ public class CraftSystem : MonoBehaviour {
             can_collect = true;
             pick_collect = collision.transform.GetComponent<CPickCollection>();
             pick_collect.GetComponent<COutLine>().SetOutLine(true);
-            Debug.Log(pick_collect.gameObject.name);
+           //Debug.Log(pick_collect.gameObject.name);
         }
     }
 
@@ -535,7 +536,7 @@ public class CraftSystem : MonoBehaviour {
         {
             if (!can_pick && !can_collect && craftFunc)
             {
-                Debug.Log("empty");
+               //Debug.Log("empty");
                 picking_item = collision.GetComponent<CPickItem>();
                 picking_item.GetComponent<COutLine>().SetOutLine(true);
                 if (!b_handling)
@@ -563,7 +564,7 @@ public class CraftSystem : MonoBehaviour {
         {
             //if (pick_collect == null) return;
             if (picking_item != null && collision.gameObject == picking_item.gameObject) {
-                Debug.Log("the same");
+               //Debug.Log("the same");
                 picking_item.GetComponent<COutLine>().SetOutLine(false);
                 picking_item = null;
                 ChangeSlot(true,0);
@@ -572,7 +573,7 @@ public class CraftSystem : MonoBehaviour {
             //if (can_pick) can_pick = false;
         }
         if (can_collect && collision.tag == "PickCollection" ) {
-            Debug.Log("LEAVE COLLECT");
+           //Debug.Log("LEAVE COLLECT");
             //if (pick_collect == null) return;
             if (pick_collect != null && collision.gameObject == pick_collect.gameObject) {
                 pick_collect.GetComponent<COutLine>().SetOutLine(false);

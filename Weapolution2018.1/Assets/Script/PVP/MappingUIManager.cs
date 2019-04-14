@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MappingUIManager : MonoBehaviour {
-
-    int playerNum = 0, confirmNum;
+    bool countDownState;
+    int playerNum = 0, confirmNum, countDownNum = 3;
     bool[] hasControl = new bool[5] { false, false, false, false, false };
     bool[] slotConfirm = new bool[4] { false, false, false, false};
+    float countDownTime = .0f;
     PlayerController[] playerControllers = new PlayerController[4];
 
     float playerGap = 120.0f;
@@ -16,6 +17,10 @@ public class MappingUIManager : MonoBehaviour {
     //第4為中間，其餘由左至右為0~3
     Vector3[] slotPos = new Vector3[5];
     UnityEngine.UI.Image[] ready = new UnityEngine.UI.Image[4];
+    UnityEngine.UI.Text info;
+
+    StageManager stageManager;
+
 
     struct PlayerController {
         //public bool confirm;
@@ -72,6 +77,9 @@ public class MappingUIManager : MonoBehaviour {
             ready[i] = readys.GetChild(i).GetComponent<UnityEngine.UI.Image>();
             ready[i].enabled = false;
         }
+        info = transform.Find("InfoText").GetComponent<UnityEngine.UI.Text>();
+
+        stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
     }
     void Start () {
 		
@@ -88,7 +96,9 @@ public class MappingUIManager : MonoBehaviour {
         //else if (Input.GetButtonUp("keyboardButtonA")) {
         //    Debug.Log("up confirm");
         //}
+        if (StageManager.timeUp) return;
         GetInput();
+        if(countDownState)CountDown();
 	}
 
     void GetInput() {
@@ -188,12 +198,6 @@ public class MappingUIManager : MonoBehaviour {
             if (Input.GetButtonDown(playerControllers[id].control + "ButtonA"))
             {
                 confirmNum++;
-                if (confirmNum >= 4) {
-                    Debug.Log("all ready");
-                    for (int i = 0; i < 4; i++) {
-                        PVPPlayerManager.SetAllController(playerControllers[i].slotID, playerControllers[i].control);
-                    }
-                } 
                 slotConfirm[playerControllers[id].slotID] = true;
                 ready[playerControllers[id].slotID].enabled = true;
                 playerControllers[id].isConfirm = true;
@@ -205,6 +209,13 @@ public class MappingUIManager : MonoBehaviour {
                         playerControllers[i].slotID = 4;
                     }
                 }
+
+                if (confirmNum >= 4)
+                {
+                    Debug.Log("all ready");
+                    countDownState = true;
+                    info.text = "3";
+                }
             }
             else if(Input.GetButtonDown(playerControllers[id].control + "ButtonB"))
             {
@@ -214,6 +225,12 @@ public class MappingUIManager : MonoBehaviour {
                     ready[playerControllers[id].slotID].enabled = false;
                     playerControllers[id].isConfirm = false;
                     confirmNum--;
+                    if (countDownState) {
+                        countDownState = false;
+                        info.text = "VS.";
+                        countDownTime = .0f;
+                        countDownNum = 3;
+                    }
                 }
                 else {
                     playerNum--;
@@ -226,6 +243,27 @@ public class MappingUIManager : MonoBehaviour {
                     else if (playerControllers[id].control == "p4") hasControl[4] = false;
                 }
             }
+        }
+    }
+
+    void CountDown() {
+        if (countDownTime < 1.0f) countDownTime += Time.deltaTime;
+        else {
+            countDownNum--;
+
+            if (countDownNum > 0)
+            {
+                info.text = countDownNum.ToString();
+            }
+            else {
+                info.text = "GO!!!";
+                for (int i = 0; i < 4; i++)
+                {
+                    PVPPlayerManager.SetAllController(playerControllers[i].slotID, playerControllers[i].control);
+                }
+                StageManager.nextStage = 2;
+                stageManager.ChangeSceneBlackOut();
+            } 
         }
     }
 

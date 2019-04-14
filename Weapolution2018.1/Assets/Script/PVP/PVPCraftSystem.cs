@@ -409,6 +409,7 @@ public class PVPCraftSystem : MonoBehaviour {
             else crafterAnimator.SetInteger("face_way", 1);
         }
         crafterAnimator.SetBool("is_gather", true);
+        crafterAnimator.SetBool("is_walk", false);
     }
 
     void Collect()
@@ -454,7 +455,7 @@ public class PVPCraftSystem : MonoBehaviour {
     }
 
     void CollectOver() {
-        crafterAnimator.SetBool("is_gather", false);
+        //crafterAnimator.SetBool("is_gather", false);
         collectBarBk.GetComponent<SpriteRenderer>().enabled = false;
         collectBar.GetComponent<SpriteRenderer>().enabled = false;
         pick_collect.ThrowItemOut();
@@ -496,6 +497,7 @@ public class PVPCraftSystem : MonoBehaviour {
             if (Input.GetButtonDown(whichPlayer + "ButtonX") && CanSetTrap())
             {
                 if (playerControl.SetUseTrap()) {
+                    crafterAnimator.SetTrigger("usingTrape");
                     craftFunc = false;
                     trapNum++;
                 }  

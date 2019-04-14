@@ -66,7 +66,7 @@ AnimationClip:
       value: {fileID: 21300000, guid: fec1e0a1058ede24290838e88354c4e8, type: 3}
     - time: 0.33333334
       value: {fileID: 21300000, guid: 843d8a57c3cbc7c43a83e7c880672218, type: 3}
-    - time: 0.41666666
+    - time: 0.43333334
       value: {fileID: 21300000, guid: 57a57b0036f18ee419a4dbfb7db4ed89, type: 3}
     attribute: m_Sprite
     path: image
@@ -112,7 +112,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.43333334
+    m_StopTime: 0.45000002
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -171,7 +171,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
   m_Events:
-  - time: 0.38333333
+  - time: 0.41666666
     functionName: OverRoll
     data: 
     objectReferenceParameter: {fileID: 0}

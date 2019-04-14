@@ -6,7 +6,7 @@ using System;
 public class PlayerControl : MonoBehaviour {
 
     bool isCraft, isKeyboard, dashHit, invincible, die;
-    bool teamA, meleeWeapon;
+    bool teamA, meleeWeapon, menuMode = false;
     int faceDir = 1, lastDir = -1, lastXInput = 0, lastYInput = 0;
     string control;
     float speedX, speedY, dashInputTime = 1.0f, dashTime;
@@ -72,13 +72,18 @@ public class PlayerControl : MonoBehaviour {
                 break;
             case State.hurt:
                 if(FirstInState()) animator.SetTrigger("is_hurt");
+                GetInput();
+                Move();
                 break;
             case State.die:
                 if(FirstInState()) animator.SetBool("is_die", true);
                 break;
             case State.attack:
                 if(FirstInState()) animator.SetBool("is_attack", true);
-                if (meleeWeapon) GetInput();
+                if (meleeWeapon) {
+                    GetInput();
+                    Move();
+                }
                 break;
             case State.collect:
 
@@ -119,6 +124,9 @@ public class PlayerControl : MonoBehaviour {
 
     void GetInput()
     {
+        if (menuMode) {
+            return;
+        }
         if (isKeyboard)
         {
             bool stop = false;
@@ -171,7 +179,7 @@ public class PlayerControl : MonoBehaviour {
                     }
                     if (faceDir == 0)
                     {
-                        if (!inputDown && lastYInput <= 0) lastYInput = 1;
+                        //if (!inputDown && lastYInput <= 0) lastYInput = 1;
                         if (inputUp && inputDown)
                         {
                             if (lastYInput > 0 && inputDown)
@@ -185,12 +193,15 @@ public class PlayerControl : MonoBehaviour {
                             speedY = -1.0f;
                             faceDir = 1;
                         }
-                        else if (inputUp) speedY = 1.0f;
+                        else if (inputUp) {
+                            speedY = 1.0f;
+                            lastYInput = 1;
+                        } 
 
                     }
                     else if (faceDir == 1)
                     {
-                        if (!inputUp && lastYInput >= 0) lastYInput = -1;
+                        //if (!inputUp && lastYInput >= 0) lastYInput = -1;
                         if (inputUp && inputDown)
                         {
                             if (lastYInput < 0 && inputUp)
@@ -204,7 +215,10 @@ public class PlayerControl : MonoBehaviour {
                             speedY = 1.0f;
                             faceDir = 0;
                         }
-                        else if (inputDown) speedY = -1.0f;
+                        else if (inputDown) {
+                            speedY = -1.0f;
+                            lastYInput = -1;
+                        } 
 
                     }
 
@@ -246,7 +260,7 @@ public class PlayerControl : MonoBehaviour {
                     }
                     if (faceDir == 2)
                     {
-                        if (!inputRight && lastXInput >= 0) lastXInput = -1;
+                        //if (!inputRight && lastXInput >= 0) lastXInput = -1;
                         if (inputLeft && inputRight)
                         {
                             if (lastXInput < 0 && inputRight)
@@ -260,12 +274,15 @@ public class PlayerControl : MonoBehaviour {
                             speedX = 1.0f;
                             faceDir = 3;
                         }
-                        else if (inputLeft) speedX = -1.0f;
+                        else if (inputLeft) {
+                            speedX = -1.0f;
+                            lastXInput = -1;
+                        } 
 
                     }
                     else if (faceDir == 3)
                     {
-                        if (!inputLeft && lastXInput <= 0) lastXInput = 1;
+                        //if (!inputLeft && lastXInput <= 0) lastXInput = 1;
                         if (inputLeft && inputRight)
                         {
                             if (lastXInput > 0 && inputLeft)
@@ -279,7 +296,10 @@ public class PlayerControl : MonoBehaviour {
                             speedX = -1.0f;
                             faceDir = 2;
                         }
-                        else if (inputRight) speedX = 1.0f;
+                        else if (inputRight) {
+                            speedX = 1.0f;
+                            lastXInput = 1;
+                        } 
                     }
                     break;
             }
@@ -334,12 +354,12 @@ public class PlayerControl : MonoBehaviour {
             speedY = Input.GetAxis(control + "LVertical");
             if (Mathf.Abs(speedX) >= Mathf.Abs(speedY))
             {
-                if (speedX <= .0f) faceDir = 1;
-                else faceDir = 0;
+                if (speedX < -0.1f) faceDir = 2;
+                else if(speedX > 0.1f) faceDir = 3;
             }
             else {
-                if (speedY <= .0f) faceDir = 2;
-                else faceDir = 3;
+                if (speedY < -0.1f) faceDir = 1;
+                else if(speedY > 0.1f) faceDir = 0;
             }
 
             //如果在攻擊狀態跳過下面狀態切換只接收移動輸入
@@ -420,6 +440,12 @@ public class PlayerControl : MonoBehaviour {
         return faceDir;
     }
 
+    public void SetMenuMode(bool value) {
+        speedX = 0;
+        speedY = 0;
+        menuMode = value;
+    }
+
     void Move()
     {
         //偵測障礙物，讓速度歸零
@@ -442,8 +468,9 @@ public class PlayerControl : MonoBehaviour {
         }
 
         Vector2 move = Vector2.zero;
-        if (isKeyboard)move = new Vector2(speedX, speedY).normalized;
-        Debug.Log(isCraft + "  is move   " + move);
+        if (isKeyboard) move = new Vector2(speedX, speedY).normalized;
+        else move = new Vector2(speedX, speedY);
+        Debug.Log(isKeyboard + "  is move   " + move);
         transform.position += Time.deltaTime * speed * new Vector3(move.x, move.y, 0);
     }
 
@@ -452,9 +479,10 @@ public class PlayerControl : MonoBehaviour {
         //if (dashTime > 0.4f) state = State.idle;
         if (!dashHit) {
             Vector2 pos = new Vector2(transform.position.x, transform.position.y + 0.2f);
-            if (Physics2D.Raycast(pos, dashDir, 2.5f, moveMask))
+            if (Physics2D.Raycast(pos, dashDir, 1.0f, moveMask)) {
                 dashDir = Vector2.zero;
-            dashHit = true;
+                dashHit = true;
+            }    
         }
         transform.position += Time.deltaTime * dashTime * new Vector3(dashDir.x * 50.0f, dashDir.y * 40.0f);
 
@@ -501,7 +529,7 @@ public class PlayerControl : MonoBehaviour {
         {
             animator.SetBool("is_attack", false);
         }
-        playerManager.SetHP(teamA, -value);
+        playerManager.SetHP(teamA, -value*0.02f);
 
         //if (inFuntionTime == 0)
         //{
@@ -528,9 +556,10 @@ public class PlayerControl : MonoBehaviour {
 
 
     public void OverGathering() {
+        Debug.Log("oooovvvveeerrrr gatjerrrrr");
         CollectOver();
         animator.SetBool("is_gather", false);
-        animator.SetBool("is_walk", false);
+        //animator.SetBool("is_walk", false);
         state = State.idle;
     }
     public void SetTrapOver() {
@@ -548,8 +577,7 @@ public class PlayerControl : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "DamageToPlayer" && !invincible && !die) {
-            if(!isCraft)GetHurt(collision.GetComponent<PVPProjectile>().GetATKValue());
-            else GetHurt(0.02f);
+            GetHurt(collision.GetComponent<PVPProjectile>().GetATKValue());
         }
     }
 

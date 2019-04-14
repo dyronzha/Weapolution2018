@@ -87,7 +87,16 @@ public class CPickItemSystem : MonoBehaviour {
                 SpawnPickCollect(locations[7], 1);
                 SpawnPickCollect(locations[5], 1);
             }
+            else if (StageManager.currentStage == 2)
+            {
+                SpawnPickCollect(locations[0], 0);
+                SpawnPickCollect(locations[1], 2);
+                SpawnPickCollect(locations[3], 0);
+                SpawnPickCollect(locations[4], 2);
+                SpawnPickCollect(locations[8], 3);
+            }
         }
+        
     }
 
     // Update is called once per frame

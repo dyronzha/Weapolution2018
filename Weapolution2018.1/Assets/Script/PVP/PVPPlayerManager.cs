@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PVPPlayerManager : MonoBehaviour {
-    static string[] controller = new string[4] {"p1", "keyboard", "keyboard", "p2"};
+    static string[] controller = new string[4] {"p1", "keyboard", "keyboard", "p1"};
     PlayerControl[] playerControls = new PlayerControl[4];
     StageManager stageManager;
     PVPTeamHP teamHp;
+
+    public PVPCraftMenu teamAMenu, teamBMenu;
 
     // Use this for initialization
     private void Awake()
@@ -22,6 +24,9 @@ public class PVPPlayerManager : MonoBehaviour {
             if (i == 1 || i == 3) {
                 playerControls[i].SetController(true, controller[i]);
                 playerControls[i].transform.Find("CraftSystem").GetComponent<PVPCraftSystem>().Init(characterVoice, controller[i]);
+                Debug.Log(playerControls[i] + "   "  + teamAMenu);
+                if(i == 1)teamAMenu.Init(controller[i], this.playerControls[i]);
+                else teamBMenu.Init(controller[i], this.playerControls[i]);
             } 
             else {
                 playerControls[i].SetController(false, controller[i]);

@@ -65,7 +65,7 @@ public class ChoosePlayer : MonoBehaviour {
             changeOnce = false;
             Player.isMapped = true;           
             //SelectStageScript.isChoosed = true;
-            StageManager.nextStage = 3;
+            StageManager.nextStage = 5;
             stageManager.ChangeSceneBlackOut();
 
 
