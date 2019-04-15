@@ -52,6 +52,7 @@ public class PVPPlayerManager : MonoBehaviour {
     }
 
     public void PVPGameOver(int team) {
+
         if (team == 0)
         {
             playerControls[0].GoDie();
@@ -73,6 +74,7 @@ public class PVPPlayerManager : MonoBehaviour {
     IEnumerator OnDialog(string team) {
         yield return new WaitForSecondsRealtime(2.2f);
         pvpDialog.SetOn(team);
+        StageManager.timeUp = true;
     }
 
 

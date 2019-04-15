@@ -22,6 +22,7 @@ public class PVPProjectile : MonoBehaviour {
 
     void Update()
     {
+
         flight(flight_way);
 
     }

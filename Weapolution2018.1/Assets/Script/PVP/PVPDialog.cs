@@ -29,7 +29,10 @@ public class PVPDialog : MonoBehaviour {
         currentDialog = dialog;
         if (StageManager.currentStage == 1) {
             if (!hasChoose) hasChoose = true;
-            else this.gameObject.SetActive(false);
+            else {
+                this.gameObject.SetActive(false);
+                start = true;
+            } 
         } 
         else {
             this.gameObject.SetActive(false);

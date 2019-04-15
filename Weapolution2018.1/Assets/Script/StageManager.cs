@@ -7,7 +7,7 @@ public class StageManager : MonoBehaviour {
 
 
     public static bool timeUp;
-    public static  int currentStage =2, nextStage =3;
+    public static  int currentStage =1, nextStage =2;
 
 	public bool inMenuState;
     public bool stageBegin;

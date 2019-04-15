@@ -74,6 +74,7 @@ public class MappingUIManager : MonoBehaviour {
             playerUI[i] = UIs.GetChild(i).GetComponent<RectTransform>();
             playerUI[i].gameObject.SetActive(false);
             playerControllers[i] = new PlayerController();
+            playerControllers[i].control = "p1";
             ready[i] = readys.GetChild(i).GetComponent<UnityEngine.UI.Image>();
             ready[i].enabled = false;
         }
@@ -211,7 +212,7 @@ public class MappingUIManager : MonoBehaviour {
                     }
                 }
 
-                if (confirmNum >= 4)
+                if (confirmNum >= 2)
                 {
                     Debug.Log("all ready");
                     countDownState = true;
@@ -248,9 +249,10 @@ public class MappingUIManager : MonoBehaviour {
     }
 
     void CountDown() {
-        if (countDownTime < 1.0f) countDownTime += Time.deltaTime;
+        if (countDownTime < 0.35f) countDownTime += Time.deltaTime;
         else {
             countDownNum--;
+            countDownTime = .0f;
 
             if (countDownNum > 0)
             {
