@@ -29,7 +29,7 @@ public class ChoosePlayer : MonoBehaviour {
         buda_keyboard1 = GameObject.Find("buda_keyboard1").GetComponent<SpriteRenderer>();
         haka_joystick1 = GameObject.Find("haka_joystick1").GetComponent<SpriteRenderer>();
         haka_keyboard1 = GameObject.Find("haka_keyboard1").GetComponent<SpriteRenderer>();
-        stageManager = GameObject.Find("MappingPvE_BG").GetComponent<StageManager>();
+        stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
         budaHands = GameObject.Find("budaHand");
         hakaHands = GameObject.Find("hakaHand");
         budaHands.SetActive(false);

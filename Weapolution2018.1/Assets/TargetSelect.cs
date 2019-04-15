@@ -243,7 +243,7 @@ public class TargetSelect : MonoBehaviour {
         if(!isP1target && p1IsLocked) return;
         if (!Controller) //用鍵盤
         {
-            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.LeftArrow)) //target左右動
+            if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A)) //target左右動
             {
                 if (isP1target && !p1IsLocked) P1targetOnBuda = !P1targetOnBuda;
                 if(!isP1target && !p2IsLocked) P2targetOnBuda = !P2targetOnBuda;
