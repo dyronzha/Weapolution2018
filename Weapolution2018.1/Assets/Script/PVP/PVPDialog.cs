@@ -11,6 +11,11 @@ public class PVPDialog : MonoBehaviour {
     Text content;
     StageManager stageManager;
 
+    static bool hasChoose = false;
+
+    [HideInInspector]
+    public bool start = false;
+
     public string[] dialog;
 
     // Use this for initialization
@@ -21,9 +26,10 @@ public class PVPDialog : MonoBehaviour {
 
     }
     void Start () {
+        currentDialog = dialog;
         if (StageManager.currentStage == 1) {
-            StageManager.timeUp = true;
-            currentDialog = dialog;
+            if (!hasChoose) hasChoose = true;
+            else this.gameObject.SetActive(false);
         } 
         else {
             this.gameObject.SetActive(false);
@@ -48,8 +54,8 @@ public class PVPDialog : MonoBehaviour {
             {
                 if (StageManager.currentStage == 1)
                 {
-                    StageManager.timeUp = false;
                     this.gameObject.SetActive(false);
+                    start = true;
                 }
                 else {
                     StageManager.nextStage = 1;
@@ -62,7 +68,7 @@ public class PVPDialog : MonoBehaviour {
               || Input.GetButtonDown("p2ButtonB") || Input.GetButtonDown("p3ButtonB") || Input.GetButtonDown("p4ButtonB")) {
             if (StageManager.currentStage == 1)
             {
-                StageManager.timeUp = false;
+                start = true;
                 this.gameObject.SetActive(false);
             }
             else
@@ -73,5 +79,8 @@ public class PVPDialog : MonoBehaviour {
         }
     }
 
-
+    public void SetOn(string team) {
+        content.text = team + currentDialog[0];
+        gameObject.SetActive(true);
+    }
 }

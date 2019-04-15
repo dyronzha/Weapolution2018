@@ -193,6 +193,7 @@ public class CPickItem : MonoBehaviour {
 
     public void SetLifeTime(float _time) {
         time = _time;
+        render.enabled = true;
     }
 
     public void SetShadowEnable(bool _isOn) {

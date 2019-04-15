@@ -94,6 +94,8 @@ public class CPickItemSystem : MonoBehaviour {
                 SpawnPickCollect(locations[3], 0);
                 SpawnPickCollect(locations[4], 2);
                 SpawnPickCollect(locations[8], 3);
+                SpawnInUsed(new Vector3(-5,0,0), 4);
+                SpawnInUsed(new Vector3(5, 0, 0), 4);
             }
         }
         

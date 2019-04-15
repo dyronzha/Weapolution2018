@@ -529,7 +529,7 @@ public class PlayerControl : MonoBehaviour {
         {
             animator.SetBool("is_attack", false);
         }
-        playerManager.SetHP(teamA, -value*0.02f);
+        playerManager.SetHP(teamA, -value);
 
         //if (inFuntionTime == 0)
         //{

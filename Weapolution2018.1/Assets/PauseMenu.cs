@@ -13,7 +13,7 @@ public class PauseMenu : MonoBehaviour {
     public List<Sprite> Stage02ButtonState;
     bool SetReady = false;
     int SelectNum = 0;
-    int MaxNum = 4, MinNum = 0;
+    int MaxNum = 3, MinNum = 0;
     int InFuntionTime = 0;
 	bool showMenu;
     float clickTime;
@@ -57,7 +57,7 @@ public class PauseMenu : MonoBehaviour {
     void SetMenuPic()
     {
         PauseMenuImage.sprite = WhichStage[2];
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 4; i++)
         {
             MenuButton[i].sprite = WhichStage[0];
             PauseMenuButton[i].targetGraphic.GetComponent<Image>().sprite = WhichStage[0];
@@ -97,7 +97,7 @@ public class PauseMenu : MonoBehaviour {
 
 	void MouseControl(){
 		if(MouseHover && InFuntionTime == 0){
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
                 MenuButton[i].sprite = WhichStage[0];
             }
@@ -140,17 +140,14 @@ public class PauseMenu : MonoBehaviour {
 			StageManagerscript.inMenuState = false;
 			break;
 		case 1:
+                StageManager.nextStage = StageManager.currentStage;
                 StageManagerscript.ChangeSceneBlackOut();
                 break;
 		case 2:
-                StageManager.nextStage = StageManager.currentStage+1;
+                StageManager.nextStage = 0;
                 StageManagerscript.ChangeSceneBlackOut();
                 break;
 		case 3:
-                StageManager.nextStage = 2;
-                StageManagerscript.ChangeSceneBlackOut();
-                break;
-        case 4:
                 Application.Quit();
                 break;
 		}
@@ -166,15 +163,14 @@ public class PauseMenu : MonoBehaviour {
                     StageManager.nextStage = StageManager.currentStage;
                     StageManagerscript.ChangeSceneBlackOut();
                     break;
-			case 2:
-                    StageManager.nextStage = StageManager.currentStage+1;
+                case 2:
+                    StageManager.nextStage = 0;
                     StageManagerscript.ChangeSceneBlackOut();
                     break;
-			case 3:
-				    StageManager.nextStage = 0;
-                    StageManagerscript.ChangeSceneBlackOut();
+                case 3:
+                    Application.Quit();
                     break;
-			}
+            }
 		}
 	}
 

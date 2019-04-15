@@ -20,7 +20,7 @@ public class MappingUIManager : MonoBehaviour {
     UnityEngine.UI.Text info;
 
     StageManager stageManager;
-
+    PVPDialog pvpDialog;
 
     struct PlayerController {
         //public bool confirm;
@@ -80,6 +80,7 @@ public class MappingUIManager : MonoBehaviour {
         info = transform.Find("InfoText").GetComponent<UnityEngine.UI.Text>();
 
         stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
+        pvpDialog = GameObject.Find("Dialog").GetComponent<PVPDialog>();
     }
     void Start () {
 		
@@ -96,7 +97,7 @@ public class MappingUIManager : MonoBehaviour {
         //else if (Input.GetButtonUp("keyboardButtonA")) {
         //    Debug.Log("up confirm");
         //}
-        if (StageManager.timeUp) return;
+        if (StageManager.timeUp || !pvpDialog.start) return;
         GetInput();
         if(countDownState)CountDown();
 	}
