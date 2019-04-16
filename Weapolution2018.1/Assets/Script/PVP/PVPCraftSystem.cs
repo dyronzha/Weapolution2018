@@ -17,7 +17,7 @@ public class PVPCraftSystem : MonoBehaviour {
     CPickCollection pick_collect;
     CItem craftA, craftB, craftC;
     CraftMenu craftMenu;
-    HealEffects healEffect;
+    public HealEffects healEffect;
     [HideInInspector]
     public bool craftFunc = true, useController = false;
     [HideInInspector]
@@ -59,7 +59,7 @@ public class PVPCraftSystem : MonoBehaviour {
         //craftMenu = GameObject.Find("CraftMenu").GetComponent<CraftMenu>();
         crafterAnimator = transform.parent.GetComponent<Animator>();
         craftFunc = true;
-        healEffect = GameObject.Find("HealEffects").GetComponent<HealEffects>();
+        //healEffect = GameObject.Find("HealEffects").GetComponent<HealEffects>();
 
         playerControl = transform.parent.GetComponent<PlayerControl>();
         tool = transform.parent.Find("Tool").GetComponent<SpriteRenderer>();
@@ -152,7 +152,7 @@ public class PVPCraftSystem : MonoBehaviour {
                 LBFixed = false;
                 if (CItemDataBase.items[picking_item.id].elementID < -20)
                 {
-                    TeamHp.ChangeHp(true, 0.15f);
+                    playerControl.RecoverHp(3.0f);
                     healEffect.SetHealEffectAni();
                     picking_item.GetComponent<COutLine>().SetOutLine(false);
                     picking_item.SetInFree();
@@ -197,7 +197,7 @@ public class PVPCraftSystem : MonoBehaviour {
 
                 if (CItemDataBase.items[picking_item.id].elementID < -20)
                 {
-                    TeamHp.ChangeHp(true, 0.15f);
+                    playerControl.RecoverHp(3.0f);
                     healEffect.SetHealEffectAni();
                     picking_item.GetComponent<COutLine>().SetOutLine(false);
                     picking_item.SetInFree();

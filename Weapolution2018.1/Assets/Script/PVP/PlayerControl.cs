@@ -463,14 +463,13 @@ public class PlayerControl : MonoBehaviour {
         if (speedX > .0f && rightHit) speedX = .0f;
         else if (speedX < .0f && leftHit) speedX = .0f;
 
-        if (upHit || downHit || leftHit || rightHit) {
-            Debug.Log(isCraft + "   hit wall");
-        }
+        //if (upHit || downHit || leftHit || rightHit) {
+        //    Debug.Log(isCraft + "   hit wall");
+        //}
 
         Vector2 move = Vector2.zero;
         if (isKeyboard) move = new Vector2(speedX, speedY).normalized;
         else move = new Vector2(speedX, speedY);
-        Debug.Log(isKeyboard + "  is move   " + move);
         transform.position += Time.deltaTime * speed * new Vector3(move.x, move.y, 0);
     }
 
@@ -529,7 +528,7 @@ public class PlayerControl : MonoBehaviour {
         {
             animator.SetBool("is_attack", false);
         }
-        playerManager.SetHP(teamA, -value);
+        playerManager.SetHP(teamA, -value*0.02f);
 
         //if (inFuntionTime == 0)
         //{
@@ -541,8 +540,10 @@ public class PlayerControl : MonoBehaviour {
         //    inFuntionTime++;
             
         //}
+    }
 
-
+    public void RecoverHp(float value) {
+        playerManager.SetHP(teamA, value * 0.02f);
     }
 
     public void OverBeHurt()

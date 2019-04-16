@@ -64,6 +64,7 @@ public class PickWeaponPVP : MonoBehaviour {
                 if (Input.GetButtonDown(whichPlayer + "ButtonX"))
                 {
                     if (!ButtonXFixed) return;
+                    if (!lastPick.gameObject.activeSelf) return;
                     ButtonXFixed = false;
                     pickWeapon = lastPick;
                     holdWeapon = CItemDataBase.items[pickWeapon.id];
@@ -78,6 +79,7 @@ public class PickWeaponPVP : MonoBehaviour {
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
+                    if (!lastPick.gameObject.activeSelf) return;
                     pickWeapon = lastPick;
                     holdWeapon = CItemDataBase.items[pickWeapon.id];
                     pickWeapon.transform.parent = this.transform;

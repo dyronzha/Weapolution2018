@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PVPPlayerManager : MonoBehaviour {
-    static string[] controller = new string[4] { "p1", "keyboard", "keyboard", "p1" };
+    static string[] controller = new string[4] { "p3", "keyboard", "p2", "p1" };
     PlayerControl[] playerControls = new PlayerControl[4];
     StageManager stageManager;
     PVPTeamHP teamHp;

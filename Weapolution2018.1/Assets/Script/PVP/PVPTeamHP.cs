@@ -64,9 +64,12 @@ public class PVPTeamHP : MonoBehaviour {
     }
     public void CheckHp(int id)
     {
-        if (teamHp[id] <= 0 )
+        if (teamHp[id] <= 0)
         {
             gameOver(id);
+        }
+        else if (teamHp[id] > 1.0f) {
+            teamHp[id] = 1.0f;
         }
     }
 
@@ -85,13 +88,16 @@ public class PVPTeamHP : MonoBehaviour {
         if (teamA)
         {
             teamHp[0] += _value;
+            CheckHp(0);
             RenderUI(0);
-            if (_value < .0f) CheckHp(0);
+            
+
         }
         else {
             teamHp[1] += _value;
+            CheckHp(1);
             RenderUI(1);
-            if (_value < .0f) CheckHp(1);
+            
         }
         
 

@@ -17745,6 +17745,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114670312585805022, guid: e90764f09ffe71645ad239c7ecd366c2,
+        type: 2}
+      propertyPath: CharacterEffectVoice.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2886e3c65aa2f824b8a8f20e73811232, type: 3}
     m_RemovedComponents:
     - {fileID: 114433452416048602, guid: e90764f09ffe71645ad239c7ecd366c2, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: e90764f09ffe71645ad239c7ecd366c2, type: 2}

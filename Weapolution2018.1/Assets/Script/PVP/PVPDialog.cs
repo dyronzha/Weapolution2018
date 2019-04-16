@@ -28,6 +28,7 @@ public class PVPDialog : MonoBehaviour {
     void Start () {
         currentDialog = dialog;
         if (StageManager.currentStage == 1) {
+            content.text = currentDialog[0];
             if (!hasChoose) hasChoose = true;
             else {
                 this.gameObject.SetActive(false);

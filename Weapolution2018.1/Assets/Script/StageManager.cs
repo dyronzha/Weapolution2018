@@ -150,6 +150,11 @@ public class StageManager : MonoBehaviour {
         StartCoroutine(OnChangingScene(0.0f));
     }
 
+    public void StartVersus() {
+        nextStage = 1;
+        StartCoroutine(OnChangingScene(0.0f));
+    }
+
     //public void ChangeSceneBlackOutForMapping()
     //{
     //    inChanging = true;

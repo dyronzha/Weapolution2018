@@ -212,7 +212,7 @@ public class MappingUIManager : MonoBehaviour {
                     }
                 }
 
-                if (confirmNum >= 2)
+                if (confirmNum >= 4)
                 {
                     Debug.Log("all ready");
                     countDownState = true;

@@ -66,8 +66,10 @@ public class PVPAttacker : MonoBehaviour {
             }
             if (Input.GetAxis(control + "LT") >= 0.5f)
             {
+                Debug.Log(control + "   dash");
                 playerControl.SetDashState();
             }
+
         }
     }
     void Attack()
@@ -105,6 +107,7 @@ public class PVPAttacker : MonoBehaviour {
     {
         Transform tempProjectile = projectileSystem.GetChild(projectileNum);
         tempProjectile.position = weapon.position;
+        if (playerControl.GetFaceDir() == 1) tempProjectile.position += new Vector3(0, -0.5f, 0);
         tempProjectile.gameObject.SetActive(true);
         tempProjectile.GetComponent<PVPProjectile>().SetProjectileImg(playerControl.GetFaceDir(), pickWeapon.holdWeapon);
         projectileNum++;
