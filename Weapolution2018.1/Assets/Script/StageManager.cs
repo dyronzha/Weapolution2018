@@ -7,7 +7,7 @@ public class StageManager : MonoBehaviour {
 
 
     public static bool timeUp;
-    public static  int currentStage =1, nextStage =2;
+    public static  int currentStage =0, nextStage =1;
 
 	public bool inMenuState;
     public bool stageBegin;
@@ -35,16 +35,16 @@ public class StageManager : MonoBehaviour {
         //transRender.stageManager = this;
         //BGM = GameObject.Find("map").GetComponent<AudioSource>();
 
-        if (currentStage == 1) {
+        if (currentStage == 1 || currentStage == 4) {
             animator = GameObject.Find("BlackScene").GetComponent<Animator>();
         }
-        if (currentStage == 2) {
+        else if (currentStage == 2) {
             transRender = Camera.main.GetComponent<SceneTransRender>();
             transRender.stageManager = this;
             animator = GameObject.Find("BlackScene").GetComponent<Animator>();
             BGM = GameObject.Find("map").GetComponent<AudioSource>();
         }
-        if (currentStage >= 5)
+        else if (currentStage >= 5)
         {
             transRender = Camera.main.GetComponent<SceneTransRender>();
             transRender.stageManager = this;
@@ -75,24 +75,25 @@ public class StageManager : MonoBehaviour {
         //    Player.isMapped = false;
         //    StartCoroutine(OnChangingScene(0.0f));
         //}
-        if (currentStage == 3) {
-            if (Input.GetKeyDown(KeyCode.Space)) {
-                nextStage = 4;
-                ChangeSceneBlackOut();
-                //StartCoroutine(OnChangingScene(0.0f));
-            }
-        }
+
+        //if (currentStage == 3) {
+        //    if (Input.GetKeyDown(KeyCode.Space)) {
+        //        nextStage = 4;
+        //        ChangeSceneBlackOut();
+        //        //StartCoroutine(OnChangingScene(0.0f));
+        //    }
+        //}
 
 
 
-        if (currentStage >= 5 || currentStage == 1 || currentStage == 2) {
+        if (currentStage >= 4 || currentStage == 1 || currentStage == 2) {
             if (!stageBegin)
             {
                 if (!inChanging)
                 {
 
                     inChanging = true;
-                    if (currentStage == 5 || currentStage == 1 || currentStage == 2) animator.Play("BlackIn");
+                    if (currentStage <= 5 || currentStage == 1 || currentStage == 2) animator.Play("BlackIn");
                     else transRender.SetIsGoIn(true);
                     //ToStageBegin();
                 }
