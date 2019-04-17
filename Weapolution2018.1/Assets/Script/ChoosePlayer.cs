@@ -19,8 +19,8 @@ public class ChoosePlayer : MonoBehaviour {
     bool p2Ready = false;
     bool changeOnce;
     TargetSelect TargetSelectScript;
-    //SelectStage SelectStageScript;
-    StageManager stageManager;
+    SelectStage selectStage;
+
 
     // Use this for initialization
 
@@ -29,13 +29,13 @@ public class ChoosePlayer : MonoBehaviour {
         buda_keyboard1 = GameObject.Find("buda_keyboard1").GetComponent<SpriteRenderer>();
         haka_joystick1 = GameObject.Find("haka_joystick1").GetComponent<SpriteRenderer>();
         haka_keyboard1 = GameObject.Find("haka_keyboard1").GetComponent<SpriteRenderer>();
-        stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
+
         budaHands = GameObject.Find("budaHand");
         hakaHands = GameObject.Find("hakaHand");
         budaHands.SetActive(false);
         hakaHands.SetActive(false);
         TargetSelectScript = transform.GetComponent<TargetSelect>();
-        //SelectStageScript = GameObject.Find("SelectStage").GetComponent<SelectStage>();
+        selectStage = GameObject.Find("SelectStage").GetComponent<SelectStage>();
     }
 	
 	// Update is called once per frame
@@ -63,12 +63,8 @@ public class ChoosePlayer : MonoBehaviour {
         if (AttackerSucces && CrafterSucces && !changeOnce)
         {
             changeOnce = false;
-            Player.isMapped = true;           
-            //SelectStageScript.isChoosed = true;
-            StageManager.nextStage = 5;
-            stageManager.ChangeSceneBlackOut();
-
-
+            Player.isMapped = true;
+            selectStage.TransCamera();
         }
         //Debug.Log("Player.p2controller" + Player.p2controller);
         //if (Input.GetMouseButtonDown(0)){

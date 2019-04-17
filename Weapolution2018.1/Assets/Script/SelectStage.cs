@@ -4,6 +4,188 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class SelectStage : MonoBehaviour {
+
+    Transform camera;
+    bool isStart, isLock, isMove, goLeft;
+    int curStage = 0;
+    float moveTime;
+
+    bool[] isUnLock = new bool[6] { true, false, false, false, false, false };
+
+    Vector3 leftPos, middlePos, rightPos;
+    StageManager stageManager;
+
+    public Transform[] stages;
+
+
+    private void Awake()
+    {
+        camera = GameObject.Find("Main Camera").transform;
+        stageManager = GameObject.Find("StageManager").GetComponent<StageManager>();
+        UnLock();
+    }
+    private void Start()
+    {
+        middlePos = new Vector3(27,0,0);
+        rightPos = new Vector3(42, 0, 0);
+        leftPos = new Vector3(12,0,0);
+    }
+
+    private void Update()
+    {
+        if (isStart) {
+            if (!isMove) GetInput();
+            else ImageMove();
+        }
+    }
+
+    void UnLock() {
+        for (int i = 1; i <= 2; i++) {
+            if (i+5 <= StageManager.stageRecord) {
+                stages[i].Find("Lock").gameObject.SetActive(false);
+                isUnLock[i] = true;
+            }
+        }
+    }
+
+    public void TransCamera() {
+        StartCoroutine(MoveCamera());
+    }
+    IEnumerator MoveCamera() {
+        while (camera.position.x < 27.0f) {
+            camera.position += Time.deltaTime * 3.0f * new Vector3(1,0,0);
+            yield return null;
+        }
+        camera.position = new Vector3(27.0f,0,-500);
+        isStart = true;
+    }
+
+    void GetInput() {
+        if (Player.p1controller)
+        {
+            if (Input.GetButtonDown(Player.p1joystick + "ButtonA")) {
+                if (!isUnLock[curStage]) return;
+                isStart = false;
+                StageManager.nextStage = (curStage + 5);
+                stageManager.ChangeSceneBlackOut();
+            }
+            if (Input.GetAxis(Player.p1joystick + "LHorizontal") > 0.5f && curStage < 5)
+            {
+                goLeft = true;
+                isMove = true;
+                return;
+            }
+            else if (Input.GetAxis(Player.p1joystick + "LHorizontal") < -0.5f && curStage > 0)
+            {
+                goLeft = false;
+                isMove = true;
+                return;
+            }
+        }
+        else {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                if (!isUnLock[curStage]) return;
+                isStart = false;
+                StageManager.nextStage = curStage + 5;
+                stageManager.ChangeSceneBlackOut();
+            }
+            if (Input.GetKeyDown(KeyCode.D) && curStage < 5)
+            {
+                goLeft = true;
+                isMove = true;
+                return;
+            }
+            else if (Input.GetKeyDown(KeyCode.A) && curStage > 0) {
+                goLeft = false;
+                isMove = true;
+                return;
+            }
+        }
+
+        if (Player.p2controller)
+        {
+            if (Input.GetButtonDown(Player.p2joystick + "ButtonA"))
+            {
+                if (!isUnLock[curStage]) return;
+                isStart = false;
+                StageManager.nextStage = curStage + 5;
+                stageManager.ChangeSceneBlackOut();
+            }
+            if (Input.GetAxis(Player.p2joystick + "LHorizontal") > 0.5f && curStage < 5)
+            {
+                goLeft = true;
+                isMove = true;
+            }
+            else if (Input.GetAxis(Player.p2joystick + "LHorizontal") < -0.5f && curStage > 0)
+            {
+                goLeft = false;
+                isMove = true;
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                if (!isUnLock[curStage]) return;
+                isStart = false;
+                StageManager.nextStage = curStage + 5;
+                stageManager.ChangeSceneBlackOut();
+            }
+            if (Input.GetKeyDown(KeyCode.D) && curStage < 5)
+            {
+                goLeft = true;
+                isMove = true;
+            }
+            else if (Input.GetKeyDown(KeyCode.A) && curStage > 0)
+            {
+                goLeft = false;
+                isMove = true;
+            }
+        }
+
+    }
+
+    void ImageMove() {
+        if (moveTime < 1.0f)
+        {
+            moveTime += Time.deltaTime*2.0f;
+            if (goLeft)
+            {
+                stages[curStage].position = Vector3.Lerp(middlePos, leftPos, moveTime);
+                stages[curStage+1].position = Vector3.Lerp(rightPos, middlePos, moveTime);
+            }
+            else {
+                stages[curStage].position = Vector3.Lerp(middlePos, rightPos, moveTime);
+                stages[curStage - 1].position = Vector3.Lerp(leftPos, middlePos, moveTime);
+            }
+        }
+        else {
+            if (goLeft)
+            {
+                stages[curStage].position = leftPos;
+                stages[curStage + 1].position = middlePos;
+                curStage++;
+            }
+            else {
+                stages[curStage].position = rightPos;
+                stages[curStage - 1].position = middlePos;
+                curStage--;
+
+            }
+            moveTime = .0f;
+            isMove = false;
+        }
+        
+       
+    }
+
+
+}
+
+
+
+/*
     public bool isChoosed = false;
     bool PicisMoved = false;
     bool isControl = false;
@@ -323,5 +505,6 @@ public class SelectStage : MonoBehaviour {
         isGoingRight = false;
         PicfuctionTimes = 0;
         clickTime = Time.time;
-    }
-}
+    } 
+
+    */

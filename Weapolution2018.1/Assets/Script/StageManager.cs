@@ -7,9 +7,9 @@ public class StageManager : MonoBehaviour {
 
 
     public static bool timeUp;
-    public static  int currentStage =0, nextStage =1;
+    public static  int currentStage =0, nextStage =1, stageRecord;
 
-	public bool inMenuState;
+    public bool inMenuState;
     public bool stageBegin;
 
     bool inTransState, stageOver, isWin;
@@ -46,6 +46,7 @@ public class StageManager : MonoBehaviour {
         }
         else if (currentStage >= 5)
         {
+            animator = GameObject.Find("BlackScene").GetComponent<Animator>();
             transRender = Camera.main.GetComponent<SceneTransRender>();
             transRender.stageManager = this;
             BGM = GameObject.Find("map").GetComponent<AudioSource>();
@@ -64,7 +65,7 @@ public class StageManager : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-		
+        if (currentStage == 0) LoadData();
 	}
 	
 	// Update is called once per frame
@@ -232,8 +233,42 @@ public class StageManager : MonoBehaviour {
         
         if (nextStage >= 8) nextStage = 0;
         currentStage = nextStage;
-        
+        SaveDate(nextStage);
         SceneManager.LoadScene(nextStage);
     }
 
+    public void LoadData() {
+        if (PlayerPrefs.HasKey("StageRecord"))
+        {
+            try
+            {
+                stageRecord = PlayerPrefs.GetInt("StageRecord");
+            }
+            catch(System.Exception e) {
+                Debug.LogError(e.Message);
+            }
+
+        }
+        else {
+            Debug.Log("沒檔先存檔");
+            SaveDate(5);
+        }
+    } 
+
+    public void SaveDate(int stage) {
+        Debug.Log("cur stage:" + stage + "         record:" +stageRecord);
+        if (stage <= stageRecord) return;
+        stageRecord = stage;
+        try
+        {
+            PlayerPrefs.SetInt("StageRecord", stageRecord);
+            PlayerPrefs.Save();
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError(e.Message);
+        }
+    }
+
 }
+

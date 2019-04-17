@@ -81,6 +81,8 @@ public class Crafter : MonoBehaviour {
     {
         if (test) return;
         if (PlayerScript.p2_die) return;
+        K_JoyX = 0;
+        K_JoyY = 0;
         animator.SetTrigger("is_hurt");
         if (Player.p2charaType) Player.p2moveAble = false;
         else Player.p1moveAble = false;
@@ -131,6 +133,7 @@ public class Crafter : MonoBehaviour {
         inFuntionTime = 0;
         K_JoyX = 0;
         K_JoyY = 0;
+        animator.SetBool("is_gather", false);
         if (StageManager.currentStage == 7)
         {
             if (CanonScript.startFilled) {

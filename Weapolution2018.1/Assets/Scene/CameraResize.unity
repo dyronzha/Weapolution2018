@@ -15486,7 +15486,7 @@ GameObject:
   - component: {fileID: 608301324}
   m_Layer: 23
   m_Name: GetHurtArea
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34091,7 +34091,7 @@ GameObject:
   - component: {fileID: 1316323161}
   m_Layer: 23
   m_Name: GetHurtArea
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
