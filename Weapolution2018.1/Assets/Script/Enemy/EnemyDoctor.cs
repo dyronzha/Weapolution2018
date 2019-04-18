@@ -249,7 +249,7 @@ public class EnemyDoctor : CEnemy
         if (pathSuccessful)
         {
             pathIndex = 0;
-            Debug.Log(gameObject.name + "find path");
+            //Debug.Log(gameObject.name + "find path");
             pathFind = pathSuccessful;
             path = new Path(wayPoints, self_pos, turnDis, stoppingDis);
         }

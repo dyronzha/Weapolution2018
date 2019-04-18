@@ -134,12 +134,12 @@ public class Crafter : MonoBehaviour {
         K_JoyX = 0;
         K_JoyY = 0;
         animator.SetBool("is_gather", false);
-        if (StageManager.currentStage == 7)
+        if (StageManager.currentStage == 7 )
         {
             if (CanonScript.startFilled) {
-                CanonScript.startFilled = false;
+                Debug.Log("craftsystem Over fillllllllllllllllllllll");
                 CanonScript.OverFinlling();
-                CanonScript.CallCraftSystemFucion();
+                craftSystem.ThrowOut();
             }
         }
             
@@ -387,7 +387,6 @@ public class Crafter : MonoBehaviour {
     {
         if (collision.tag == "Web" && !isSticked && craftSystem.GetFunc())
         {
-            Debug.Log("stickkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
             web = collision.GetComponent<Web>();
             isSticked = true;
             BeSticked();

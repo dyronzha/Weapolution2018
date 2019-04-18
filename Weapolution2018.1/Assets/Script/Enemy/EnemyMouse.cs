@@ -28,7 +28,7 @@ public class EnemyMouse : CEnemy {
     // Update is called once per frame
     void Update () {
         if (StageManager.timeUp) return;
-        //if (Input.GetKeyDown(KeyCode.J)) SetHurtValue(1,0);
+        if (Input.GetKeyDown(KeyCode.J)) SetHurtValue(1,0);
         UpdatePos();
         if (!isShowUp)
         {
@@ -133,7 +133,7 @@ public class EnemyMouse : CEnemy {
 
     public override void Idle()
     {
-        //Debug.Log("idle" + state_time);
+        ////Debug.Log("idle" + state_time);
         inState_time += Time.deltaTime;
         if (state_time < 0.1f) state_time = Random.Range(1.5f, 2.0f);
 
@@ -166,13 +166,13 @@ public class EnemyMouse : CEnemy {
 
         if (pathFind)
         {
-            //Debug.Log("trace path find");
+            ////Debug.Log("trace path find");
             Vector2 Pos2d = new Vector2(self_pos.x, self_pos.y);
             if (path.turnBoundaries[pathIndex].HasCrossedLine(Pos2d))
             {
                 if (pathIndex == path.finishLineIndex)
                 {
-                    //Debug.Log("catch player  " + path.finishLineIndex);
+                    ////Debug.Log("catch player  " + path.finishLineIndex);
                     pathFind = false;
                 }
                 else
@@ -195,7 +195,7 @@ public class EnemyMouse : CEnemy {
                             SetState(3, true); //range attack
                             
                             traceTotalTime = 0.0f;
-                            //Debug.Log("start shoot");
+                            ////Debug.Log("start shoot");
                             pathFind = false;
                             //if (state == 3) animator.SetTrigger("exist");
                         }
@@ -231,7 +231,7 @@ public class EnemyMouse : CEnemy {
         if (pathSuccessful)
         {
             pathIndex = 0;
-            //Debug.Log(gameObject.name + "find path");
+            ////Debug.Log(gameObject.name + "find path");
             pathFind = pathSuccessful;
             path = new Path(wayPoints, self_pos, turnDis, stoppingDis);
         }
@@ -272,7 +272,7 @@ public class EnemyMouse : CEnemy {
     public void RangeAttackOver()
     {
         SetState(4, false);
-        //Debug.Log("RangeAttackOver");
+        ////Debug.Log("RangeAttackOver");
         //keepAway = new Vector3(playerPos.x - keepAway.x, playerPos.y - keepAway.y, 0.0f).V3NormalizedtoV2();
     }
 
@@ -280,7 +280,7 @@ public class EnemyMouse : CEnemy {
         if (rangeDetectTime > 1.0f) {
             if (CouculatePlayerDis(true, 8.0f))  //閃避過程距離拉太大，重新追逐
             {
-                //Debug.Log("dodge but too far");
+                ////Debug.Log("dodge but too far");
                 SetState(2, false);
                 rangeDetectTime = 0.0f;
                 return;
@@ -291,7 +291,7 @@ public class EnemyMouse : CEnemy {
             //detect_ray = Physics2D.Linecast(new_pos, playerPos, obstacleMask);
             //if (!detect_ray && bullets.GetFreeNum() > 0) SetState(3, true);
             //else {
-            //    Debug.Log("shoot but obstacle");
+            //    //Debug.Log("shoot but obstacle");
             //    SetState(2, false);
             //} 
             //rangeDetectTime = 0.0f;
@@ -336,9 +336,11 @@ public class EnemyMouse : CEnemy {
                 Debug.DrawRay(new_pos, (f_turn_dis) * trace1, Color.blue);
                 Debug.DrawRay(new_pos, (f_turn_dis) * trace2, Color.white);
                 if (!detect1) { keepAway = Quaternion.AngleAxis(i + 10.0f, new Vector3(0, 0, 1)) * keepAway;
-                    Debug.Log(i + " keep away change" + keepAway); break; }
+                    //Debug.Log(i + " keep away change" + keepAway);
+                    break; }
                 if (!detect2) { keepAway = Quaternion.AngleAxis((360 - (i + 10.0f)), new Vector3(0, 0, 1)) * keepAway;
-                    Debug.Log(i + " keep away change" + keepAway); break; }
+                    //Debug.Log(i + " keep away change" + keepAway);
+                    break; }
                 if(i >= 340)keepAway = new Vector3(0, 0, 0);
             }
         }
@@ -370,7 +372,7 @@ public class EnemyMouse : CEnemy {
         attackOnce = false;
         isForceState = false;
         SetState(2, false);
-        Debug.Log("hit over");
+        //Debug.Log("hit over");
     }
 
     public override void SetOnAttackDetect()
@@ -406,7 +408,6 @@ public class EnemyMouse : CEnemy {
         else if (_HitDir == 1) effectPos = new Vector3(new_pos.x, new_pos.y - 1.7f, -200.0f);
         else if (_HitDir == 2) effectPos = new Vector3(new_pos.x - 1.7f, new_pos.y, -200.0f);
         else if (_HitDir == 3) effectPos = new Vector3(new_pos.x + 1.7f, new_pos.y, -200.0f);
-        Debug.Log("get hurt efffffffect" + gameObject.name);
         getHurtEffect.SetEffect(effectPos, 0.5f);
         hurtValue = _value;
         hitDir = _HitDir;
@@ -421,7 +422,7 @@ public class EnemyMouse : CEnemy {
         isForceState = false;
         if (hp <= 0) SetState(8, true);
         else SetState(2, false);
-        Debug.Log("Hurt Over");
+        ////Debug.Log("Hurt Over");
     }
 
     public override void Die()
@@ -464,7 +465,7 @@ public class EnemyMouse : CEnemy {
         }
         if (state != lastState)
         {
-            //Debug.Log("setAnimator" + gameObject.name);
+            ////Debug.Log("setAnimator" + gameObject.name);
             animator.SetInteger("state", state);
             animator.SetTrigger("exist");
             lastState = state;
@@ -487,7 +488,7 @@ public class EnemyMouse : CEnemy {
             {
                 canDetectAtk = false;
                 player.GetComponent<Player>().GetHurt();
-                Debug.Log("hitPlayer");
+                //Debug.Log("hitPlayer");
             }
         }
         //else if (collision.tag == "Trap") {

@@ -7679,7 +7679,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &300233410
 Transform:
   m_ObjectHideFlags: 0
@@ -48178,7 +48178,7 @@ GameObject:
   - component: {fileID: 1807962951}
   - component: {fileID: 1807962949}
   - component: {fileID: 1807962950}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Canon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -48198,11 +48198,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CanonisfillingPowder: 0
   startFilled: 0
-  CanoncanFiiled: 0
   CanonTriigerIN: 0
   CanonPowderNum: 0
-  CanonFilled: 0
-  CanonNum: 0
   CraftSystemScript: {fileID: 1561406866}
 --- !u!114 &1807962950
 MonoBehaviour:

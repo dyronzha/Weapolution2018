@@ -296,7 +296,7 @@ public class CEnemy : MonoBehaviour {
         if (state_time < 0.1f) {
             state_time = 0.58f;
             hp -= hurtValue;
-            Debug.Log("enemy : ouch");
+            //Debug.Log("enemy : ouch");
             getHurtOnce = true;
 
             if (hitDir == 0) hitToDir = new Vector3(0, 1, 0);

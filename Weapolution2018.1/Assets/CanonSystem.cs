@@ -83,11 +83,12 @@ public class CanonSystem : MonoBehaviour {
             }
         }
         else {
-            CanonAnimtion();
+            
             //LeftListener();
-            OutOfBullet();
+            //OutOfBullet();
             if (CanonScript.CanonisfillingPowder)
             {
+                CanonAnimtion();
                 if (ShowRightAim)
                 {
                     if (useControler)
@@ -103,12 +104,18 @@ public class CanonSystem : MonoBehaviour {
                     AimControl(RightAim);                   
                 }
                 else {
-                    if (CanonScript.CanonTriigerIN && CanonScript.CanonPowderNum != 0) {
+                    if (CanonScript.CanonTriigerIN) {
                         if (useControler) {
-                            if (Input.GetButtonDown(whichPlayer + "ButtonA")) ReadyToShoot(true);
+                            if (Input.GetButtonDown(whichPlayer + "ButtonA")) {
+                                ReadyToShoot(true);
+                                CanonScript.CraftCantFunc(true);
+                            } 
                         }
                         else {
-                            if (Input.GetKeyDown(KeyCode.Space)) ReadyToShoot(true);
+                            if (Input.GetKeyDown(KeyCode.Space)) {
+                                ReadyToShoot(true);
+                                CanonScript.CraftCantFunc(true);
+                            } 
                         }
                     }
                 }
@@ -139,7 +146,8 @@ public class CanonSystem : MonoBehaviour {
         Explosion.transform.position = RightAim.transform.position;
         CanonAnimator.SetTrigger("Shoot");
         CanonScript.CanonPowderNum--;
-        characterVoice.SetAudio(5);    
+        characterVoice.SetAudio(5);
+        OutOfBullet();
     }
 
     public void ExplosionOver() {
@@ -150,6 +158,7 @@ public class CanonSystem : MonoBehaviour {
     {
         if (CanonScript.CanonPowderNum == 0)
         {
+            CanonScript.OutOfPowder();
             hasFillAni = false;
             CanonAnimator.SetBool("HavePowder", false);
             CancelShoot();
@@ -159,7 +168,7 @@ public class CanonSystem : MonoBehaviour {
     {
         RightAim.SetActive(false);
         ShowRightAim = false;
-        
+        CanonScript.CraftCantFunc(false);
         if (Player.p2charaType) Player.p2moveAble = true;
         else Player.p1moveAble = true;     
     }
@@ -183,20 +192,25 @@ public class CanonSystem : MonoBehaviour {
 
         if (useControler)
         {
-            speedX = Mathf.Sign(Input.GetAxis(whichPlayer + "LHorizontal"));
-            speedY = Mathf.Sign(Input.GetAxis(whichPlayer + "LVertical"));
 
+            speedX = Input.GetAxis(whichPlayer + "LHorizontal");
+            speedY = Input.GetAxis(whichPlayer + "LVertical");
+
+            if (speedX > 0.1f) speedX = 1.0f;
+            else if (speedX < -0.1f) speedX = -1.0f; 
+            if (speedY > 0.1f) speedY = 1.0f;
+            else if (speedY < -0.1f) speedY = -1.0f;
             //if (whichPlayer == "p1")
             //{
             //    if (Mathf.Abs(p1_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
             //    if (Mathf.Abs(p1_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
-                
-            //}
-            //else
-            //{
-            //    if (Mathf.Abs(p2_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
-            //    if (Mathf.Abs(p2_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
-            //}
+
+                //}
+                //else
+                //{
+                //    if (Mathf.Abs(p2_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
+                //    if (Mathf.Abs(p2_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
+                //}
         }
         else {
             if (Input.GetKey(KeyCode.W)) speedY = 1.0f;

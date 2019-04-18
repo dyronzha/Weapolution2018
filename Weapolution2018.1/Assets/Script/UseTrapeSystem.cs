@@ -59,7 +59,7 @@ public class UseTrapeSystem : MonoBehaviour {
         if (OnBuildTrapping) return;
         if (!useController)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Q) && craftSystem.GetFunc())
             {
                 Tool.enabled = true;
                 if (!CanSet() || trapeNum >= 2)
@@ -81,7 +81,7 @@ public class UseTrapeSystem : MonoBehaviour {
         }
         else
         {
-            if (Input.GetButtonDown(whichPlayer + "ButtonX")) {
+            if (Input.GetButtonDown(whichPlayer + "ButtonX" )&& craftSystem.GetFunc()) {
                 Tool.enabled = true;
                 if (!CanSet() || trapeNum >= 2)
                 {//如果位置不能設陷阱，顯示不能挖

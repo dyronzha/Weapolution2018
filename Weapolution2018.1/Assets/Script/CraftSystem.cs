@@ -94,13 +94,15 @@ public class CraftSystem : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         if (StageManager.timeUp) return;
-        if (craftFunc) {
+        if (craftFunc)
+        {
             if (can_pick) CheckPickItem();
             ThrowItem();
             PickItem();
             Collect();
             InputFixed();
-        } 
+        }
+        else Debug.Log("aaaaaaaahfjsahflajsfklsaf;kafkjsl;fkaslk;lsafk;a");
         //是否靠近鍛造爐
         //if (forge.showUp && Vector2.Distance(this.transform.position, forge.fixed_pos) < forge_dis)
         //    NearForge();
@@ -461,6 +463,7 @@ public class CraftSystem : MonoBehaviour {
         return craftFunc;
     }
     public void SetFuncBusy(bool busy) {
+        Debug.Log("Set FUUUUUUUUUUUUUUNC BUSY");
         craftFunc = !busy;
     }
 

@@ -83,8 +83,8 @@ public class Player : MonoBehaviour {
     {
         if (!isMapped)
         {
-            p1charaType = false;
-            p2charaType = true;
+            p1charaType = true;
+            p2charaType = false;
 
             p1controller = true; //預設鍵盤
             p1joystick = "p1";
@@ -267,7 +267,7 @@ public class Player : MonoBehaviour {
                 case 0:
                     break;
                 case 1:
-                    Debug.Log("roll");
+                    //Debug.Log("roll");
                     Roll(2, face_way);
                     break;
                 case 2:
@@ -548,7 +548,7 @@ public class Player : MonoBehaviour {
 
             RaycastHit2D hitWall = Physics2D.Raycast(transform.position, rollWay,
                                                     1.2f, unWalkable);
-            if (!hitWall) Debug.Log("rollrollroll" + rollWay + "   " + roll_time);
+            //if (!hitWall) Debug.Log("rollrollroll" + rollWay + "   " + roll_time);
             if (!hitWall) transform.position += roll_time * Time.deltaTime * rollWay;
         }
        
@@ -671,7 +671,6 @@ public class Player : MonoBehaviour {
         if (!p1charaType)  p1moveAble = true;
         else p2moveAble = true;
         if (test)tutorialRequest.DoneRoll();
-        Debug.Log("OverRoll");
         roll_time = 0;
         invincible = false;
         inFuntionTime = 0;

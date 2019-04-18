@@ -175,10 +175,10 @@ public class CPickItemSystem : MonoBehaviour {
             if (detect == null)
             {
                 locationID = tempID;
-                Debug.Log("detect null" + tempID);
+                //Debug.Log("detect null" + tempID);
                 return true;
             }
-            else Debug.Log("detect true" + locations[i]);
+            //else Debug.Log("detect true" + locations[i]);
         }
         return false;
     }
