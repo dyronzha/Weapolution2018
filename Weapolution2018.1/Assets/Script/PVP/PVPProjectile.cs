@@ -36,7 +36,7 @@ public class PVPProjectile : MonoBehaviour {
             projectile_img.sprite = ProjectileSprite[1];
         else if (weapon.id == 10)
             projectile_img.sprite = ProjectileSprite[2];
-        else if (weapon.id == 15)
+        else if (weapon.id == 14)
             projectile_img.sprite = ProjectileSprite[3];
 
 

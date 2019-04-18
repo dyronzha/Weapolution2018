@@ -332,7 +332,8 @@ public class CraftSystem : MonoBehaviour {
             handling_item.SetActive(true);
             handling_item.GetComponent<CPickItem>().SetInField();
             handling_item.transform.position = this.transform.GetChild(0).position;
-            handling_item.GetComponent<CPickItem>().SetThrow(throwVec3, throwSpeed);
+            if(StageManager .currentStage ==  7) handling_item.GetComponent<CPickItem>().SetThrow(throwVec3, throwSpeed, GetComponentInParent<LevelHeight>().GetHeight());
+            else handling_item.GetComponent<CPickItem>().SetThrow(throwVec3, throwSpeed);
             ArrowEnable(false);
             if (can_pick) ChangeSlot(false, picking_item.id);
             else ChangeSlot(true,-1);

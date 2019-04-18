@@ -84,7 +84,18 @@ public class CPickItem : MonoBehaviour {
         this.transform.parent = pickitem_system.gameObject.transform.GetChild(1);
     }
 
-    public void SetFall(float _height,Vector3 _flyDir, float speed) {
+    public void SetFall(float _height, Vector3 _flyDir, float speed)
+    {
+        //float ground_height = _height;
+        f_fallTime = 2.0f * _height / f_gravity;
+        origin_pos_vec3 = transform.position;
+        b_falling = true;
+        collider.enabled = false;
+        fly_dir_vec3 = new Vector3(speed * _flyDir.x, speed * _flyDir.y, 0);
+        add_velocity_vec3 = new Vector3(0.0f, -f_gravity, 0.0f);
+        shadowRender.enabled = false;
+    }
+    public void SetFall(float _height,Vector3 _flyDir, float speed, float height) {
         //float ground_height = _height;
         f_fallTime = 2.0f * _height / f_gravity;
         origin_pos_vec3 = transform.position;
@@ -93,6 +104,7 @@ public class CPickItem : MonoBehaviour {
         fly_dir_vec3 = new Vector3(speed * _flyDir.x, speed * _flyDir.y, 0);
         add_velocity_vec3 = new Vector3(0.0f, -f_gravity, 0.0f);
         shadowRender.enabled = false;
+        levelHeight.SetSpecificHeight(height);
     }
 
     void OnFalling() {
@@ -117,7 +129,24 @@ public class CPickItem : MonoBehaviour {
         }
     }
 
-    public void SetThrow(Vector3 _flyDir, float speed) {
+    public void SetThrow(Vector3 _flyDir, float speed)
+    {
+        origin_pos_vec3 = transform.position;
+        b_flying = true;
+        //i_fly_way = fly_dir;
+        collider.enabled = false;
+        //若是比較平拋橫向速度較大
+        if (Mathf.Abs(_flyDir.x) < 0.85f) fly_dir_vec3 = new Vector3(speed * _flyDir.x, speed * 0.8f * _flyDir.y, 0);
+        else fly_dir_vec3 = new Vector3(speed * 0.72f * _flyDir.x, speed * 0.8f * _flyDir.y, 0);
+        add_velocity_vec3 = new Vector3(0.0f, -f_gravity, 0.0f);
+        //若是往下丟，重力需要較小
+        if (_flyDir.y < 0.0f) add_velocity_vec3 = new Vector3(0.0f, -f_gravity - (_flyDir.y * 25.0f), 0.0f);
+        shadowRender.enabled = false;
+        SetZBase(-3.0f);
+
+    }
+
+    public void SetThrow(Vector3 _flyDir, float speed, float height) {
         origin_pos_vec3 = transform.position;
         b_flying = true;
         //i_fly_way = fly_dir;
@@ -129,7 +158,8 @@ public class CPickItem : MonoBehaviour {
         //若是往下丟，重力需要較小
         if (_flyDir.y < 0.0f) add_velocity_vec3 = new Vector3(0.0f, -f_gravity - (_flyDir.y*25.0f), 0.0f);
         shadowRender.enabled = false;
-        SetZBase(-3.0f);
+        levelHeight.SetSpecificHeight(height - 3.0f);
+        //SetZBase(-3.0f);
         
         //switch (fly_dir)
         //{
@@ -167,12 +197,12 @@ public class CPickItem : MonoBehaviour {
             //transform.position += 0.5f * Time.deltaTime * Time.deltaTime * resistance_vec3;
         }
         else {
-            SetZBase(0.0f);
+            if (StageManager.currentStage != 7) SetZBase(0.0f);
+            else levelHeight.SetHeight();
             setColliderOnce = false;
             f_fallingTime = 0.0f;
             b_flying = false;
             shadowRender.enabled = true;
-            if(StageManager.currentStage == 7)levelHeight.SetHeight();
         } 
     }
 

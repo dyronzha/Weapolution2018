@@ -21,7 +21,7 @@ public class EnemyMouse : CEnemy {
                         1 << LayerMask.NameToLayer("ObstacleForIn");
         state = 0;
         bullets = GameObject.Find("EnemyMouseBullets").GetComponent<EnemyBulletSystem>();
-        hp = 4;
+        hp = 6;
         getHurtEffect = GetComponent<GetHurtEffect>();
     }
     

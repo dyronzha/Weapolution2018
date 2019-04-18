@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MappingUIManager : MonoBehaviour {
-    bool countDownState;
+    bool countDownState, goNextStage = false;
     int playerNum = 0, confirmNum, countDownNum = 3;
     bool[] hasControl = new bool[5] { false, false, false, false, false };
     bool[] slotConfirm = new bool[4] { false, false, false, false};
@@ -74,7 +74,7 @@ public class MappingUIManager : MonoBehaviour {
             playerUI[i] = UIs.GetChild(i).GetComponent<RectTransform>();
             playerUI[i].gameObject.SetActive(false);
             playerControllers[i] = new PlayerController();
-            playerControllers[i].control = "p1";
+            playerControllers[i].control = "p2";
             ready[i] = readys.GetChild(i).GetComponent<UnityEngine.UI.Image>();
             ready[i].enabled = false;
         }
@@ -99,8 +99,11 @@ public class MappingUIManager : MonoBehaviour {
         //    Debug.Log("up confirm");
         //}
         if (StageManager.timeUp || !pvpDialog.start) return;
-        GetInput();
-        if(countDownState)CountDown();
+        if (!goNextStage) {
+            GetInput();
+            if (countDownState) CountDown();
+        }
+
 	}
 
     void GetInput() {
@@ -196,9 +199,11 @@ public class MappingUIManager : MonoBehaviour {
     }
 
     void ConfirmCancleSelect(int id) {
-        if (playerControllers[id].slotID < 4) {
+        if (playerControllers[id].slotID < 4 )
+        {
             if (Input.GetButtonDown(playerControllers[id].control + "ButtonA"))
             {
+                if (playerControllers[id].isConfirm) return;
                 confirmNum++;
                 slotConfirm[playerControllers[id].slotID] = true;
                 ready[playerControllers[id].slotID].enabled = true;
@@ -212,7 +217,7 @@ public class MappingUIManager : MonoBehaviour {
                     }
                 }
 
-                if (confirmNum >= 4)
+                if (confirmNum >= 3)
                 {
                     Debug.Log("all ready");
                     countDownState = true;
@@ -266,6 +271,7 @@ public class MappingUIManager : MonoBehaviour {
                 }
                 StageManager.nextStage = 2;
                 stageManager.ChangeSceneBlackOut();
+                goNextStage = true;
             } 
         }
     }

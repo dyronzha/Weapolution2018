@@ -37,8 +37,21 @@ public class ResizeCamera : MonoBehaviour {
         playerInPosY = playerIn.transform.position.y;
         playerOutPosX = playerOut.transform.position.x;
         playerOutPosY = playerOut.transform.position.y - 1.0f;
-        if (playerInPosY > playerOutPosY) playerInPosY += 3.0f;
-        else playerOutPosY += 4.0f;
+        if (playerInPosX > playerOutPosX)
+        {
+            playerInPosX += 2.0f;
+            playerOutPosX-= 2.0f;
+        }
+        else {
+            playerInPosX -= 2.0f;
+           playerOutPosX += 2.0f;
+        }
+
+        if (playerInPosY > playerOutPosY) playerInPosY += 4.0f;
+        else {
+            playerOutPosY += 4.0f;
+            playerInPosY -= 1.5f;
+        } 
     }
 
     void SetCameraPos() {

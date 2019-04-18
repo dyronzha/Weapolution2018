@@ -25,8 +25,8 @@ public class Dialog : MonoBehaviour {
 	}
 
     void GetInput() {
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("p1ButtonA")
-              || Input.GetButtonDown("p2ButtonA"))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(Player.p1joystick +  "ButtonA")
+              || Input.GetButtonDown(Player.p2joystick + "ButtonA"))
         {
             if (dialogLine < currentDialog.Length - 1)
             {

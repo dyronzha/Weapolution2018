@@ -89,7 +89,8 @@ public class CPickCollection : MonoBehaviour {
                 angle = (Mathf.Abs(angle + offset) < 90.0f) ? angle : (Mathf.Sign(offset) * 90.0f - offset);
             }
             throwWay = Quaternion.AngleAxis(angle, new Vector3(0, 0, 1)) * throwWay;
-            tempItem.SetFall(0.5f, throwWay, throwSpeed);
+            if(StageManager.currentStage != 7)tempItem.SetFall(0.5f, throwWay, throwSpeed);
+            else tempItem.SetFall(0.5f, throwWay, throwSpeed, levelHieght.GetHeight());
             Debug.Log("throw out   " + throwWay);
         }
         pickitem_system.RecyclePickCollect(this.gameObject);

@@ -80,7 +80,7 @@ public class Crafter : MonoBehaviour {
     public void GetHurt()
     {
         if (test) return;
-        if (PlayerScript.p2_die) return;
+        if (PlayerScript.p2_die || !craftSystem.GetFunc()) return;
         K_JoyX = 0;
         K_JoyY = 0;
         animator.SetTrigger("is_hurt");
@@ -385,8 +385,9 @@ public class Crafter : MonoBehaviour {
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.tag == "Web" && !isSticked)
+        if (collision.tag == "Web" && !isSticked && craftSystem.GetFunc())
         {
+            Debug.Log("stickkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
             web = collision.GetComponent<Web>();
             isSticked = true;
             BeSticked();

@@ -50,7 +50,7 @@ public class TargetSelect : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        LeftListener();
+        //LeftListener();
         targetSectionAssign();
 
 
@@ -239,8 +239,11 @@ public class TargetSelect : MonoBehaviour {
 
     void TargetChooseCharacter(bool Controller,string WhichStick,bool isP1target)
     {
+
+
         if (isP1target && p2IsLocked) return;
         if(!isP1target && p1IsLocked) return;
+
         if (!Controller) //用鍵盤
         {
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.A)) //target左右動
@@ -251,9 +254,10 @@ public class TargetSelect : MonoBehaviour {
         }
         else 
         {
-            if ( WhichStick == "p1")
+            if (isP1target)
             {
-                if ( 0.5f <= Mathf.Abs(p1_L_JoyX) && !p1MoveOnlyOnce )
+                p1_L_JoyX = Input.GetAxis(WhichStick + "LHorizontal");
+                if (0.5f <= Mathf.Abs(p1_L_JoyX) && !p1MoveOnlyOnce)
                 {
                     if (isP1target && !p1IsLocked) P1targetOnBuda = !P1targetOnBuda;
                     if (!isP1target && !p2IsLocked) P2targetOnBuda = !P2targetOnBuda;
@@ -264,9 +268,9 @@ public class TargetSelect : MonoBehaviour {
                     p1MoveOnlyOnce = false;
                 }
             }
-            else if (WhichStick == "p2")
-            {
-                if (0.5f <= Mathf.Abs( p2_L_JoyX )&& !p2MoveOnlyOnce)
+            else {
+                p2_L_JoyX = Input.GetAxis(WhichStick + "LHorizontal");
+                if (0.5f <= Mathf.Abs(p2_L_JoyX) && !p2MoveOnlyOnce)
                 {
                     if (isP1target && !p1IsLocked) P1targetOnBuda = !P1targetOnBuda;
                     if (!isP1target && !p2IsLocked) P2targetOnBuda = !P2targetOnBuda;
@@ -277,6 +281,14 @@ public class TargetSelect : MonoBehaviour {
                     p2MoveOnlyOnce = false;
                 }
             }
+            //if ( WhichStick == "p1")
+            //{
+                
+            //}
+            //else if (WhichStick == "p2")
+            //{
+               
+            //}
         }
     }
 

@@ -46,7 +46,7 @@ public class PoisonManager : MonoBehaviour {
         freePoisons.Add(poison);
         usedPoisons.Remove(poison);
         CPickItem tempPick = pickItemSystem.SpawnInUsed(posOffset, 3);
-        tempPick.SetZBase(-100.0f);
+        tempPick.SetZBase(-110.0f);
         //if (IsOnHeight3(posOffset) && posOffset.z < -50.0f) {
         //    CPickItem tempPick= pickItemSystem.SpawnInUsed(posOffset, 3);
         //    tempPick.SetZBase(-100.0f);

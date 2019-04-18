@@ -2061,6 +2061,8 @@ GameObject:
   - component: {fileID: 70669861}
   - component: {fileID: 70669860}
   - component: {fileID: 70669859}
+  - component: {fileID: 70669863}
+  - component: {fileID: 70669862}
   m_Layer: 16
   m_Name: Projectile (1)
   m_TagString: projectile
@@ -2076,7 +2078,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 70669857}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -11.683332}
   m_LocalScale: {x: 1.5699998, y: 1.5699998, z: 1.5699998}
   m_Children:
   - {fileID: 147405266}
@@ -2149,6 +2151,31 @@ MonoBehaviour:
   tutorialRequest: {fileID: 0}
   test: 0
   StageNum: 2
+--- !u!114 &70669862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70669857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38d27480f870194aac670a80ae7c14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoMovable: 0
+  isIn: 1
+--- !u!114 &70669863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 70669857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea2dcf7ce5365a44b2efd66ca1306b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_base: 0
 --- !u!1 &70723851
 GameObject:
   m_ObjectHideFlags: 0
@@ -7652,7 +7679,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &300233410
 Transform:
   m_ObjectHideFlags: 0
@@ -8635,6 +8662,8 @@ GameObject:
   - component: {fileID: 329629984}
   - component: {fileID: 329629983}
   - component: {fileID: 329629982}
+  - component: {fileID: 329629986}
+  - component: {fileID: 329629985}
   m_Layer: 16
   m_Name: Projectile (4)
   m_TagString: projectile
@@ -8650,7 +8679,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 329629980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -11.683332}
   m_LocalScale: {x: 1.5699998, y: 1.5699998, z: 1.5699998}
   m_Children:
   - {fileID: 35203955}
@@ -8723,6 +8752,31 @@ MonoBehaviour:
   tutorialRequest: {fileID: 0}
   test: 0
   StageNum: 2
+--- !u!114 &329629985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 329629980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38d27480f870194aac670a80ae7c14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoMovable: 0
+  isIn: 1
+--- !u!114 &329629986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 329629980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea2dcf7ce5365a44b2efd66ca1306b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_base: 0
 --- !u!1 &334419653
 GameObject:
   m_ObjectHideFlags: 0
@@ -10680,9 +10734,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d0c6249737ac2149996b1109ffc31e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 7.5
-  minPosX: -22
-  maxPosX: 22
+  size: 9
+  minPosX: -22.5
+  maxPosX: 22.5
   minPosY: -13.6
   maxPosY: 15.2
   playerIn: {fileID: 1083673727}
@@ -10732,7 +10786,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.5
+  orthographic size: 9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -10962,6 +11016,34 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 406853648}
   m_CullTransparentMesh: 0
+--- !u!1 &412136683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 412136684}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &412136684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 412136683}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.3, y: -4.3, z: -3.6946456}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &415597176
 GameObject:
   m_ObjectHideFlags: 0
@@ -11550,7 +11632,7 @@ GameObject:
   - component: {fileID: 440554272}
   m_Layer: 11
   m_Name: Stair
-  m_TagString: Stair
+  m_TagString: StairIn
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21611,6 +21693,8 @@ GameObject:
   - component: {fileID: 825954890}
   - component: {fileID: 825954889}
   - component: {fileID: 825954888}
+  - component: {fileID: 825954892}
+  - component: {fileID: 825954891}
   m_Layer: 16
   m_Name: Projectile (2)
   m_TagString: projectile
@@ -21626,7 +21710,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 825954886}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -11.683332}
   m_LocalScale: {x: 1.5699998, y: 1.5699998, z: 1.5699998}
   m_Children:
   - {fileID: 1771879925}
@@ -21699,6 +21783,31 @@ MonoBehaviour:
   tutorialRequest: {fileID: 0}
   test: 0
   StageNum: 2
+--- !u!114 &825954891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 825954886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38d27480f870194aac670a80ae7c14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoMovable: 0
+  isIn: 1
+--- !u!114 &825954892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 825954886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea2dcf7ce5365a44b2efd66ca1306b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_base: 0
 --- !u!1 &829067429
 GameObject:
   m_ObjectHideFlags: 0
@@ -22795,6 +22904,8 @@ GameObject:
   - component: {fileID: 889168005}
   - component: {fileID: 889168004}
   - component: {fileID: 889168003}
+  - component: {fileID: 889168007}
+  - component: {fileID: 889168006}
   m_Layer: 16
   m_Name: Projectile
   m_TagString: projectile
@@ -22810,7 +22921,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 889168001}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -11.683332}
   m_LocalScale: {x: 1.57, y: 1.57, z: 1.57}
   m_Children:
   - {fileID: 1975064663}
@@ -22883,6 +22994,31 @@ MonoBehaviour:
   tutorialRequest: {fileID: 0}
   test: 0
   StageNum: 2
+--- !u!114 &889168006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 889168001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38d27480f870194aac670a80ae7c14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoMovable: 0
+  isIn: 1
+--- !u!114 &889168007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 889168001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea2dcf7ce5365a44b2efd66ca1306b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_base: 0
 --- !u!1 &891418285
 GameObject:
   m_ObjectHideFlags: 0
@@ -25107,6 +25243,8 @@ GameObject:
   - component: {fileID: 974965419}
   - component: {fileID: 974965418}
   - component: {fileID: 974965417}
+  - component: {fileID: 974965421}
+  - component: {fileID: 974965420}
   m_Layer: 16
   m_Name: Projectile (3)
   m_TagString: projectile
@@ -25122,7 +25260,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 974965415}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -11.683332}
   m_LocalScale: {x: 1.5699998, y: 1.5699998, z: 1.5699998}
   m_Children:
   - {fileID: 1905605981}
@@ -25195,6 +25333,31 @@ MonoBehaviour:
   tutorialRequest: {fileID: 0}
   test: 0
   StageNum: 2
+--- !u!114 &974965420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 974965415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38d27480f870194aac670a80ae7c14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoMovable: 0
+  isIn: 1
+--- !u!114 &974965421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 974965415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea2dcf7ce5365a44b2efd66ca1306b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_base: 0
 --- !u!1 &977489622
 GameObject:
   m_ObjectHideFlags: 0
@@ -25592,6 +25755,8 @@ GameObject:
   - component: {fileID: 1005887114}
   - component: {fileID: 1005887113}
   - component: {fileID: 1005887112}
+  - component: {fileID: 1005887116}
+  - component: {fileID: 1005887115}
   m_Layer: 16
   m_Name: Projectile (6)
   m_TagString: projectile
@@ -25607,7 +25772,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1005887110}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -11.683332}
   m_LocalScale: {x: 1.5699998, y: 1.5699998, z: 1.5699998}
   m_Children:
   - {fileID: 1287274039}
@@ -25680,6 +25845,31 @@ MonoBehaviour:
   tutorialRequest: {fileID: 0}
   test: 0
   StageNum: 2
+--- !u!114 &1005887115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1005887110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38d27480f870194aac670a80ae7c14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoMovable: 0
+  isIn: 1
+--- !u!114 &1005887116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1005887110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea2dcf7ce5365a44b2efd66ca1306b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_base: 0
 --- !u!1 &1009487380
 GameObject:
   m_ObjectHideFlags: 0
@@ -25868,6 +26058,8 @@ GameObject:
   - component: {fileID: 1010878196}
   - component: {fileID: 1010878195}
   - component: {fileID: 1010878194}
+  - component: {fileID: 1010878198}
+  - component: {fileID: 1010878197}
   m_Layer: 16
   m_Name: Projectile (5)
   m_TagString: projectile
@@ -25883,7 +26075,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1010878192}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -11.683332}
   m_LocalScale: {x: 1.5699998, y: 1.5699998, z: 1.5699998}
   m_Children:
   - {fileID: 555095915}
@@ -25956,6 +26148,31 @@ MonoBehaviour:
   tutorialRequest: {fileID: 0}
   test: 0
   StageNum: 2
+--- !u!114 &1010878197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1010878192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38d27480f870194aac670a80ae7c14f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  autoMovable: 0
+  isIn: 1
+--- !u!114 &1010878198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1010878192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea2dcf7ce5365a44b2efd66ca1306b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  f_base: 0
 --- !u!1 &1014681788
 GameObject:
   m_ObjectHideFlags: 0
@@ -42041,7 +42258,7 @@ GameObject:
   - component: {fileID: 1612720085}
   m_Layer: 11
   m_Name: Stair (1)
-  m_TagString: Stair
+  m_TagString: StairOut
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

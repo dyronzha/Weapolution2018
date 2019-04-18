@@ -16,6 +16,9 @@ public class SelectStage : MonoBehaviour {
     StageManager stageManager;
 
     public Transform[] stages;
+    public GameObject LArrow, RArrow;
+    public Text StageName;
+    public string[] stageNames;
 
 
     private void Awake()
@@ -29,6 +32,7 @@ public class SelectStage : MonoBehaviour {
         middlePos = new Vector3(27,0,0);
         rightPos = new Vector3(42, 0, 0);
         leftPos = new Vector3(12,0,0);
+        StageName.text = string.Empty;
     }
 
     private void Update()
@@ -53,11 +57,14 @@ public class SelectStage : MonoBehaviour {
     }
     IEnumerator MoveCamera() {
         while (camera.position.x < 27.0f) {
-            camera.position += Time.deltaTime * 3.0f * new Vector3(1,0,0);
+            camera.position += Time.deltaTime * 30.0f * new Vector3(1,0,0);
             yield return null;
         }
         camera.position = new Vector3(27.0f,0,-500);
         isStart = true;
+        StageName.text = stageNames[0];
+        Debug.Log("camera over");
+        yield return null;
     }
 
     void GetInput() {
@@ -166,15 +173,20 @@ public class SelectStage : MonoBehaviour {
                 stages[curStage].position = leftPos;
                 stages[curStage + 1].position = middlePos;
                 curStage++;
+                if (curStage == 5) RArrow.SetActive(false);
+                else if (curStage == 1) LArrow.SetActive(true);
             }
             else {
                 stages[curStage].position = rightPos;
                 stages[curStage - 1].position = middlePos;
                 curStage--;
-
+                if (curStage == 0) LArrow.SetActive(false);
+                else if (curStage == 4) RArrow.SetActive(true);
             }
             moveTime = .0f;
             isMove = false;
+            StageName.text = stageNames[curStage];
+           
         }
         
        

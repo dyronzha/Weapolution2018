@@ -14,13 +14,14 @@ TagManager:
   - Trap
   - projectile
   - Wall
-  - Stair
   - Web
   - EmemyBullet
   - EnemyOut
   - Explosion
   - DamageToPlayer
   - PlayerHurtArea
+  - StairIn
+  - StairOut
   layers:
   - Default
   - TransparentFX

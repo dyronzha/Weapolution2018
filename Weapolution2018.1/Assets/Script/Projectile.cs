@@ -12,6 +12,9 @@ public class Projectile : MonoBehaviour {
     public TutorialRequest tutorialRequest;
     public bool test;
     public int StageNum;
+
+    LevelHeight levelHeight;
+
     // Use this for initializatio
     void Start () {
         //Debug.Log("projectile start");
@@ -21,6 +24,8 @@ public class Projectile : MonoBehaviour {
         flight_way = -1;
         //SetProjectileImg(0);
         this.gameObject.SetActive(false);
+
+        if (StageManager.currentStage == 7) levelHeight = GetComponent<LevelHeight>();
     }
 
 	void Update () {       
@@ -30,6 +35,7 @@ public class Projectile : MonoBehaviour {
     }
     public void SetProjectileImg(int _flight_way)
     {
+        if (StageManager.currentStage == 7) levelHeight.SetHeight();
         if (StageNum == 1)
         {
             if (Player.weapon.id == 6) //木頭弓箭
@@ -117,7 +123,8 @@ public class Projectile : MonoBehaviour {
         if (flight_way < 0) return;
         if (collision.tag == "Enemy")
         {
-            collision.transform.GetComponent<CEnemy>().SetHurtValue(Player.weapon.attack, flight_way);
+            CEnemy enemy = collision.transform.GetComponent<CEnemy>();
+            if(enemy != null) enemy.SetHurtValue(Player.weapon.attack, flight_way);
             if (test) tutorialRequest.DoneHitEnemy();
             flight_way = -1;
             gameObject.SetActive(false);

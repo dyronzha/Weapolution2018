@@ -39,7 +39,9 @@ public class PVPPlayerManager : MonoBehaviour {
         pvpDialog = GameObject.Find("Dialog").GetComponent<PVPDialog>();
     }
     void Start() {
-
+        for (int i = 0; i < 4; i++) {
+            Debug.Log(controller[i]);
+        }
     }
 
     // Update is called once per frame
@@ -48,6 +50,7 @@ public class PVPPlayerManager : MonoBehaviour {
     }
 
     public static void SetAllController(int id, string con) {
+        Debug.Log(id + "  is " + con);
         controller[id] = con;
     }
 

@@ -84,7 +84,7 @@ public class CanonSystem : MonoBehaviour {
         }
         else {
             CanonAnimtion();
-            LeftListener();
+            //LeftListener();
             OutOfBullet();
             if (CanonScript.CanonisfillingPowder)
             {
@@ -183,17 +183,20 @@ public class CanonSystem : MonoBehaviour {
 
         if (useControler)
         {
-            if (whichPlayer == "p1")
-            {
-                if (Mathf.Abs(p1_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
-                if (Mathf.Abs(p1_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
+            speedX = Mathf.Sign(Input.GetAxis(whichPlayer + "LHorizontal"));
+            speedY = Mathf.Sign(Input.GetAxis(whichPlayer + "LVertical"));
+
+            //if (whichPlayer == "p1")
+            //{
+            //    if (Mathf.Abs(p1_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
+            //    if (Mathf.Abs(p1_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
                 
-            }
-            else
-            {
-                if (Mathf.Abs(p2_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
-                if (Mathf.Abs(p2_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
-            }
+            //}
+            //else
+            //{
+            //    if (Mathf.Abs(p2_L_JoyY) > 0.1f) speedY = Mathf.Sign(p1_L_JoyY);
+            //    if (Mathf.Abs(p2_L_JoyX) > 0.1f) speedX = Mathf.Sign(p1_L_JoyX);
+            //}
         }
         else {
             if (Input.GetKey(KeyCode.W)) speedY = 1.0f;
